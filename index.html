@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Harmony App — Sign In</title>
+
+  <meta name="theme-color" content="#0A1628" />
+  <meta name="description" content="Harmony App — sacred frequencies and spiritual wellness." />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Harmony App" />
+
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icons/icon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="stars"></div>
+
+  <main class="login-page">
+    <div class="login-card">
+      <div class="logo-flame">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="flameGradLogin" x1="0" y1="1" x2="0" y2="0">
+              <stop offset="0%" stop-color="#C9A84C" />
+              <stop offset="100%" stop-color="#F5E7B8" />
+            </linearGradient>
+          </defs>
+          <path
+            fill="url(#flameGradLogin)"
+            d="M12 2c1 3-2 4-2 7a3 3 0 1 0 6 0c0-1-.5-2-1-2 2 1 4 4 4 7a7 7 0 1 1-14 0c0-5 4-7 4-9 0 0 1.5 1 1.5 2.5C9.5 6 9 5 12 2z"
+          />
+        </svg>
+      </div>
+
+      <h1 class="brand-title">Harmony App</h1>
+      <p class="brand-subtitle">Your Sacred Frequency Space</p>
+
+      <form id="login-form" novalidate>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            autocomplete="email"
+            placeholder="you@example.com"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            autocomplete="current-password"
+            placeholder="••••••••"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn-primary" id="login-btn">Access My Space</button>
+
+        <div id="auth-message" class="auth-message" role="alert"></div>
+      </form>
+
+      <a href="#" id="forgot-link" class="forgot-link">Forgot password?</a>
+    </div>
+  </main>
+
+  <script src="js/stars.js" defer></script>
+  <script type="module" src="js/auth.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>

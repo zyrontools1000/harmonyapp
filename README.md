@@ -1,2 +1,2 @@
 # harmonyapp
-HarmonyApp PWA - Sacred Frequencies
+HarmonyApp PWA - Sacred Frequencies and Spiritual Wellness

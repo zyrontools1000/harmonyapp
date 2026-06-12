@@ -20,7 +20,7 @@ function clearMessage() {
 (async function redirectIfLoggedIn() {
   const { data } = await supabase.auth.getSession();
   if (data && data.session) {
-    window.location.href = 'dashboard.html';
+    window.location.href = 'home.html';
   }
 })();
 
@@ -49,7 +49,7 @@ form.addEventListener('submit', async (event) => {
   }
 
   showMessage('Welcome back. Entering your sacred space...', 'success');
-  window.location.href = 'dashboard.html';
+  window.location.href = 'home.html';
 });
 
 forgotLink.addEventListener('click', async (event) => {

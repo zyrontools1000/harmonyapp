@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Youth Protocol Guide — Harmony App</title>
+  <meta name="theme-color" content="#0D0618" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .guide-page { position:relative; z-index:1; padding-bottom:110px; }
+    .guide-body { padding:8px 20px 30px; max-width:500px; margin:0 auto; }
+    .guide-welcome { background:linear-gradient(135deg,rgba(45,10,94,0.5),rgba(13,6,24,0.7)); border:1px solid rgba(147,51,234,0.3); border-radius:18px; padding:24px 20px; margin-bottom:28px; text-align:center; }
+    .guide-welcome h2 { font-family:'Cinzel',serif; font-size:18px; font-weight:700; color:#F0EAF8; margin-bottom:6px; }
+    .guide-welcome .sub { font-size:12px; color:#C9A84C; letter-spacing:2px; text-transform:uppercase; margin-bottom:16px; display:block; }
+    .guide-welcome p { font-size:13.5px; color:#C4B8D8; line-height:1.8; }
+    .session-card { background:linear-gradient(135deg,rgba(45,10,94,0.45),rgba(13,6,24,0.6)); border:1px solid rgba(147,51,234,0.25); border-radius:16px; padding:22px 20px; margin-bottom:16px; position:relative; overflow:hidden; }
+    .session-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,#FF2D8A,#FF6B2B,#FFD700); }
+    .session-num { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:#9333EA; font-family:'Cinzel',serif; font-weight:600; margin-bottom:4px; }
+    .session-title { font-family:'Cinzel',serif; font-size:16px; font-weight:700; color:#F0EAF8; margin-bottom:14px; }
+    .section-tag { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:#C9A84C; font-weight:600; margin-bottom:8px; margin-top:14px; }
+    .guide-text { font-size:13.5px; color:#C4B8D8; line-height:1.8; }
+    .time-list { list-style:none; padding:0; display:flex; flex-direction:column; gap:6px; }
+    .time-list li { display:flex; align-items:flex-start; gap:8px; font-size:13px; color:#C4B8D8; }
+    .time-list li::before { content:'✓'; color:#9333EA; flex-shrink:0; font-weight:700; }
+    .how-list { list-style:none; padding:0; display:flex; flex-direction:column; gap:6px; }
+    .how-list li { display:flex; gap:8px; font-size:13px; color:#C4B8D8; line-height:1.6; }
+    .how-list li::before { content:'✦'; color:#9333EA; flex-shrink:0; font-size:10px; margin-top:3px; }
+    .intention-box { background:rgba(201,168,76,0.07); border:1px solid rgba(201,168,76,0.3); border-radius:12px; padding:14px 16px; margin-top:14px; }
+    .intention-label { font-size:10px; letter-spacing:2px; color:#C9A84C; font-weight:600; margin-bottom:6px; }
+    .intention-text { font-size:14px; color:#F0EAF8; font-style:italic; line-height:1.6; }
+    .challenge-card { background:linear-gradient(135deg,rgba(201,168,76,0.08),rgba(13,6,24,0.5)); border:1px solid rgba(201,168,76,0.3); border-radius:16px; padding:22px 20px; margin-bottom:16px; }
+    .challenge-title { font-family:'Cinzel',serif; font-size:16px; font-weight:700; color:#C9A84C; margin-bottom:14px; }
+    .check-list { list-style:none; padding:0; display:flex; flex-direction:column; gap:8px; }
+    .check-list li { display:flex; gap:10px; font-size:13px; color:#C4B8D8; line-height:1.6; }
+    .check-list li::before { content:'✓'; color:#C9A84C; flex-shrink:0; font-weight:700; }
+    .declaration-box { background:linear-gradient(135deg,rgba(109,40,217,0.15),rgba(255,45,138,0.08)); border:1px solid rgba(147,51,234,0.3); border-radius:14px; padding:20px; margin-bottom:24px; text-align:center; }
+    .declaration-label { font-family:'Cinzel',serif; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#9333EA; margin-bottom:12px; }
+    .declaration-text { font-size:15px; color:#F0EAF8; font-style:italic; line-height:1.8; }
+    .back-btn-bottom { display:block; text-align:center; padding:15px 24px; border-radius:50px; background:linear-gradient(135deg,rgba(109,40,217,0.5),rgba(45,10,94,0.7)); border:1px solid rgba(147,51,234,0.4); color:#E8DFF8; font-family:'Cinzel',serif; font-size:13px; font-weight:600; letter-spacing:1.5px; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="guide-page">
+
+    <header class="page-header">
+      <a href="youth-protocol.html" class="back-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </a>
+      <div class="page-header-text">
+        <div class="page-eyebrow">Protocol Guide</div>
+        <h1 class="page-title">Youth Frequency Protocol™</h1>
+      </div>
+    </header>
+
+    <div class="guide-body">
+
+      <div class="guide-welcome">
+        <h2>Youth Frequency Protocol™</h2>
+        <span class="sub">Divine Rejuvenation Through Sacred Frequencies</span>
+        <p>This protocol combines two carefully selected frequencies that work together to help you enter a state of deep relaxation, restoration, and rejuvenation.<br><br>Many users describe feeling lighter, more energized, refreshed, and spiritually renewed after incorporating these frequencies into their daily routine.<br><br><strong style="color:#F0EAF8;">For best results, always listen to Step 1 before Step 2.</strong></p>
+      </div>
+
+      <!-- Step 1 -->
+      <div class="session-card">
+        <div class="session-num">Step 1</div>
+        <div class="session-title">Frequency of Cellular Regeneration — 285 Hz</div>
+        <div class="section-tag">Purpose</div>
+        <div class="guide-text">The 285 Hz frequency is traditionally associated with restoration, renewal, and energetic balance. This session serves as the foundation of the Youth Frequency Protocol by helping prepare the body, mind, and spirit for deeper rejuvenation. Many listeners use this frequency to support feelings of restoration, recovery, vitality, and overall wellness.</div>
+        <div class="section-tag">Best Time to Listen</div>
+        <ul class="time-list">
+          <li>Immediately after waking</li>
+          <li>During periods of rest and relaxation</li>
+          <li>After a stressful day</li>
+          <li>Before beginning the second frequency</li>
+        </ul>
+        <div class="section-tag">Listening Instructions</div>
+        <ul class="how-list">
+          <li>Find a comfortable position and close your eyes.</li>
+          <li>Take several slow, deep breaths.</li>
+          <li>As the frequency plays, imagine every part of your body being refreshed, renewed, and restored.</li>
+          <li>Release tension and allow yourself to enter a state of complete relaxation.</li>
+        </ul>
+        <div class="intention-box">
+          <div class="intention-label">✦ Suggested Intention</div>
+          <div class="intention-text">"Every part of my body is being renewed, restored, and strengthened."</div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="session-card">
+        <div class="session-num">Step 2</div>
+        <div class="session-title">Frequency of Youth — 528 Hz</div>
+        <div class="section-tag">Purpose</div>
+        <div class="guide-text">The 528 Hz frequency is often referred to as the Frequency of Transformation and Renewal. This session is designed to support feelings of vitality, confidence, energy, and youthful well-being. Many listeners report feeling more positive, refreshed, uplifted, and emotionally renewed after consistent use.</div>
+        <div class="section-tag">Best Time to Listen</div>
+        <ul class="time-list">
+          <li>After completing Step 1</li>
+          <li>In the morning</li>
+          <li>Before exercise or physical activity</li>
+          <li>Whenever you desire an energetic reset</li>
+        </ul>
+        <div class="section-tag">Listening Instructions</div>
+        <ul class="how-list">
+          <li>As you listen, focus on feelings of vitality, energy, and wellness.</li>
+          <li>Visualize yourself feeling vibrant, strong, healthy, and full of life.</li>
+          <li>Allow yourself to embrace the emotions associated with youthfulness, joy, and renewed energy.</li>
+        </ul>
+        <div class="intention-box">
+          <div class="intention-label">✦ Suggested Intention</div>
+          <div class="intention-text">"Vitality flows through me. I feel renewed, energized, and full of life."</div>
+        </div>
+      </div>
+
+      <!-- Schedule -->
+      <div class="challenge-card">
+        <div class="challenge-title">📅 The 21-Day Youth Challenge</div>
+        <ul class="check-list">
+          <li>Listen to both frequencies every day for 21 consecutive days.</li>
+          <li>Drink plenty of water.</li>
+          <li>Spend a few moments in gratitude each morning.</li>
+          <li>Take a short walk whenever possible.</li>
+          <li>Focus on thoughts of vitality rather than aging.</li>
+          <li>Celebrate every positive change you notice.</li>
+        </ul>
+        <p style="font-size:12px;color:#9B89B8;margin-top:14px;">Many users find that combining faith, consistency, and positive expectation creates the most meaningful experience.</p>
+      </div>
+
+      <!-- Closing -->
+      <div style="background:rgba(109,40,217,0.08);border:1px solid rgba(147,51,234,0.2);border-radius:14px;padding:20px;margin-bottom:20px;">
+        <p style="font-size:13.5px;color:#C4B8D8;line-height:1.8;text-align:center;font-style:italic;">True rejuvenation is not simply about appearance. It is about energy. It is about vitality. It is about waking up with enthusiasm, strength, confidence, and gratitude for life.</p>
+      </div>
+
+      <div class="declaration-box">
+        <div class="declaration-label">✦ Daily Declaration</div>
+        <div class="declaration-text">"I welcome divine renewal into every part of my being. My mind is refreshed, my spirit is strengthened, and my life is filled with vitality, energy, and joy."</div>
+      </div>
+
+      <a href="youth-protocol.html" class="back-btn-bottom">← Return to Youth Frequency Protocol</a>
+    </div>
+  </div>
+
+  <script src="js/stars.js" defer></script>
+  <script>if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+</body>
+</html>

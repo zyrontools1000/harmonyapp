@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Divine Frequencies Accelerator — Guide</title>
+  <meta name="theme-color" content="#0D0618" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .guide-page { position:relative; z-index:1; padding-bottom:110px; }
+    .guide-body { padding:8px 20px 30px; max-width:500px; margin:0 auto; }
+
+    .guide-welcome {
+      background:linear-gradient(135deg,rgba(45,10,94,0.5),rgba(13,6,24,0.7));
+      border:1px solid rgba(147,51,234,0.3); border-radius:18px;
+      padding:24px 20px; margin-bottom:28px; text-align:center;
+    }
+    .guide-welcome h2 {
+      font-family:'Cinzel',serif; font-size:18px; font-weight:700;
+      color:#F0EAF8; margin-bottom:6px; letter-spacing:1px;
+    }
+    .guide-welcome .sub {
+      font-size:12px; color:#C9A84C; letter-spacing:2px;
+      text-transform:uppercase; margin-bottom:16px;
+    }
+    .guide-welcome p { font-size:13.5px; color:#C4B8D8; line-height:1.8; }
+
+    .session-card {
+      background:linear-gradient(135deg,rgba(45,10,94,0.45),rgba(13,6,24,0.6));
+      border:1px solid rgba(147,51,234,0.25); border-radius:16px;
+      padding:22px 20px; margin-bottom:16px;
+      position:relative; overflow:hidden;
+    }
+    .session-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:3px;
+      background:linear-gradient(90deg,#FF2D8A,#FF6B2B,#FFD700);
+    }
+    .session-num {
+      font-size:10px; letter-spacing:3px; text-transform:uppercase;
+      color:#9333EA; font-family:'Cinzel',serif; font-weight:600;
+      margin-bottom:4px;
+    }
+    .session-title {
+      font-family:'Cinzel',serif; font-size:16px; font-weight:700;
+      color:#F0EAF8; margin-bottom:14px; line-height:1.3;
+    }
+    .section-tag {
+      font-size:10px; letter-spacing:2px; text-transform:uppercase;
+      color:#C9A84C; font-weight:600; margin-bottom:8px; margin-top:14px;
+    }
+    .guide-text { font-size:13.5px; color:#C4B8D8; line-height:1.8; }
+    .guide-text p { margin-bottom:10px; }
+
+    .time-list { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:6px; }
+    .time-list li {
+      display:flex; align-items:center; gap:8px;
+      font-size:13px; color:#C4B8D8;
+    }
+    .time-list li::before { content:'✅'; font-size:13px; flex-shrink:0; }
+
+    .how-list { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:6px; }
+    .how-list li {
+      display:flex; gap:8px; font-size:13px; color:#C4B8D8; line-height:1.6;
+    }
+    .how-list li::before { content:'✦'; color:#9333EA; flex-shrink:0; font-size:10px; margin-top:3px; }
+
+    .intention-box {
+      background:rgba(201,168,76,0.07); border:1px solid rgba(201,168,76,0.3);
+      border-radius:12px; padding:14px 16px; margin-top:14px;
+    }
+    .intention-label { font-size:10px; letter-spacing:2px; color:#C9A84C; font-weight:600; margin-bottom:6px; }
+    .intention-text { font-size:14px; color:#F0EAF8; font-style:italic; line-height:1.6; }
+
+    .schedule-card {
+      background:linear-gradient(135deg,rgba(109,40,217,0.12),rgba(13,6,24,0.5));
+      border:1px solid rgba(147,51,234,0.3); border-radius:16px;
+      padding:22px 20px; margin-bottom:16px;
+    }
+    .schedule-title {
+      font-family:'Cinzel',serif; font-size:15px; font-weight:700;
+      color:#F0EAF8; margin-bottom:16px;
+    }
+    .week-label { font-size:11px; letter-spacing:2px; color:#9333EA; font-weight:600; margin-bottom:10px; }
+    .week-list { list-style:none; padding:0; display:flex; flex-direction:column; gap:6px; margin-bottom:16px; }
+    .week-list li { font-size:13px; color:#C4B8D8; padding-left:16px; position:relative; line-height:1.6; }
+    .week-list li::before { content:'·'; position:absolute; left:4px; color:#9333EA; font-weight:700; }
+
+    .seq-list { list-style:none; padding:0; display:flex; flex-direction:column; gap:8px; }
+    .seq-item {
+      display:flex; align-items:center; gap:12px;
+      font-size:13px; color:#C4B8D8;
+    }
+    .seq-num {
+      width:28px; height:28px; border-radius:50%; flex-shrink:0;
+      background:linear-gradient(135deg,rgba(255,45,138,0.2),rgba(109,40,217,0.2));
+      border:1px solid rgba(255,45,138,0.3);
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Cinzel',serif; font-size:12px; font-weight:600; color:#FF2D8A;
+    }
+
+    .note-box {
+      background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.08);
+      border-radius:14px; padding:18px 20px; margin-bottom:24px;
+    }
+    .note-box p { font-size:12.5px; color:#9B89B8; line-height:1.8; }
+
+    .closing-quote {
+      text-align:center; padding:24px 20px;
+      font-size:16px; font-style:italic; color:#E8DFF8; line-height:1.8;
+    }
+
+    .back-btn-bottom {
+      display:flex; align-items:center; justify-content:center; gap:8px;
+      padding:16px 24px; border-radius:50px;
+      background:linear-gradient(135deg,rgba(109,40,217,0.5),rgba(45,10,94,0.7));
+      border:1px solid rgba(147,51,234,0.4); color:#E8DFF8;
+      font-family:'Cinzel',serif; font-size:13px; font-weight:600;
+      letter-spacing:1.5px; text-decoration:none; text-align:center;
+      margin:0 20px 30px; display:block; max-width:460px; margin-left:auto; margin-right:auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="guide-page">
+
+    <header class="page-header">
+      <a href="divine-accelerator.html" class="back-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </a>
+      <div class="page-header-text">
+        <div class="page-eyebrow">Sacred Guide</div>
+        <h1 class="page-title">Divine Frequencies Accelerator™</h1>
+      </div>
+    </header>
+
+    <div class="guide-body">
+
+      <!-- Welcome -->
+      <div class="guide-welcome">
+        <h2>Divine Frequencies Accelerator™</h2>
+        <div class="sub">A Guided 6-Session Journey</div>
+        <p>A sacred six-session experience designed to support your spiritual transformation through biblical frequencies, intentional listening, and focused reflection.<br><br>Each session builds upon the previous one, gradually guiding you through emotional release, energetic restoration, spiritual alignment, and deeper connection with divine healing.<br><br>For the best experience, listen in a quiet environment using headphones whenever possible. Allow yourself to be fully present and approach each session with <strong style="color:#F0EAF8;">faith, intention, and openness.</strong></p>
+      </div>
+
+      <!-- Session 1 -->
+      <div class="session-card">
+        <div class="session-num">Session 1</div>
+        <div class="session-title">Deep Cellular Renewal</div>
+        <div class="section-tag">Purpose</div>
+        <div class="guide-text">This frequency is designed to help initiate the renewal process by encouraging deep relaxation and creating a state of receptivity within the body, mind, and spirit. Many listeners use this session as the foundation of their healing journey because it promotes stillness and prepares them for deeper transformation.</div>
+        <div class="section-tag">Best Time to Listen</div>
+        <ul class="time-list">
+          <li>Immediately after waking up</li>
+          <li>During quiet reflection or prayer</li>
+          <li>Before beginning your daily activities</li>
+        </ul>
+        <div class="section-tag">Listening Recommendation</div>
+        <ul class="how-list">
+          <li>Sit comfortably or lie down.</li>
+          <li>Take slow, deep breaths.</li>
+          <li>Focus on the intention of renewal.</li>
+          <li>Allow your thoughts to settle naturally.</li>
+        </ul>
+        <div class="intention-box">
+          <div class="intention-label">✦ Suggested Intention</div>
+          <div class="intention-text">"Every cell within me aligns with divine restoration and renewal."</div>
+        </div>
+      </div>
+
+      <!-- Session 2 -->
+      <div class="session-card">
+        <div class="session-num">Session 2</div>
+        <div class="session-title">Emotional Cleansing and Detox</div>
+        <div class="section-tag">Purpose</div>
+        <div class="guide-text">This session focuses on releasing emotional burdens, stress, resentment, fear, and energetic heaviness that may interfere with inner peace and spiritual growth. Many listeners report feeling lighter and more centered after consistent use.</div>
+        <div class="section-tag">Best Time to Listen</div>
+        <ul class="time-list">
+          <li>Late afternoon</li>
+          <li>After a stressful day</li>
+          <li>During journaling or self-reflection</li>
+        </ul>
+        <div class="section-tag">Listening Recommendation</div>
+        <ul class="how-list">
+          <li>Find a quiet environment.</li>
+          <li>Reflect on any emotions you wish to release.</li>
+          <li>Breathe deeply and surrender emotional tension.</li>
+        </ul>
+        <div class="intention-box">
+          <div class="intention-label">✦ Suggested Intention</div>
+          <div class="intention-text">"I release what no longer serves me and make space for peace."</div>
+        </div>
+      </div>
+
+      <!-- Session 3 -->
+      <div class="session-card">
+        <div class="session-num">Session 3</div>
+        <div class="session-title">Spiritual Connection and Inner Peace</div>
+        <div class="section-tag">Purpose</div>
+        <div class="guide-text">This frequency helps cultivate a deeper sense of spiritual awareness, faith, and connection with God's presence. It is ideal for moments of prayer, meditation, gratitude, and spiritual reflection.</div>
+        <div class="section-tag">Best Time to Listen</div>
+        <ul class="time-list">
+          <li>During prayer</li>
+          <li>Early morning devotionals</li>
+          <li>Evening spiritual practice</li>
+        </ul>
+        <div class="section-tag">Listening Recommendation</div>
+        <ul class="how-list">
+          <li>Listen with eyes closed.</li>
+          <li>Focus on gratitude and divine guidance.</li>
+          <li>Allow yourself to simply receive.</li>
+        </ul>
+        <div class="intention-box">
+          <div class="intention-label">✦ Suggested Intention</div>
+          <div class="intention-text">"I am connected to divine wisdom, peace, and guidance."</div>
+        </div>
+      </div>
+
+      <!-- Session 4 -->
+      <div class="session-card">
+        <div class="session-num">Session 4</div>
+        <div class="session-title">Vital Energy and Emotional Balance</div>
+        <div class="section-tag">Purpose</div>
+        <div class="guide-text">This session supports emotional equilibrium and renewed vitality, helping listeners feel more centered, motivated, and resilient throughout the day.</div>
+        <div class="section-tag">Best Time to Listen</div>
+        <ul class="time-list">
+          <li>Mid-morning</li>
+          <li>Before important tasks</li>
+          <li>During periods of low energy</li>
+        </ul>
+        <div class="section-tag">Listening Recommendation</div>
+        <ul class="how-list">
+          <li>Sit upright.</li>
+          <li>Focus on your breathing rhythm.</li>
+          <li>Visualize divine light flowing throughout your body.</li>
+        </ul>
+        <div class="intention-box">
+          <div class="intention-label">✦ Suggested Intention</div>
+          <div class="intention-text">"Divine energy flows through me, bringing balance, strength, and harmony."</div>
+        </div>
+      </div>
+
+      <!-- Session 5 -->
+      <div class="session-card">
+        <div class="session-num">Session 5</div>
+        <div class="session-title">Awakening and Spiritual Strength</div>
+        <div class="section-tag">Purpose</div>
+        <div class="guide-text">This frequency is designed to support spiritual empowerment, confidence, faith, and a stronger connection to your higher purpose. Many listeners use this session when seeking clarity, courage, and renewed commitment to their spiritual path.</div>
+        <div class="section-tag">Best Time to Listen</div>
+        <ul class="time-list">
+          <li>Before major decisions</li>
+          <li>During morning routines</li>
+          <li>Before worship or prayer sessions</li>
+        </ul>
+        <div class="section-tag">Listening Recommendation</div>
+        <ul class="how-list">
+          <li>Listen with focused attention.</li>
+          <li>Reflect on your purpose and spiritual mission.</li>
+          <li>Invite divine wisdom into your thoughts and actions.</li>
+        </ul>
+        <div class="intention-box">
+          <div class="intention-label">✦ Suggested Intention</div>
+          <div class="intention-text">"My spirit is strong, my faith is unwavering, and my path is illuminated."</div>
+        </div>
+      </div>
+
+      <!-- Session 6 -->
+      <div class="session-card">
+        <div class="session-num">Session 6</div>
+        <div class="session-title">963 Hz Frequency — Divine Healing</div>
+        <div class="section-tag">Purpose</div>
+        <div class="guide-text">The final session represents the culmination of the Divine Frequency Accelerator journey. Traditionally associated with spiritual elevation and divine connection, this frequency is intended to support a profound sense of peace, unity, and alignment with higher consciousness.</div>
+        <div class="section-tag">Best Time to Listen</div>
+        <ul class="time-list">
+          <li>Before sleep</li>
+          <li>During deep meditation</li>
+          <li>During extended prayer sessions</li>
+        </ul>
+        <div class="section-tag">Listening Recommendation</div>
+        <ul class="how-list">
+          <li>Use headphones if possible.</li>
+          <li>Lie down comfortably.</li>
+          <li>Release expectations and simply receive the experience.</li>
+        </ul>
+        <div class="intention-box">
+          <div class="intention-label">✦ Suggested Intention</div>
+          <div class="intention-text">"I am aligned with divine healing, love, and spiritual wholeness."</div>
+        </div>
+      </div>
+
+      <!-- Schedule -->
+      <div class="schedule-card">
+        <div class="schedule-title">📅 Recommended Listening Schedule</div>
+        <div class="week-label">Week 1</div>
+        <ul class="week-list">
+          <li>Session 1 → Daily for 2 days</li>
+          <li>Session 2 → Daily for 2 days</li>
+          <li>Session 3 → Daily for 1 day</li>
+          <li>Session 4 → Daily for 1 day</li>
+          <li>Session 5 → Daily for 1 day</li>
+        </ul>
+        <div class="week-label">Week 2 and Beyond</div>
+        <p style="font-size:13px;color:#C4B8D8;margin-bottom:14px;">For maximum benefit, follow the complete sequence:</p>
+        <div class="seq-list">
+          <div class="seq-item"><div class="seq-num">1</div>Deep Cellular Renewal</div>
+          <div class="seq-item"><div class="seq-num">2</div>Emotional Cleansing and Detox</div>
+          <div class="seq-item"><div class="seq-num">3</div>Spiritual Connection and Inner Peace</div>
+          <div class="seq-item"><div class="seq-num">4</div>Vital Energy and Emotional Balance</div>
+          <div class="seq-item"><div class="seq-num">5</div>Awakening and Spiritual Strength</div>
+          <div class="seq-item"><div class="seq-num">6</div>Divine Healing</div>
+        </div>
+        <p style="font-size:12px;color:#9B89B8;margin-top:14px;">Repeat the full journey as often as desired.</p>
+      </div>
+
+      <!-- Note -->
+      <div class="note-box">
+        <p>The Divine Frequency Accelerator is intended as a spiritual wellness experience designed to support relaxation, reflection, faith, and personal growth. It is not intended to diagnose, treat, cure, or prevent any medical condition. Always consult a qualified healthcare professional regarding any medical concerns.</p>
+      </div>
+
+      <!-- Closing quote -->
+      <div class="closing-quote">
+        "Healing begins when intention, faith, and alignment come together." ✨🙏
+      </div>
+
+      <!-- Back button -->
+      <a href="divine-accelerator.html" class="back-btn-bottom">
+        ← Return to Divine Frequencies Accelerator
+      </a>
+
+    </div>
+  </div>
+
+  <script src="js/stars.js" defer></script>
+  <script>
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+  </script>
+</body>
+</html>

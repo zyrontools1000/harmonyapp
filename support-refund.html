@@ -78,8 +78,7 @@
         <p>Your refund request has been submitted. Our team will review it and process within 7 business days. You'll receive a confirmation by email.</p>
       </div>
 
-      <form id="refund-form" action="https://formspree.io/f/REPLACE_REFUND_ID" method="POST">
-        <input type="hidden" name="_subject" value="HarmonyApp — Refund Request" />
+      <form id="refund-form">
 
         <div class="field">
           <label for="name">Full Name *</label>
@@ -146,17 +145,25 @@
   <script src="js/stars.js" defer></script>
   <script>
     if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
-    document.getElementById('refund-form').addEventListener('submit', async function(e) {
+    document.getElementById('refund-form').addEventListener('submit', function(e) {
       e.preventDefault();
-      const btn = document.getElementById('submit-btn');
-      btn.disabled = true; btn.textContent = 'Submitting...';
-      try {
-        const res = await fetch(this.action, { method:'POST', body:new FormData(this), headers:{Accept:'application/json'} });
-        if(res.ok) {
-          this.style.display = 'none';
-          document.getElementById('success-msg').style.display = 'block';
-        } else { btn.disabled = false; btn.textContent = 'Submit Refund Request'; alert('Something went wrong. Please try again.'); }
-      } catch { btn.disabled = false; btn.textContent = 'Submit Refund Request'; alert('Connection error. Please try again.'); }
+      const name       = document.getElementById('name').value;
+      const date       = document.getElementById('date').value;
+      const email      = document.getElementById('email').value;
+      const order      = document.getElementById('order').value;
+      const suggestion = document.getElementById('suggestion').value;
+      const reasons    = [...document.querySelectorAll('input[name="reason"]:checked')].map(r => r.value).join(', ');
+      const body = encodeURIComponent(
+        "Full Name: " + name + "\n" +
+        "Date: " + date + "\n" +
+        "Email: " + email + "\n" +
+        "Order Number: " + order + "\n" +
+        "Reason(s): " + (reasons || "Not specified") + "\n\n" +
+        "Suggestion:\n" + suggestion
+      );
+      window.location.href = "mailto:sacredhealapp@gmail.com?subject=HarmonyApp%20%E2%80%94%20Refund%20Request&body=" + body;
+      document.getElementById('refund-form').style.display = 'none';
+      document.getElementById('success-msg').style.display = 'block';
     });
   </script>
 </body>

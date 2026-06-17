@@ -189,13 +189,13 @@
     </nav>
 
     <!-- Header -->
-    <header style="display:flex;align-items:center;justify-content:space-between;padding:20px 20px 8px;max-width:500px;margin:0 auto;position:relative;">
-      <button onclick="openMenu()" style="background:none;border:1px solid rgba(147,51,234,0.3);color:#9B89B8;border-radius:10px;padding:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:20px;height:20px;"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
-      <div style="position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;">
-        <img src="images/logo-sacredheal.png" alt="SacredHeal" style="width:28px;height:28px;object-fit:contain;"/>
-        <span style="font-family:'Cinzel',serif;font-size:15px;font-weight:700;letter-spacing:1.5px;color:#F0EAF8;">SacredHeal Experience</span>
+    <header style="display:flex;align-items:center;justify-content:space-between;padding:20px 20px 8px;max-width:500px;margin:0 auto;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button onclick="openMenu()" style="background:none;border:1px solid rgba(147,51,234,0.3);color:#9B89B8;border-radius:10px;padding:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:20px;height:20px;"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <img src="images/logo-sacredheal.png" alt="SacredHeal" style="width:30px;height:30px;object-fit:contain;"/>
+        <span style="font-family:'Cinzel',serif;font-size:15px;font-weight:700;letter-spacing:1px;color:#F0EAF8;">SacredHeal Experience</span>
       </div>
       <button class="icon-btn" id="logout-btn" title="Sign out" style="opacity:0;pointer-events:none;width:38px;height:38px;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
@@ -204,7 +204,7 @@
 
     <!-- Thought of the Day -->
     <div class="thought-card" style="margin: 12px 20px 28px; max-width: 460px; margin-left: auto; margin-right: auto;">
-      <div class="label">✦ Thought of the Day</div>
+      <div class="label" style="font-size:12px;letter-spacing:3px;color:#C9A84C;font-weight:700;opacity:1;">✦ THOUGHT OF THE DAY</div>
       <p id="thought-text">Loading your daily reflection...</p>
     </div>
 

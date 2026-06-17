@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Request Refund — Harmony App</title>
+  <meta name="theme-color" content="#0D0618" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .form-page { position:relative; z-index:1; padding-bottom:110px; }
+    .form-body { padding:8px 20px 40px; max-width:500px; margin:0 auto; }
+    .notice-box { background:rgba(255,45,138,0.06); border:1px solid rgba(255,45,138,0.2); border-radius:14px; padding:16px 18px; margin-bottom:24px; font-size:13.5px; color:#C4B8D8; line-height:1.8; }
+    .notice-box strong { color:#F0EAF8; }
+    .field { margin-bottom:20px; }
+    .field label { display:block; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:#9B89B8; margin-bottom:8px; font-family:'Cinzel',serif; }
+    .field input, .field textarea, .field select {
+      width:100%; padding:14px 16px;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(147,51,234,0.3);
+      border-radius:12px; color:#F0EAF8;
+      font-family:'Raleway',sans-serif; font-size:15px;
+      transition:border-color 0.2s;
+    }
+    .field input:focus, .field textarea:focus, .field select:focus {
+      outline:none; border-color:#9333EA;
+      box-shadow:0 0 0 3px rgba(147,51,234,0.18);
+    }
+    .field input::placeholder, .field textarea::placeholder { color:rgba(240,234,248,0.25); }
+    .field textarea { resize:vertical; min-height:100px; }
+    .field select option { background:#1A0A2E; color:#F0EAF8; }
+    .checkbox-group { display:flex; flex-direction:column; gap:12px; }
+    .checkbox-item { display:flex; align-items:flex-start; gap:12px; cursor:pointer; }
+    .checkbox-item input[type="checkbox"] { width:18px; height:18px; margin-top:2px; accent-color:#9333EA; flex-shrink:0; cursor:pointer; }
+    .checkbox-item span { font-size:13.5px; color:#C4B8D8; line-height:1.5; }
+    .submit-btn {
+      width:100%; padding:17px; border:none; border-radius:50px;
+      background:linear-gradient(135deg,rgba(109,40,217,0.7),rgba(45,10,94,0.9));
+      border:1px solid rgba(147,51,234,0.5);
+      color:#E8DFF8; font-family:'Cinzel',serif; font-weight:700;
+      font-size:14px; letter-spacing:2px; text-transform:uppercase;
+      cursor:pointer; transition:transform 0.2s, box-shadow 0.2s;
+    }
+    .submit-btn:hover { transform:translateY(-2px); box-shadow:0 0 30px rgba(147,51,234,0.4); }
+    .submit-btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+    .success-msg { display:none; text-align:center; padding:24px; background:rgba(109,40,217,0.12); border:1px solid rgba(147,51,234,0.3); border-radius:14px; }
+    .success-msg h3 { font-family:'Cinzel',serif; color:#F0EAF8; margin-bottom:8px; }
+    .success-msg p { font-size:13px; color:#C4B8D8; line-height:1.7; }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="form-page">
+
+    <header class="page-header">
+      <a href="support.html" class="back-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </a>
+      <div class="page-header-text">
+        <div class="page-eyebrow">Support Center</div>
+        <h1 class="page-title">Request a Refund</h1>
+      </div>
+    </header>
+
+    <div class="form-body">
+
+      <div class="notice-box">
+        <strong>Important:</strong> This is a subscription service. If you are seeing a charge you don't recognize, it may be from a different service.<br><br>
+        If you still wish to request a refund, simply fill out the form below. Refunds are usually processed within <strong>7 business days</strong>.
+      </div>
+
+      <div id="success-msg" class="success-msg">
+        <h3>✅ Request Received!</h3>
+        <p>Your refund request has been submitted. Our team will review it and process within 7 business days. You'll receive a confirmation by email.</p>
+      </div>
+
+      <form id="refund-form" action="https://formspree.io/f/REPLACE_REFUND_ID" method="POST">
+        <input type="hidden" name="_subject" value="HarmonyApp — Refund Request" />
+
+        <div class="field">
+          <label for="name">Full Name *</label>
+          <input type="text" id="name" name="name" placeholder="Your full name" required />
+        </div>
+
+        <div class="field">
+          <label for="date">Date *</label>
+          <input type="date" id="date" name="date" required />
+        </div>
+
+        <div class="field">
+          <label for="email">Email used to make the purchase *</label>
+          <input type="email" id="email" name="email" placeholder="your@email.com" required />
+        </div>
+
+        <div class="field">
+          <label for="order">Your Order Number *</label>
+          <input type="text" id="order" name="order_number" placeholder="#0000JZ" required />
+        </div>
+
+        <div class="field">
+          <label>Reason for Refund *</label>
+          <div class="checkbox-group">
+            <label class="checkbox-item"><input type="checkbox" name="reason" value="Couldn't install the App" /><span>I couldn't install the App</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="reason" value="Difficult interface or poor user experience" /><span>Difficult-to-use interface or poor user experience</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="reason" value="Difficulty getting help to resolve issues" /><span>Difficulty getting help to resolve issues</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="reason" value="Didn't find what I needed in the App" /><span>I didn't find what I needed in the App</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="reason" value="App not working properly (bugs or performance issues)" /><span>App not working properly (bugs, crashes, or performance issues)</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="reason" value="Product different from what was advertised" /><span>The product was different from what was advertised</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="reason" value="Other" /><span>Other</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="suggestion">Please help us improve. Any suggestion? *</label>
+          <textarea id="suggestion" name="suggestion" placeholder="Share your feedback to help us improve..." required></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submit-btn">Submit Refund Request</button>
+      </form>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="home.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/></svg>
+      <span>Home</span>
+    </a>
+    <a href="dashboard.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+      <span>Frequencies</span>
+    </a>
+    <a href="#" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+      <span>Profile</span>
+    </a>
+    <a href="support.html" class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 3.5"/><line x1="12" y1="17" x2="12" y2="17.01"/></svg>
+      <span>Support</span>
+    </a>
+  </nav>
+
+  <script src="js/stars.js" defer></script>
+  <script>
+    if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+    document.getElementById('refund-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submit-btn');
+      btn.disabled = true; btn.textContent = 'Submitting...';
+      try {
+        const res = await fetch(this.action, { method:'POST', body:new FormData(this), headers:{Accept:'application/json'} });
+        if(res.ok) {
+          this.style.display = 'none';
+          document.getElementById('success-msg').style.display = 'block';
+        } else { btn.disabled = false; btn.textContent = 'Submit Refund Request'; alert('Something went wrong. Please try again.'); }
+      } catch { btn.disabled = false; btn.textContent = 'Submit Refund Request'; alert('Connection error. Please try again.'); }
+    });
+  </script>
+</body>
+</html>

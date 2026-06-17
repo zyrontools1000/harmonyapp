@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Get Help — Harmony App</title>
+  <meta name="theme-color" content="#0D0618" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .form-page { position:relative; z-index:1; padding-bottom:110px; }
+    .form-body { padding:8px 20px 40px; max-width:500px; margin:0 auto; }
+    .form-intro { font-size:14px; color:#C4B8D8; line-height:1.8; margin-bottom:24px; text-align:center; }
+    .field { margin-bottom:20px; }
+    .field label { display:block; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:#9B89B8; margin-bottom:8px; font-family:'Cinzel',serif; }
+    .field input, .field textarea {
+      width:100%; padding:14px 16px;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(147,51,234,0.3);
+      border-radius:12px; color:#F0EAF8;
+      font-family:'Raleway',sans-serif; font-size:15px;
+      transition:border-color 0.2s, box-shadow 0.2s;
+    }
+    .field input:focus, .field textarea:focus {
+      outline:none; border-color:#9333EA;
+      box-shadow:0 0 0 3px rgba(147,51,234,0.18);
+    }
+    .field input::placeholder, .field textarea::placeholder { color:rgba(240,234,248,0.25); }
+    .field textarea { resize:vertical; min-height:120px; }
+    .field .hint { font-size:11px; color:#5C4F78; margin-top:6px; }
+    .submit-btn {
+      width:100%; padding:17px; border:none; border-radius:50px;
+      background:linear-gradient(135deg,#FF2D8A,#FF6B2B);
+      color:#fff; font-family:'Cinzel',serif; font-weight:700;
+      font-size:14px; letter-spacing:2px; text-transform:uppercase;
+      cursor:pointer; box-shadow:0 0 30px rgba(255,45,138,0.4);
+      transition:transform 0.2s, box-shadow 0.2s;
+    }
+    .submit-btn:hover { transform:translateY(-2px); box-shadow:0 0 45px rgba(255,45,138,0.6); }
+    .submit-btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+    .success-msg { display:none; text-align:center; padding:24px; background:rgba(109,40,217,0.12); border:1px solid rgba(147,51,234,0.3); border-radius:14px; }
+    .success-msg h3 { font-family:'Cinzel',serif; color:#F0EAF8; margin-bottom:8px; }
+    .success-msg p { font-size:13px; color:#C4B8D8; line-height:1.7; }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="form-page">
+
+    <header class="page-header">
+      <a href="support.html" class="back-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </a>
+      <div class="page-header-text">
+        <div class="page-eyebrow">Support Center</div>
+        <h1 class="page-title">Get Help</h1>
+      </div>
+    </header>
+
+    <div class="form-body">
+      <p class="form-intro">Fill out the form below and we'll personally look into your case.<br><strong style="color:#F0EAF8;">Let Us Know What's Going On — We'll Make It Right.</strong></p>
+
+      <div id="success-msg" class="success-msg">
+        <h3>✅ Message Sent!</h3>
+        <p>Thank you for reaching out. Our team will personally review your case and get back to you within 1–2 business days.</p>
+      </div>
+
+      <form id="help-form" action="https://formspree.io/f/REPLACE_HELP_ID" method="POST">
+        <input type="hidden" name="_subject" value="HarmonyApp — Help Request" />
+
+        <div class="field">
+          <label for="name">Full Name *</label>
+          <input type="text" id="name" name="name" placeholder="Your full name" required />
+        </div>
+
+        <div class="field">
+          <label for="date">Date *</label>
+          <input type="date" id="date" name="date" required />
+        </div>
+
+        <div class="field">
+          <label for="email">Email Address *</label>
+          <input type="email" id="email" name="email" placeholder="your@email.com" required />
+          <div class="hint">Same one used to purchase</div>
+        </div>
+
+        <div class="field">
+          <label for="message">What would you like us to do to make it right? *</label>
+          <textarea id="message" name="message" placeholder="Tell us what happened and how we can help you..." required></textarea>
+          <div class="hint">Let us know how to help you</div>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submit-btn">Send Message 📩</button>
+      </form>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="home.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/></svg>
+      <span>Home</span>
+    </a>
+    <a href="dashboard.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+      <span>Frequencies</span>
+    </a>
+    <a href="#" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+      <span>Profile</span>
+    </a>
+    <a href="support.html" class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 3.5"/><line x1="12" y1="17" x2="12" y2="17.01"/></svg>
+      <span>Support</span>
+    </a>
+  </nav>
+
+  <script src="js/stars.js" defer></script>
+  <script>
+    if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+    document.getElementById('help-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submit-btn');
+      btn.disabled = true; btn.textContent = 'Sending...';
+      try {
+        const res = await fetch(this.action, { method:'POST', body:new FormData(this), headers:{Accept:'application/json'} });
+        if(res.ok) {
+          this.style.display = 'none';
+          document.getElementById('success-msg').style.display = 'block';
+        } else { btn.disabled = false; btn.textContent = 'Send Message 📩'; alert('Something went wrong. Please try again.'); }
+      } catch { btn.disabled = false; btn.textContent = 'Send Message 📩'; alert('Connection error. Please try again.'); }
+    });
+  </script>
+</body>
+</html>

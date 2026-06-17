@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Biblical Prosperity Guide — Harmony App</title>
+  <meta name="theme-color" content="#0D0618" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .prosperity-page { position:relative; z-index:1; padding-bottom:110px; }
+    .prosperity-body { padding:0 20px 30px; max-width:500px; margin:0 auto; }
+
+    .video-wrap {
+      max-width:500px; margin:16px auto 0;
+      border-radius:16px; overflow:hidden;
+      border:1px solid rgba(201,168,76,0.3);
+      box-shadow:0 0 40px rgba(201,168,76,0.15), 0 20px 60px rgba(0,0,0,0.6);
+    }
+    .video-inner { position:relative; padding-top:56.25%; }
+    .video-inner iframe { border:0; position:absolute; top:0; height:100%; width:100%; }
+
+    .guide-btn {
+      display:flex; align-items:center; gap:14px;
+      background:linear-gradient(135deg,rgba(201,168,76,0.1),rgba(109,40,217,0.1));
+      border:1px solid rgba(201,168,76,0.35); border-radius:14px;
+      padding:16px 18px; text-decoration:none; color:#F0EAF8;
+      margin:20px 0 24px;
+    }
+    .guide-btn-icon { width:44px; height:44px; border-radius:12px; background:linear-gradient(135deg,rgba(201,168,76,0.2),rgba(109,40,217,0.15)); border:1px solid rgba(201,168,76,0.4); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:20px; }
+
+    .section-label { font-family:'Cinzel',serif; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#9333EA; margin-bottom:10px; font-weight:600; }
+    .desc-text { font-size:14px; line-height:1.85; color:#C4B8D8; margin-bottom:22px; }
+
+    .understanding-card { background:linear-gradient(135deg,rgba(45,10,94,0.4),rgba(13,6,24,0.6)); border:1px solid rgba(147,51,234,0.25); border-radius:14px; padding:20px; margin-bottom:20px; }
+    .bullet-list { list-style:none; padding:0; display:flex; flex-direction:column; gap:8px; }
+    .bullet-list li { display:flex; gap:10px; font-size:13.5px; color:#C4B8D8; line-height:1.6; }
+    .bullet-list li::before { content:'✦'; color:#9333EA; flex-shrink:0; font-size:10px; margin-top:4px; }
+
+    .method-card { background:linear-gradient(135deg,rgba(45,10,94,0.4),rgba(13,6,24,0.6)); border:1px solid rgba(147,51,234,0.25); border-radius:14px; padding:20px; margin-bottom:16px; position:relative; overflow:hidden; }
+    .method-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,#C9A84C,#FF6B2B,#C9A84C); }
+    .step-num { font-family:'Cinzel',serif; font-size:10px; letter-spacing:2px; color:#C9A84C; font-weight:600; margin-bottom:4px; }
+    .step-title { font-family:'Cinzel',serif; font-size:14px; font-weight:700; color:#F0EAF8; margin-bottom:8px; }
+    .step-text { font-size:13.5px; color:#C4B8D8; line-height:1.75; }
+    .sub-list { list-style:none; padding:0; margin-top:8px; display:flex; flex-direction:column; gap:5px; }
+    .sub-list li { font-size:13px; color:#C4B8D8; padding-left:16px; position:relative; }
+    .sub-list li::before { content:'·'; position:absolute; left:4px; color:#C9A84C; font-weight:700; }
+
+    .declarations-card { background:linear-gradient(135deg,rgba(201,168,76,0.07),rgba(13,6,24,0.6)); border:1px solid rgba(201,168,76,0.25); border-radius:14px; padding:20px; margin-bottom:20px; }
+    .declaration-item { font-size:14px; color:#F0EAF8; font-style:italic; line-height:1.75; padding:8px 0; border-bottom:1px solid rgba(201,168,76,0.1); }
+    .declaration-item:last-child { border-bottom:none; padding-bottom:0; }
+    .declaration-item::before { content:'"'; color:#C9A84C; }
+    .declaration-item::after { content:'"'; color:#C9A84C; }
+
+    .challenge-card { background:linear-gradient(135deg,rgba(109,40,217,0.12),rgba(13,6,24,0.5)); border:1px solid rgba(147,51,234,0.3); border-radius:14px; padding:20px; margin-bottom:20px; }
+    .challenge-title { font-family:'Cinzel',serif; font-size:15px; font-weight:700; color:#F0EAF8; margin-bottom:14px; }
+    .check-list { list-style:none; padding:0; display:flex; flex-direction:column; gap:7px; }
+    .check-list li { display:flex; gap:8px; font-size:13px; color:#C4B8D8; line-height:1.6; }
+    .check-list li::before { content:'✓'; color:#C9A84C; flex-shrink:0; font-weight:700; }
+
+    .closing-quote { text-align:center; padding:20px; background:rgba(201,168,76,0.05); border:1px solid rgba(201,168,76,0.2); border-radius:14px; margin-bottom:4px; }
+    .closing-text { font-size:14px; color:#F0EAF8; font-style:italic; line-height:1.8; margin-bottom:8px; }
+    .closing-emoji { font-size:20px; }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="prosperity-page">
+
+    <header class="page-header">
+      <a href="dashboard.html" class="back-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </a>
+      <div class="page-header-text">
+        <div class="page-eyebrow">Sacred Bonus</div>
+        <h1 class="page-title">Biblical Prosperity Guide</h1>
+      </div>
+    </header>
+
+    <!-- Video -->
+    <div class="video-wrap">
+      <div class="video-inner">
+        <iframe src="https://player.mediadelivery.net/embed/680172/a1039028-5e1e-45ad-b055-1b6d996e0a4e?autoplay=false&loop=false&muted=false&preload=true&responsive=true"
+          loading="lazy"
+          allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;fullscreen;"
+          allowfullscreen="true">
+        </iframe>
+      </div>
+    </div>
+
+    <div class="prosperity-body">
+
+      <div style="text-align:center;padding:16px 0 4px;">
+        <div style="font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:#C9A84C;margin-bottom:4px;">God's Prosperity Frequency™ — 777 Hz</div>
+        <div style="font-size:12px;color:#9B89B8;">The Sacred Frequency of Abundance & Financial Breakthrough</div>
+      </div>
+
+      <!-- Guide Button -->
+      <a href="biblical-prosperity-guide.html" class="guide-btn">
+        <div class="guide-btn-icon">📖</div>
+        <div style="flex:1;">
+          <div style="font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:#C9A84C;margin-bottom:3px;">Prosperity Guide</div>
+          <div style="font-size:12px;color:#9B89B8;">The Alignment Method, Declarations & 21-Day Challenge</div>
+        </div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" style="width:16px;height:16px;flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+
+      <!-- Welcome -->
+      <div class="section-label">Welcome</div>
+      <div class="desc-text">
+        The God's Prosperity Frequency™ was created to help you enter a state of faith, gratitude, expectancy, and spiritual alignment regarding the financial blessings God desires for His children.<br><br>
+        Many people spend years focusing on lack, scarcity, debt, worry, and financial fear. This session is designed to help you step away from those patterns and create space for faith, abundance, gratitude, and divine expectation.<br><br>
+        As you listen, allow yourself to release financial stress and open your heart to God's provision.
+      </div>
+
+      <!-- Understanding Prosperity -->
+      <div class="section-label">Understanding Biblical Prosperity</div>
+      <div class="understanding-card">
+        <div style="font-size:13px;color:#C4B8D8;margin-bottom:12px;line-height:1.7;">Biblical prosperity is about much more than money. True prosperity includes:</div>
+        <ul class="bullet-list">
+          <li>Peace of mind</li>
+          <li>Financial stability</li>
+          <li>Opportunities and favor</li>
+          <li>Healthy relationships</li>
+          <li>Purpose and fulfillment</li>
+          <li>Generosity and stewardship</li>
+          <li>Confidence in God's provision</li>
+        </ul>
+        <div style="font-size:13px;color:#9B89B8;margin-top:14px;font-style:italic;line-height:1.7;">Prosperity begins internally before it manifests externally.</div>
+      </div>
+
+      <!-- Closing -->
+      <div class="closing-quote">
+        <div class="closing-text">Prosperity is not merely about accumulating wealth. It is about living with confidence, purpose, peace, and trust in God's provision.</div>
+        <div class="closing-emoji">✨🙏</div>
+      </div>
+
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="home.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/></svg>
+      <span>Home</span>
+    </a>
+    <a href="dashboard.html" class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+      <span>Frequencies</span>
+    </a>
+    <a href="#" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+      <span>Profile</span>
+    </a>
+    <a href="#" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 3.5"/><line x1="12" y1="17" x2="12" y2="17.01"/></svg>
+      <span>Support</span>
+    </a>
+  </nav>
+
+  <script src="js/stars.js" defer></script>
+  <script type="module" src="js/authGuard.js"></script>
+  <script>if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+</body>
+</html>

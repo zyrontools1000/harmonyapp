@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Prosperity Guide — Harmony App</title>
+  <meta name="theme-color" content="#0D0618" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .guide-page { position:relative; z-index:1; padding-bottom:110px; }
+    .guide-body { padding:8px 20px 30px; max-width:500px; margin:0 auto; }
+    .welcome-card { background:linear-gradient(135deg,rgba(45,10,94,0.5),rgba(13,6,24,0.7)); border:1px solid rgba(201,168,76,0.25); border-radius:18px; padding:24px 20px; margin-bottom:24px; text-align:center; }
+    .welcome-card h2 { font-family:'Cinzel',serif; font-size:17px; font-weight:700; color:#C9A84C; margin-bottom:6px; }
+    .welcome-card .sub { font-size:11px; color:#9B89B8; letter-spacing:2px; text-transform:uppercase; margin-bottom:14px; display:block; }
+    .welcome-card p { font-size:13.5px; color:#C4B8D8; line-height:1.8; }
+    .section-label { font-family:'Cinzel',serif; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#C9A84C; margin-bottom:10px; font-weight:600; }
+    .time-card { background:rgba(201,168,76,0.06); border:1px solid rgba(201,168,76,0.2); border-radius:14px; padding:18px 20px; margin-bottom:20px; }
+    .time-block { margin-bottom:16px; }
+    .time-block:last-child { margin-bottom:0; }
+    .time-title { font-family:'Cinzel',serif; font-size:13px; font-weight:600; color:#F0EAF8; margin-bottom:6px; }
+    .time-text { font-size:13px; color:#C4B8D8; line-height:1.7; }
+    .method-card { background:linear-gradient(135deg,rgba(45,10,94,0.4),rgba(13,6,24,0.6)); border:1px solid rgba(147,51,234,0.2); border-radius:14px; padding:18px 20px; margin-bottom:10px; position:relative; overflow:hidden; }
+    .method-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,#C9A84C,#FF6B2B); }
+    .step-label { font-size:10px; letter-spacing:2px; color:#C9A84C; font-weight:600; margin-bottom:4px; }
+    .step-title { font-family:'Cinzel',serif; font-size:14px; font-weight:700; color:#F0EAF8; margin-bottom:8px; }
+    .step-text { font-size:13.5px; color:#C4B8D8; line-height:1.75; }
+    .sub-list { list-style:none; padding:0; margin-top:8px; display:flex; flex-direction:column; gap:5px; }
+    .sub-list li { font-size:13px; color:#C4B8D8; padding-left:16px; position:relative; line-height:1.5; }
+    .sub-list li::before { content:'·'; position:absolute; left:4px; color:#C9A84C; font-weight:700; }
+    .declarations-card { background:linear-gradient(135deg,rgba(201,168,76,0.07),rgba(13,6,24,0.6)); border:1px solid rgba(201,168,76,0.25); border-radius:14px; padding:20px; margin-bottom:20px; }
+    .declaration-item { font-size:14px; color:#F0EAF8; font-style:italic; line-height:1.75; padding:8px 0; border-bottom:1px solid rgba(201,168,76,0.1); }
+    .declaration-item:last-child { border-bottom:none; padding-bottom:0; }
+    .challenge-card { background:linear-gradient(135deg,rgba(109,40,217,0.1),rgba(13,6,24,0.5)); border:1px solid rgba(147,51,234,0.25); border-radius:14px; padding:20px; margin-bottom:20px; }
+    .challenge-title { font-family:'Cinzel',serif; font-size:15px; font-weight:700; color:#F0EAF8; margin-bottom:14px; }
+    .check-list { list-style:none; padding:0; display:flex; flex-direction:column; gap:7px; }
+    .check-list li { display:flex; gap:8px; font-size:13px; color:#C4B8D8; line-height:1.6; }
+    .check-list li::before { content:'✓'; color:#C9A84C; flex-shrink:0; font-weight:700; }
+    .best-card { background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.07); border-radius:14px; padding:18px 20px; margin-bottom:20px; }
+    .back-btn-bottom { display:block; text-align:center; padding:15px 24px; border-radius:50px; background:linear-gradient(135deg,rgba(109,40,217,0.5),rgba(45,10,94,0.7)); border:1px solid rgba(147,51,234,0.4); color:#E8DFF8; font-family:'Cinzel',serif; font-size:13px; font-weight:600; letter-spacing:1.5px; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="guide-page">
+
+    <header class="page-header">
+      <a href="biblical-prosperity.html" class="back-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </a>
+      <div class="page-header-text">
+        <div class="page-eyebrow">Prosperity Guide</div>
+        <h1 class="page-title">God's Prosperity Frequency™</h1>
+      </div>
+    </header>
+
+    <div class="guide-body">
+
+      <div class="welcome-card">
+        <h2>God's Prosperity Frequency™ (777 Hz)</h2>
+        <span class="sub">The Sacred Frequency of Abundance</span>
+        <p>This session is designed to help you step away from patterns of lack and create space for faith, abundance, gratitude, and divine expectation. As you listen, allow yourself to release financial stress and open your heart to God's provision.</p>
+      </div>
+
+      <!-- Best Times -->
+      <div class="section-label">Best Times to Listen</div>
+      <div class="time-card">
+        <div class="time-block">
+          <div class="time-title">🌅 Morning Prosperity Alignment</div>
+          <div class="time-text">Listen immediately after waking — 10–20 minutes. This helps establish a mindset of gratitude, confidence, and expectation for the day ahead.</div>
+        </div>
+        <div style="height:1px;background:rgba(201,168,76,0.1);margin:12px 0;"></div>
+        <div class="time-block">
+          <div class="time-title">💼 Before Important Financial Decisions</div>
+          <div class="time-text">Listen before business meetings, investment reviews, budget planning, negotiations, or any financial discussion to create a calmer, more focused state of mind.</div>
+        </div>
+        <div style="height:1px;background:rgba(201,168,76,0.1);margin:12px 0;"></div>
+        <div class="time-block">
+          <div class="time-title">🌙 Before Sleep</div>
+          <div class="time-text">End the day in a state of gratitude rather than financial worry. Many users find this to be one of the most powerful times to use the frequency.</div>
+        </div>
+      </div>
+
+      <!-- The Method -->
+      <div class="section-label">The Prosperity Alignment Method</div>
+
+      <div class="method-card">
+        <div class="step-label">Step 1</div>
+        <div class="step-title">Relax</div>
+        <div class="step-text">Find a quiet place. Take slow, deep breaths. Allow your body to relax and release tension from your shoulders, neck, and chest.</div>
+      </div>
+
+      <div class="method-card">
+        <div class="step-label">Step 2</div>
+        <div class="step-title">Release Scarcity</div>
+        <div class="step-text">As the frequency plays, mentally let go of:</div>
+        <ul class="sub-list">
+          <li>Financial fear</li>
+          <li>Debt anxiety</li>
+          <li>Worry about the future</li>
+          <li>Limiting beliefs about money</li>
+        </ul>
+        <div class="step-text" style="margin-top:10px;">Imagine these burdens slowly dissolving.</div>
+      </div>
+
+      <div class="method-card">
+        <div class="step-label">Step 3</div>
+        <div class="step-title">Visualize Provision</div>
+        <div class="step-text">Picture yourself:</div>
+        <ul class="sub-list">
+          <li>Paying off debts</li>
+          <li>Living comfortably</li>
+          <li>Supporting your family</li>
+          <li>Giving generously</li>
+          <li>Growing your income</li>
+          <li>Achieving financial freedom</li>
+        </ul>
+        <div class="step-text" style="margin-top:10px;">Focus on the feeling of gratitude as if these blessings are already unfolding.</div>
+      </div>
+
+      <div class="method-card">
+        <div class="step-label">Step 4</div>
+        <div class="step-title">Practice Gratitude</div>
+        <div class="step-text">Think of at least five blessings already present in your life. Gratitude is one of the fastest ways to shift your focus from scarcity to abundance.</div>
+      </div>
+
+      <div class="method-card" style="margin-bottom:20px;">
+        <div class="step-label">Step 5</div>
+        <div class="step-title">Receive</div>
+        <div class="step-text">Stop striving. Stop analyzing. Simply listen. Allow yourself to sit quietly with a sense of trust and expectancy.</div>
+      </div>
+
+      <!-- Declarations -->
+      <div class="section-label">Daily Prosperity Declarations</div>
+      <div class="declarations-card">
+        <div style="font-size:12px;color:#9B89B8;margin-bottom:12px;">Repeat these statements during or after your session:</div>
+        <div class="declaration-item">God provides for all my needs.</div>
+        <div class="declaration-item">New opportunities are flowing into my life.</div>
+        <div class="declaration-item">I release financial fear and embrace faith.</div>
+        <div class="declaration-item">I am guided toward wise decisions.</div>
+        <div class="declaration-item">I welcome abundance with gratitude and humility.</div>
+        <div class="declaration-item">God's provision is greater than my limitations.</div>
+        <div class="declaration-item">I am becoming a faithful steward of every blessing I receive.</div>
+      </div>
+
+      <!-- 21-Day Challenge -->
+      <div class="challenge-card">
+        <div class="challenge-title">📅 21-Day Prosperity Challenge</div>
+        <div style="font-family:'Cinzel',serif;font-size:12px;color:#C9A84C;margin-bottom:10px;">Every Morning</div>
+        <ul class="check-list" style="margin-bottom:14px;">
+          <li>Listen for 10 minutes</li>
+        </ul>
+        <div style="font-family:'Cinzel',serif;font-size:12px;color:#C9A84C;margin-bottom:10px;">Every Evening</div>
+        <ul class="check-list" style="margin-bottom:14px;">
+          <li>Listen for 10 minutes before bed</li>
+        </ul>
+        <div style="font-family:'Cinzel',serif;font-size:12px;color:#C9A84C;margin-bottom:10px;">Every Day — Write Down</div>
+        <ul class="check-list">
+          <li>One financial blessing you received</li>
+          <li>One opportunity you noticed</li>
+          <li>One thing you are grateful for</li>
+        </ul>
+        <div style="font-size:12px;color:#9B89B8;margin-top:14px;font-style:italic;">Small shifts repeated consistently create powerful transformation over time.</div>
+      </div>
+
+      <!-- Best Practices -->
+      <div class="section-label">For Best Results</div>
+      <div class="best-card">
+        <ul class="check-list">
+          <li>Use headphones whenever possible.</li>
+          <li>Listen consistently.</li>
+          <li>Focus on gratitude rather than lack.</li>
+          <li>Pair listening with wise financial action.</li>
+          <li>Stay open to opportunities, ideas, and guidance.</li>
+          <li>Maintain a generous spirit.</li>
+        </ul>
+      </div>
+
+      <a href="biblical-prosperity.html" class="back-btn-bottom">← Return to Biblical Prosperity Guide</a>
+    </div>
+  </div>
+
+  <script src="js/stars.js" defer></script>
+  <script>if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+</body>
+</html>

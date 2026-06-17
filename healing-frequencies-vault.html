@@ -3,36 +3,86 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Harmony App — Healing Frequencies Vault</title>
-
-  <meta name="theme-color" content="#0A1628" />
-  <meta name="description" content="Harmony App — sacred frequencies and spiritual wellness." />
+  <title>Healing Frequencies Vault — Harmony App</title>
+  <meta name="theme-color" content="#0D0618" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Harmony App" />
-
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="icons/icon.svg" />
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet"
-  />
-
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .vault-tabs {
+      display:flex; gap:10px; overflow-x:auto; padding:14px 20px 0;
+      scrollbar-width:none; -webkit-overflow-scrolling:touch;
+    }
+    .vault-tabs::-webkit-scrollbar { display:none; }
+    .vault-tab {
+      flex-shrink:0; padding:10px 20px;
+      border-radius:50px; border:1px solid rgba(147,51,234,0.3);
+      background:none; color:#9B89B8;
+      font-family:'Cinzel',serif; font-size:11px; letter-spacing:1px;
+      cursor:pointer; transition:all 0.2s; white-space:nowrap;
+    }
+    .vault-tab.active {
+      background:linear-gradient(135deg,rgba(255,45,138,0.2),rgba(109,40,217,0.2));
+      border-color:rgba(255,45,138,0.45); color:#F0EAF8;
+    }
+    .vault-panel { display:none; padding:16px 20px 110px; }
+    .vault-panel.active { display:block; }
+    .freq-btn {
+      display:flex; align-items:center; gap:14px;
+      background:linear-gradient(135deg,rgba(45,10,94,0.5),rgba(13,6,24,0.6));
+      border:1px solid rgba(147,51,234,0.3); border-radius:14px;
+      padding:14px 16px; margin-bottom:10px;
+      cursor:pointer; width:100%; text-align:left;
+      color:#F0EAF8; transition:border-color 0.2s, background 0.2s;
+    }
+    .freq-btn:hover { border-color:rgba(255,45,138,0.4); }
+    .freq-btn.playing { border-color:#FF2D8A; background:rgba(255,45,138,0.08); }
+    .freq-play {
+      width:40px; height:40px; border-radius:50%; border:none; flex-shrink:0;
+      background:linear-gradient(135deg,#FF2D8A,#FF6B2B);
+      display:flex; align-items:center; justify-content:center;
+      box-shadow:0 0 14px rgba(255,45,138,0.3); cursor:pointer;
+    }
+    .freq-play svg { width:16px; height:16px; color:#fff; margin-left:2px; }
+    .freq-info { flex:1; min-width:0; }
+    .freq-title { font-size:13.5px; font-weight:600; margin-bottom:3px; line-height:1.3; }
+    .freq-sub { font-size:11px; color:#9B89B8; }
+    .freq-dur { font-size:11px; color:#9B89B8; flex-shrink:0; }
+
+    /* Mini player bar */
+    .mini-player {
+      position:fixed; bottom:70px; left:0; right:0; z-index:20;
+      background:rgba(26,10,46,0.97); border-top:1px solid rgba(255,45,138,0.3);
+      backdrop-filter:blur(20px); padding:10px 20px;
+      display:none;
+    }
+    .mini-player.show { display:block; }
+    .mini-top { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+    .mini-title { font-size:12px; font-weight:600; color:#F0EAF8; flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .mini-play {
+      width:36px; height:36px; border-radius:50%; border:none;
+      background:linear-gradient(135deg,#FF2D8A,#FF6B2B); color:#fff;
+      display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0;
+    }
+    .mini-play svg { width:14px; height:14px; margin-left:2px; }
+    .mini-close { background:none; border:none; color:#9B89B8; cursor:pointer; padding:4px; flex-shrink:0; }
+    .mini-close svg { width:16px; height:16px; }
+    .mini-bar { width:100%; height:3px; border-radius:2px; background:rgba(255,255,255,0.1); cursor:pointer; }
+    .mini-fill { height:100%; border-radius:2px; width:0%; background:linear-gradient(90deg,#FF2D8A,#FF6B2B); pointer-events:none; }
+  </style>
 </head>
 <body>
   <div class="stars"></div>
-
   <div class="app-shell">
+
     <header class="page-header">
-      <a href="dashboard.html" class="back-btn" aria-label="Back to dashboard">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M15 18l-6-6 6-6" />
-        </svg>
+      <a href="dashboard.html" class="back-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
       </a>
       <div class="page-header-text">
         <div class="page-eyebrow">Sacred Module</div>
@@ -41,317 +91,182 @@
     </header>
 
     <p class="page-intro">
-      A growing collection of pure tones for grounding, repair, and renewal. Explore the vault
-      whenever you feel called — each frequency offers its own gift of healing for body, mind,
-      and spirit.
+      A growing collection of sacred tones for grounding, repair, and renewal. Explore the collection whenever you feel the calling — each frequency offers its own healing gift for the body, finances, mind, and spirit.
     </p>
 
-    <div class="section-label">Health Healing Frequencies</div>
-    <section class="audio-list">
-      <div class="audio-item" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/health-healing-frequencies/1-Blood%20pressure.mp3">
-        <button class="play-btn" aria-label="Play Blood Pressure"></button>
-        <div class="audio-info">
-          <div class="audio-title">Blood Pressure</div>
-          <div class="audio-subtitle">Cardiovascular Balance</div>
-        </div>
-        <div class="audio-duration">--:--</div>
-      </div>
+    <!-- Tabs -->
+    <div class="vault-tabs">
+      <button class="vault-tab active" onclick="switchTab('health', this)">🩺 Health</button>
+      <button class="vault-tab" onclick="switchTab('sleep', this)">🌙 Deep Sleep</button>
+      <button class="vault-tab" onclick="switchTab('mental', this)">🧠 Mental</button>
+      <button class="vault-tab" onclick="switchTab('prosperity', this)">✨ Prosperity</button>
+    </div>
 
-      <div class="audio-item" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/health-healing-frequencies/2-Healing-%20Energy%20and%20vitality.mp3">
-        <button class="play-btn" aria-label="Play Energy and Vitality"></button>
-        <div class="audio-info">
-          <div class="audio-title">Energy and Vitality</div>
-          <div class="audio-subtitle">Healing Frequency</div>
-        </div>
-        <div class="audio-duration">--:--</div>
-      </div>
+    <!-- HEALTH -->
+    <div class="vault-panel active" id="panel-health">
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/health-healing-frequencies/1-Blood%20pressure.mp3" data-title="Blood Pressure"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Blood Pressure</div><div class="freq-sub">Cardiovascular Balance</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/health-healing-frequencies/2-Healing-%20Energy%20and%20vitality.mp3" data-title="Energy and Vitality"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Energy and Vitality</div><div class="freq-sub">Healing Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/health-healing-frequencies/3-Healing-%20Health%20problems.mp3" data-title="Health Problems"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Health Problems</div><div class="freq-sub">Healing Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/health-healing-frequencies/4-Frequency%20285%20Hz%20%E2%80%93%20Cellular%20Regeneration.mp3" data-title="Cellular Regeneration"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Cellular Regeneration</div><div class="freq-sub">Healing Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/health-healing-frequencies/5-Frequency%20174%20Hz%20%E2%80%93%20Pain%20Relief.mp3" data-title="Pain Relief Power"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Pain Relief Power</div><div class="freq-sub">Healing Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/health-healing-frequencies/6-Frequency%20528%20Hz%20%E2%80%93%20Repair%20cell.mp3" data-title="Chronic Pain Soothing"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Chronic Pain Soothing</div><div class="freq-sub">Healing Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/health-healing-frequencies/7-Frequency%20852%20Hz%20%E2%80%93Chronic%20Soothe%20Vibration.mp3" data-title="Intestinal Pain"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Intestinal Pain</div><div class="freq-sub">Healing Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/health-healing-frequencies/8-Powerful%20regeneration%20frequency.mp3" data-title="Powerful Regeneration"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Powerful Regeneration</div><div class="freq-sub">Healing Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/health-healing-frequencies/10-Healing-%20General%20Illnesses.mp3" data-title="General Illnesses"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">General Illnesses</div><div class="freq-sub">Healing Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/health-healing-frequencies/11-Healing-%20Malaises.mp3" data-title="Malaises"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Malaises</div><div class="freq-sub">Healing Frequency</div></div><div class="freq-dur">--:--</div></div>
+    </div>
 
-      <div class="audio-item" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/health-healing-frequencies/3-Healing-%20Health%20problems.mp3">
-        <button class="play-btn" aria-label="Play Health Problems"></button>
-        <div class="audio-info">
-          <div class="audio-title">Health Problems</div>
-          <div class="audio-subtitle">Healing Frequency</div>
-        </div>
-        <div class="audio-duration">--:--</div>
-      </div>
+    <!-- DEEP SLEEP -->
+    <div class="vault-panel" id="panel-sleep">
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/deep-sleep-frequencies/1-Inner%20Peace%20Resonance.mp3" data-title="Inner Peace Resonance"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Inner Peace Resonance</div><div class="freq-sub">Deep Sleep Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/deep-sleep-frequencies/2-Serene%20Rest.mp3" data-title="Serene Rest"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Serene Rest</div><div class="freq-sub">Deep Sleep Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/deep-sleep-frequencies/3-Tranquil%20Mind.mp3" data-title="Tranquil Mind"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Tranquil Mind</div><div class="freq-sub">Deep Sleep Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/deep-sleep-frequencies/4-Restful%20Harmony.mp3" data-title="Restful Harmony"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Restful Harmony</div><div class="freq-sub">Deep Sleep Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/deep-sleep-frequencies/5-Peaceful%20Slumber.mp3" data-title="Peaceful Slumber"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Peaceful Slumber</div><div class="freq-sub">Deep Sleep Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/deep-sleep-frequencies/6-Dreamful%20Bliss.mp3" data-title="Dreamful Bliss"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Dreamful Bliss</div><div class="freq-sub">Deep Sleep Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/deep-sleep-frequencies/7-Gentle%20Surrender.mp3" data-title="Gentle Surrender"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Gentle Surrender</div><div class="freq-sub">Deep Sleep Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/deep-sleep-frequencies/8-Nocturnal%20Calm.mp3" data-title="Nocturnal Calm"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Nocturnal Calm</div><div class="freq-sub">Deep Sleep Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/deep-sleep-frequencies/9-Sunset%20Frequencies.mp3" data-title="Sunset Frequencies"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Sunset Frequencies</div><div class="freq-sub">Deep Sleep Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/deep-sleep-frequencies/10-Starlight%20Serenade.mp3" data-title="Starlight Serenade"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Starlight Serenade</div><div class="freq-sub">Deep Sleep Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/deep-sleep-frequencies/11-Moonlit%20Reverie.mp3" data-title="Moonlit Reverie"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Moonlit Reverie</div><div class="freq-sub">Deep Sleep Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/deep-sleep-frequencies/12-Aurora%20Dreams.mp3" data-title="Aurora Dreams"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Aurora Dreams</div><div class="freq-sub">Deep Sleep Frequency</div></div><div class="freq-dur">--:--</div></div>
+    </div>
 
-      <div class="audio-item" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/health-healing-frequencies/4-Frequency%20285%20Hz%20%E2%80%93%20Cellular%20Regeneration.mp3">
-        <button class="play-btn" aria-label="Play 285 Hz — Cellular Regeneration"></button>
-        <div class="audio-info">
-          <div class="audio-title">Cellular Regeneration</div>
-          <div class="audio-subtitle">Healing Frequency</div>
-        </div>
-        <div class="audio-duration">--:--</div>
-      </div>
+    <!-- MENTAL -->
+    <div class="vault-panel" id="panel-mental">
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/mental-frequencies/2-High%20Focus.mp3" data-title="High Focus"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">High Focus</div><div class="freq-sub">Mental Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/mental-frequencies/3-Calm%20Mind%20Resonance.mp3" data-title="Calm Mind Resonance"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Calm Mind Resonance</div><div class="freq-sub">Mental Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/mental-frequencies/4-Anxiety%20Release%20Harmony.mp3" data-title="Anxiety Release Harmony"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Anxiety Release Harmony</div><div class="freq-sub">Mental Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/mental-frequencies/5-Hopeful%20Heart%20Frequencies.mp3" data-title="Hopeful Heart Frequencies"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Hopeful Heart Frequencies</div><div class="freq-sub">Mental Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/mental-frequencies/7-Awakening%20the%20Purpose.mp3" data-title="Awakening the Purpose"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Awakening the Purpose</div><div class="freq-sub">Mental Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/mental-frequencies/8-Emotional%20Flow%20Waves.mp3" data-title="Emotional Flow Waves"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Emotional Flow Waves</div><div class="freq-sub">Mental Frequency</div></div><div class="freq-dur">--:--</div></div>
+    </div>
 
-      <div class="audio-item" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/health-healing-frequencies/5-Frequency%20174%20Hz%20%E2%80%93%20Pain%20Relief.mp3">
-        <button class="play-btn" aria-label="Play 174 Hz — Pain Relief"></button>
-        <div class="audio-info">
-          <div class="audio-title">Pain Relief Power</div>
-          <div class="audio-subtitle">Healing Frequency</div>
-        </div>
-        <div class="audio-duration">--:--</div>
-      </div>
+    <!-- PROSPERITY -->
+    <div class="vault-panel" id="panel-prosperity">
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/prosperity-frequencies/1-Magnetism%20of%20Success.mp3" data-title="Magnetism of Success"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Magnetism of Success</div><div class="freq-sub">Prosperity Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/prosperity-frequencies/2-Tune%20in%20to%20Wealth.mp3" data-title="Tune in to Wealth"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Tune in to Wealth</div><div class="freq-sub">Prosperity Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/prosperity-frequencies/3-Path%20to%20Abundance.mp3" data-title="Path to Abundance"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Path to Abundance</div><div class="freq-sub">Prosperity Frequency</div></div><div class="freq-dur">--:--</div></div>
+      <div class="freq-btn" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/prosperity-frequencies/4-Reprogramming%20for%20Prosperity.mp3" data-title="Reprogramming for Prosperity"><div class="freq-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="freq-info"><div class="freq-title">Reprogramming for Prosperity</div><div class="freq-sub">Prosperity Frequency</div></div><div class="freq-dur">--:--</div></div>
+    </div>
 
-      <div class="audio-item" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/health-healing-frequencies/6-Frequency%20528%20Hz%20%E2%80%93%20Repair%20cell.mp3">
-        <button class="play-btn" aria-label="Play 528 Hz — Cell Repair"></button>
-        <div class="audio-info">
-          <div class="audio-title">Chronic Pain Soothing</div>
-          <div class="audio-subtitle">Healing Frequency</div>
-        </div>
-        <div class="audio-duration">--:--</div>
-      </div>
+  </div><!-- end app-shell -->
 
-      <div class="audio-item" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/health-healing-frequencies/7-Frequency%20852%20Hz%20%E2%80%93Chronic%20Soothe%20Vibration.mp3">
-        <button class="play-btn" aria-label="Play 852 Hz — Chronic Pain Soothing"></button>
-        <div class="audio-info">
-          <div class="audio-title">Intestinal Pain</div>
-          <div class="audio-subtitle">Healing Frequency</div>
-        </div>
-        <div class="audio-duration">--:--</div>
-      </div>
-
-      <div class="audio-item" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/health-healing-frequencies/8-Powerful%20regeneration%20frequency.mp3">
-        <button class="play-btn" aria-label="Play Powerful Regeneration"></button>
-        <div class="audio-info">
-          <div class="audio-title">Powerful Regeneration</div>
-          <div class="audio-subtitle">Healing Frequency</div>
-        </div>
-        <div class="audio-duration">--:--</div>
-      </div>
-
-
-      <div class="audio-item" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/health-healing-frequencies/10-Healing-%20General%20Illnesses.mp3">
-        <button class="play-btn" aria-label="Play General Illnesses"></button>
-        <div class="audio-info">
-          <div class="audio-title">General Illnesses</div>
-          <div class="audio-subtitle">Healing Frequency</div>
-        </div>
-        <div class="audio-duration">--:--</div>
-      </div>
-
-      <div class="audio-item" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/health-healing-frequencies/11-Healing-%20Malaises.mp3">
-        <button class="play-btn" aria-label="Play Malaises"></button>
-        <div class="audio-info">
-          <div class="audio-title">Malaises</div>
-          <div class="audio-subtitle">Healing Frequency</div>
-        </div>
-        <div class="audio-duration">--:--</div>
-      </div>
-    </section>
-
-    <div class="section-label">Deep Sleep Frequencies</div>
-    <section class="audio-list">
-      <div class="audio-item" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/deep-sleep-frequencies/1-Inner%20Peace%20Resonance.mp3">
-        <button class="play-btn" aria-label="Play Inner Peace Resonance"></button>
-        <div class="audio-info">
-          <div class="audio-title">Inner Peace Resonance</div>
-          <div class="audio-subtitle">Deep Sleep Frequency</div>
-        </div>
-        <div class="audio-duration">--:--</div>
-      </div>
-
-      <div class="audio-item" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/deep-sleep-frequencies/2-Serene%20Rest.mp3">
-        <button class="play-btn" aria-label="Play Serene Rest"></button>
-        <div class="audio-info">
-          <div class="audio-title">Serene Rest</div>
-          <div class="audio-subtitle">Deep Sleep Frequency</div>
-        </div>
-        <div class="audio-duration">--:--</div>
-      </div>
-
-      <div class="audio-item" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/deep-sleep-frequencies/3-Deep%20Dreams.mp3">
-        <button class="play-btn" aria-label="Play Deep Dreams"></button>
-        <div class="audio-info">
-          <div class="audio-title">Deep Dreams</div>
-          <div class="audio-subtitle">Deep Sleep Frequency</div>
-        </div>
-        <div class="audio-duration">--:--</div>
-      </div>
-
-      <div class="audio-item" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/deep-sleep-frequencies/4-Tensions%20Release.mp3">
-        <button class="play-btn" aria-label="Play Tensions Release"></button>
-        <div class="audio-info">
-          <div class="audio-title">Tensions Release</div>
-          <div class="audio-subtitle">Deep Sleep Frequency</div>
-        </div>
-        <div class="audio-duration">--:--</div>
-      </div>
-
-      <div class="audio-item" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/deep-sleep-frequencies/5-Stress-Free%20Vibrations.mp3">
-        <button class="play-btn" aria-label="Play Stress-Free Vibrations"></button>
-        <div class="audio-info">
-          <div class="audio-title">Stress-Free Vibrations</div>
-          <div class="audio-subtitle">Deep Sleep Frequency</div>
-        </div>
-        <div class="audio-duration">--:--</div>
-      </div>
-
-      <div class="audio-item" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/deep-sleep-frequencies/6-Inner%20Calm.mp3">
-        <button class="play-btn" aria-label="Play Inner Calm"></button>
-        <div class="audio-info">
-          <div class="audio-title">Inner Calm</div>
-          <div class="audio-subtitle">Deep Sleep Frequency</div>
-        </div>
-        <div class="audio-duration">--:--</div>
-      </div>
-    </section>
-
-    <div class="section-label">Mental Frequencies</div>
-    <section class="audio-list">
-<div class="audio-item" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/mental-frequencies/2-High%20Focus.mp3">
-        <button class="play-btn" aria-label="Play High Focus"></button>
-        <div class="audio-info">
-          <div class="audio-title">High Focus</div>
-          <div class="audio-subtitle">Mental Frequency</div>
-        </div>
-        <div class="audio-duration">--:--</div>
-      </div>
-
-      <div class="audio-item" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/mental-frequencies/3-Calm%20Mind%20Resonance.mp3">
-        <button class="play-btn" aria-label="Play Calm Mind Resonance"></button>
-        <div class="audio-info">
-          <div class="audio-title">Calm Mind Resonance</div>
-          <div class="audio-subtitle">Mental Frequency</div>
-        </div>
-        <div class="audio-duration">--:--</div>
-      </div>
-
-      <div class="audio-item" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/mental-frequencies/4-Anxiety%20Release%20Harmony.mp3">
-        <button class="play-btn" aria-label="Play Anxiety Release Harmony"></button>
-        <div class="audio-info">
-          <div class="audio-title">Anxiety Release Harmony</div>
-          <div class="audio-subtitle">Mental Frequency</div>
-        </div>
-        <div class="audio-duration">--:--</div>
-      </div>
-
-      <div class="audio-item" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/mental-frequencies/5-Hopeful%20Heart%20Frequencies.mp3">
-        <button class="play-btn" aria-label="Play Hopeful Heart Frequencies"></button>
-        <div class="audio-info">
-          <div class="audio-title">Hopeful Heart Frequencies</div>
-          <div class="audio-subtitle">Mental Frequency</div>
-        </div>
-        <div class="audio-duration">--:--</div>
-      </div>
-
-
-      <div class="audio-item" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/mental-frequencies/7-Awakening%20the%20Purpose.mp3">
-        <button class="play-btn" aria-label="Play Awakening the Purpose"></button>
-        <div class="audio-info">
-          <div class="audio-title">Awakening the Purpose</div>
-          <div class="audio-subtitle">Mental Frequency</div>
-        </div>
-        <div class="audio-duration">--:--</div>
-      </div>
-
-      <div class="audio-item" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/mental-frequencies/8-Emotional%20Flow%20Waves.mp3">
-        <button class="play-btn" aria-label="Play Emotional Flow Waves"></button>
-        <div class="audio-info">
-          <div class="audio-title">Emotional Flow Waves</div>
-          <div class="audio-subtitle">Mental Frequency</div>
-        </div>
-        <div class="audio-duration">--:--</div>
-      </div>
-    </section>
-
-    <div class="section-label">Prosperity Frequencies</div>
-    <section class="audio-list">
-      <div class="audio-item" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/prosperity-frequencies/1-Magnetism%20of%20Success.mp3">
-        <button class="play-btn" aria-label="Play Magnetism of Success"></button>
-        <div class="audio-info">
-          <div class="audio-title">Magnetism of Success</div>
-          <div class="audio-subtitle">Prosperity Frequency</div>
-        </div>
-        <div class="audio-duration">--:--</div>
-      </div>
-
-      <div class="audio-item" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/prosperity-frequencies/2-Tune%20in%20to%20Wealth.mp3">
-        <button class="play-btn" aria-label="Play Tune in to Wealth"></button>
-        <div class="audio-info">
-          <div class="audio-title">Tune in to Wealth</div>
-          <div class="audio-subtitle">Prosperity Frequency</div>
-        </div>
-        <div class="audio-duration">--:--</div>
-      </div>
-
-      <div class="audio-item" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/prosperity-frequencies/3-Path%20to%20Abundance.mp3">
-        <button class="play-btn" aria-label="Play Path to Abundance"></button>
-        <div class="audio-info">
-          <div class="audio-title">Path to Abundance</div>
-          <div class="audio-subtitle">Prosperity Frequency</div>
-        </div>
-        <div class="audio-duration">--:--</div>
-      </div>
-
-      <div class="audio-item" data-src="https://harmonyapp-audios.b-cdn.net/healing-frequencies-vault/prosperity-frequencies/4-Reprogramming%20for%20Prosperity.mp3">
-        <button class="play-btn" aria-label="Play Reprogramming for Prosperity"></button>
-        <div class="audio-info">
-          <div class="audio-title">Reprogramming for Prosperity</div>
-          <div class="audio-subtitle">Prosperity Frequency</div>
-        </div>
-        <div class="audio-duration">--:--</div>
-      </div>
-    </section>
+  <!-- Mini Player -->
+  <div class="mini-player" id="mini-player">
+    <div class="mini-top">
+      <button class="mini-play" id="mini-play-btn">
+        <svg id="mini-play-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </button>
+      <div class="mini-title" id="mini-title">-</div>
+      <button class="mini-close" id="mini-close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="mini-bar" id="mini-bar"><div class="mini-fill" id="mini-fill"></div></div>
   </div>
 
+  <!-- Bottom Nav -->
   <nav class="bottom-nav">
-    <a href="dashboard.html" class="nav-item">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M3 11.5 12 4l9 7.5" />
-        <path d="M5 10v10h14V10" />
-      </svg>
+    <a href="home.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/></svg>
       <span>Home</span>
     </a>
-
-    <a href="#" class="nav-item">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-      </svg>
-      <span>Library</span>
-    </a>
-
-    <a href="#" class="nav-item">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="6" y1="9" x2="6" y2="15" />
-        <line x1="9" y1="5" x2="9" y2="19" />
-        <line x1="12" y1="2" x2="12" y2="22" />
-        <line x1="15" y1="5" x2="15" y2="19" />
-        <line x1="18" y1="9" x2="18" y2="15" />
-      </svg>
+    <a href="dashboard.html" class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
       <span>Frequencies</span>
     </a>
-
     <a href="#" class="nav-item">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="8" r="4" />
-        <path d="M4 21c0-4 4-6 8-6s8 2 8 6" />
-      </svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
       <span>Profile</span>
     </a>
-
     <a href="#" class="nav-item">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="10" />
-        <path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 3.5" />
-        <line x1="12" y1="17" x2="12" y2="17.01" />
-      </svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 3.5"/><line x1="12" y1="17" x2="12" y2="17.01"/></svg>
       <span>Support</span>
     </a>
   </nav>
 
   <div id="toast" class="toast"></div>
+  <audio id="vault-audio" preload="none"></audio>
 
   <script src="js/stars.js" defer></script>
   <script type="module" src="js/authGuard.js"></script>
-  <script src="js/player.js" defer></script>
   <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').catch(() => {});
-      });
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+
+    function switchTab(id, el) {
+      document.querySelectorAll('.vault-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.vault-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('panel-' + id).classList.add('active');
+      el.classList.add('active');
     }
+
+    const audio = document.getElementById('vault-audio');
+    const miniPlayer = document.getElementById('mini-player');
+    const miniTitle = document.getElementById('mini-title');
+    const miniPlayBtn = document.getElementById('mini-play-btn');
+    const miniPlayIcon = document.getElementById('mini-play-icon');
+    const miniFill = document.getElementById('mini-fill');
+    const miniBar = document.getElementById('mini-bar');
+    const pauseSVG = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+    const playSVG = '<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
+    const fmt = s => `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
+
+    let currentBtn = null;
+
+    document.querySelectorAll('.freq-btn').forEach(btn => {
+      // Load duration
+      const tmpAudio = new Audio();
+      tmpAudio.src = btn.dataset.src;
+      tmpAudio.addEventListener('loadedmetadata', () => {
+        btn.querySelector('.freq-dur').textContent = fmt(tmpAudio.duration);
+      });
+
+      btn.addEventListener('click', () => {
+        if (currentBtn && currentBtn !== btn) {
+          currentBtn.classList.remove('playing');
+          currentBtn.querySelector('.freq-play svg').outerHTML = playSVG;
+        }
+        if (audio.src !== btn.dataset.src || audio.paused) {
+          audio.src = btn.dataset.src;
+          audio.play();
+          btn.classList.add('playing');
+          btn.querySelector('.freq-play').innerHTML = pauseSVG;
+          miniTitle.textContent = btn.dataset.title;
+          miniPlayer.classList.add('show');
+          miniPlayBtn.innerHTML = pauseSVG;
+          currentBtn = btn;
+        } else {
+          audio.pause();
+          btn.classList.remove('playing');
+          btn.querySelector('.freq-play').innerHTML = playSVG;
+          miniPlayBtn.innerHTML = playSVG;
+        }
+      });
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const pct = (audio.currentTime / audio.duration) * 100 || 0;
+      miniFill.style.width = pct + '%';
+    });
+    audio.addEventListener('ended', () => {
+      if (currentBtn) { currentBtn.classList.remove('playing'); currentBtn.querySelector('.freq-play').innerHTML = playSVG; }
+      miniPlayBtn.innerHTML = playSVG;
+    });
+    miniPlayBtn.addEventListener('click', () => {
+      if (audio.paused) { audio.play(); miniPlayBtn.innerHTML = pauseSVG; if(currentBtn){currentBtn.classList.add('playing');currentBtn.querySelector('.freq-play').innerHTML=pauseSVG;} }
+      else { audio.pause(); miniPlayBtn.innerHTML = playSVG; if(currentBtn){currentBtn.classList.remove('playing');currentBtn.querySelector('.freq-play').innerHTML=playSVG;} }
+    });
+    miniBar.addEventListener('click', e => {
+      const rect = miniBar.getBoundingClientRect();
+      audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+    });
+    document.getElementById('mini-close').addEventListener('click', () => {
+      audio.pause(); audio.src = '';
+      miniPlayer.classList.remove('show');
+      if(currentBtn){currentBtn.classList.remove('playing');currentBtn.querySelector('.freq-play').innerHTML=playSVG;}
+      currentBtn = null;
+    });
   </script>
 </body>
 </html>

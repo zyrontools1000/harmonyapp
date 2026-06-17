@@ -25,6 +25,7 @@
       padding: 0 20px; margin-bottom: 14px;
     }
     .shelf-title {
+      font-weight: 700;
       font-family: 'Cinzel', serif;
       font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
       color: var(--text);
@@ -56,8 +57,11 @@
       flex-shrink: 0;
       width: 148px; height: 185px;
       border-radius: 16px;
-      border: 1px solid var(--border);
+      border: 2px solid rgba(147,51,234,0.45);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.06);
       background: linear-gradient(160deg, rgba(45,10,94,0.7), rgba(13,6,24,0.85));
+      background-size: cover;
+      background-position: center;
       display: flex; flex-direction: column;
       justify-content: flex-end;
       padding: 14px 12px;
@@ -66,6 +70,14 @@
       scroll-snap-align: start;
       transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
     }
+    /* Dark overlay so text is readable over image */
+    .shelf-card .card-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(13,6,24,0.1) 0%, rgba(13,6,24,0.75) 60%, rgba(13,6,24,0.92) 100%);
+      border-radius: 16px;
+      z-index: 0;
+    }
+    .card-icon, .card-title, .card-sub { position: relative; z-index: 1; }
     .shelf-card:active { transform: scale(0.96); }
     .shelf-card:hover {
       border-color: rgba(255,45,138,0.45);
@@ -151,35 +163,48 @@
 
   <div class="app-shell">
 
-    <!-- Header -->
-    <header class="topbar">
-      <div class="topbar-brand">
-        <div class="topbar-logo">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="lg1" x1="0" y1="1" x2="0.5" y2="0">
-                <stop offset="0%" stop-color="#FF6B2B"/>
-                <stop offset="50%" stop-color="#FF2D8A"/>
-                <stop offset="100%" stop-color="#C084FC"/>
-              </linearGradient>
-            </defs>
-            <path fill="url(#lg1)" d="M12 2c1 3-2 4-2 7a3 3 0 1 0 6 0c0-1-.5-2-1-2 2 1 4 4 4 7a7 7 0 1 1-14 0c0-5 4-7 4-9 0 0 1.5 1 1.5 2.5C9.5 6 9 5 12 2z"/>
-          </svg>
-        </div>
-        <span class="topbar-name" style="font-size:15px;">SacredHeal Experience</span>
+    <!-- Slide Menu Overlay -->
+    <div id="menu-overlay" onclick="closeMenu()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:40;backdrop-filter:blur(4px);"></div>
+    <!-- Slide Menu -->
+    <nav id="slide-menu" style="position:fixed;top:0;left:-280px;width:280px;height:100%;background:linear-gradient(160deg,#1A0A2E,#0D0618);border-right:1px solid rgba(147,51,234,0.3);z-index:50;transition:left 0.3s ease;padding:60px 0 40px;display:flex;flex-direction:column;">
+      <div style="padding:0 24px 32px;border-bottom:1px solid rgba(147,51,234,0.2);">
+        <img src="images/logo-sacredheal.png" alt="SacredHeal" style="width:48px;height:48px;object-fit:contain;margin-bottom:10px;"/>
+        <div style="font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:#F0EAF8;letter-spacing:1px;">SacredHeal Experience</div>
+        <div style="font-size:11px;color:#9B89B8;letter-spacing:1px;">Healing Frequencies in Scripture</div>
       </div>
-      <button class="icon-btn" id="logout-btn" title="Sign out">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-          <polyline points="16 17 21 12 16 7"/>
-          <line x1="21" y1="12" x2="9" y2="12"/>
-        </svg>
+      <div style="flex:1;padding:20px 0;">
+        <a href="home.html" style="display:flex;align-items:center;gap:14px;padding:15px 24px;color:#9B89B8;text-decoration:none;font-family:'Cinzel',serif;font-size:13px;letter-spacing:1px;border-left:3px solid transparent;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:18px;height:18px;"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/></svg>Home
+        </a>
+        <a href="dashboard.html" style="display:flex;align-items:center;gap:14px;padding:15px 24px;color:#F0EAF8;text-decoration:none;font-family:'Cinzel',serif;font-size:13px;letter-spacing:1px;border-left:3px solid #9333EA;background:rgba(147,51,234,0.08);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:18px;height:18px;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>Frequencies
+        </a>
+        <a href="install.html" style="display:flex;align-items:center;gap:14px;padding:15px 24px;color:#9B89B8;text-decoration:none;font-family:'Cinzel',serif;font-size:13px;letter-spacing:1px;border-left:3px solid transparent;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:18px;height:18px;"><path d="M12 16v-8m0 8l-3-3m3 3l3-3"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg>How To Install
+        </a>
+        <a href="#" id="menu-signout" style="display:flex;align-items:center;gap:14px;padding:15px 24px;color:#9B89B8;text-decoration:none;font-family:'Cinzel',serif;font-size:13px;letter-spacing:1px;border-left:3px solid transparent;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:18px;height:18px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sign Out
+        </a>
+      </div>
+    </nav>
+
+    <!-- Header -->
+    <header style="display:flex;align-items:center;justify-content:space-between;padding:20px 20px 8px;max-width:500px;margin:0 auto;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button onclick="openMenu()" style="background:none;border:1px solid rgba(147,51,234,0.3);color:#9B89B8;border-radius:10px;padding:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:20px;height:20px;"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <img src="images/logo-sacredheal.png" alt="SacredHeal" style="width:30px;height:30px;object-fit:contain;"/>
+        <span style="font-family:'Cinzel',serif;font-size:15px;font-weight:700;letter-spacing:1px;color:#F0EAF8;">SacredHeal Experience</span>
+      </div>
+      <button class="icon-btn" id="logout-btn" title="Sign out" style="opacity:0;pointer-events:none;width:38px;height:38px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
       </button>
     </header>
 
     <!-- Thought of the Day -->
     <div class="thought-card" style="margin: 12px 20px 28px; max-width: 460px; margin-left: auto; margin-right: auto;">
-      <div class="label">✦ Thought of the Day</div>
+      <div class="label" style="font-size:12px;letter-spacing:3px;color:#C9A84C;font-weight:700;opacity:1;">✦ THOUGHT OF THE DAY</div>
       <p id="thought-text">Loading your daily reflection...</p>
     </div>
 
@@ -196,59 +221,25 @@
         <div class="shelf-track">
 
           <!-- 7 Biblical -->
-          <a href="7-biblical-healing-frequencies.html" class="shelf-card">
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#FF2D8A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-              </svg>
-            </div>
+          <a href="7-biblical-healing-frequencies.html" class="shelf-card" style="background-image:url('images/modules/biblical.jpg')"><div class="card-overlay"></div>
             <div class="card-title">7 Biblical Healing Frequencies</div>
             <div class="card-sub">7 sacred tones · Scripture-rooted</div>
           </a>
 
           <!-- Healing Vault -->
-          <a href="healing-frequencies-vault.html" class="shelf-card">
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#FF6B2B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                <circle cx="12" cy="12" r="4"/>
-                <line x1="12" y1="8" x2="12" y2="9.2"/>
-                <line x1="12" y1="14.8" x2="12" y2="16"/>
-              </svg>
-            </div>
+          <a href="healing-frequencies-vault.html" class="shelf-card" style="background-image:url('images/modules/vault.jpg')"><div class="card-overlay"></div>
             <div class="card-title">Healing Frequencies Vault</div>
             <div class="card-sub">41 frequencies · 4 categories</div>
           </a>
 
           <!-- Archangel -->
-          <a href="archangel-frequencies.html" class="shelf-card">
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22c0-6 1-10 8-14-1 5-2 9-8 14z"/>
-                <path d="M12 22c0-6-1-10-8-14 1 5 2 9 8 14z"/>
-                <path d="M12 22V8"/>
-              </svg>
-            </div>
+          <a href="archangel-frequencies.html" class="shelf-card" style="background-image:url('images/modules/archangel.jpg')"><div class="card-overlay"></div>
             <div class="card-title">7 Sacred Archangel Frequencies</div>
             <div class="card-sub">7 videos · Divine channels</div>
           </a>
 
           <!-- Divine Accelerator -->
-          <a href="divine-accelerator.html" class="shelf-card">
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#C084FC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="4"/>
-                <line x1="12" y1="2" x2="12" y2="4"/>
-                <line x1="12" y1="20" x2="12" y2="22"/>
-                <line x1="2" y1="12" x2="4" y2="12"/>
-                <line x1="20" y1="12" x2="22" y2="12"/>
-                <line x1="4.93" y1="4.93" x2="6.34" y2="6.34"/>
-                <line x1="17.66" y1="17.66" x2="19.07" y2="19.07"/>
-                <line x1="4.93" y1="19.07" x2="6.34" y2="17.66"/>
-                <line x1="17.66" y1="6.34" x2="19.07" y2="4.93"/>
-              </svg>
-            </div>
+          <a href="divine-accelerator.html" class="shelf-card" style="background-image:url('images/modules/accelerator.jpg')"><div class="card-overlay"></div>
             <div class="card-title">Divine Frequencies Accelerator</div>
             <div class="card-sub">6 activation frequencies</div>
           </a>
@@ -269,28 +260,13 @@
         <div class="shelf-track">
 
           <!-- Sacred Bonuses -->
-          <a href="sacred-bonuses.html" class="shelf-card">
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#FF2D8A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="8" width="18" height="4" rx="1"/>
-                <path d="M5 12h14v8a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-8z"/>
-                <path d="M12 8v13"/>
-                <path d="M12 8c0-2-2-4-4-3-1.5.7-1 3 4 3z"/>
-                <path d="M12 8c0-2 2-4 4-3 1.5.7 1 3-4 3z"/>
-              </svg>
-            </div>
+          <a href="sacred-bonuses.html" class="shelf-card" style="background-image:url('images/modules/bonuses.jpg')"><div class="card-overlay"></div>
             <div class="card-title">Sacred Bonuses</div>
             <div class="card-sub">Prayers · Protocols · Guides</div>
           </a>
 
           <!-- Coming soon bonus -->
           <div class="shelf-card coming">
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#9B89B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/>
-                <polyline points="12 6 12 12 16 14"/>
-              </svg>
-            </div>
             <div class="card-title">New Bonus</div>
             <div class="card-sub">Coming soon</div>
           </div>
@@ -311,17 +287,11 @@
         <div class="shelf-track">
 
           <!-- 7 Day Ritual — locked upsell -->
-          <div class="shelf-card locked">
+          <div class="shelf-card locked" style="background-image:url('images/modules/7dayritual.jpg')"><div class="card-overlay"></div>
             <div class="lock-badge">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="3" y="11" width="18" height="11" rx="2"/>
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-              </svg>
-            </div>
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#FF6B2B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22c0-6 1-10 8-14-1 5-2 9-8 14z"/>
-                <path d="M12 22c0-6-1-10-8-14 1 5 2 9 8 14z"/>
               </svg>
             </div>
             <div class="card-title">7 Day Ritual with Archangel Michael</div>
@@ -330,12 +300,6 @@
 
           <!-- Future upsell slot -->
           <div class="shelf-card coming">
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#9B89B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19"/>
-                <line x1="5" y1="12" x2="19" y2="12"/>
-              </svg>
-            </div>
             <div class="card-title">More Content</div>
             <div class="card-sub">Coming soon</div>
           </div>
@@ -391,5 +355,19 @@
     ];
     document.getElementById('thought-text').textContent = thoughts[new Date().getDay()];
   </script>
+<script>
+function openMenu() {
+  document.getElementById('slide-menu').style.left = '0';
+  document.getElementById('menu-overlay').style.display = 'block';
+}
+function closeMenu() {
+  document.getElementById('slide-menu').style.left = '-280px';
+  document.getElementById('menu-overlay').style.display = 'none';
+}
+document.getElementById('menu-signout').addEventListener('click', function(e) {
+  e.preventDefault();
+  document.getElementById('logout-btn').click();
+});
+</script>
 </body>
 </html>

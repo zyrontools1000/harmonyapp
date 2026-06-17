@@ -4,76 +4,78 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Harmony App — Sign In</title>
-
-  <meta name="theme-color" content="#0A1628" />
-  <meta name="description" content="Harmony App — sacred frequencies and spiritual wellness." />
+  <meta name="theme-color" content="#0D0618" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Harmony App" />
-
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="icons/icon.svg" />
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet"
-  />
-
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .login-logo {
+      width: 120px; height: 120px;
+      margin: 0 auto 20px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .login-logo img {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 24px rgba(255,107,43,0.45));
+    }
+    .btn-login {
+      display: block; width: 100%;
+      padding: 17px 24px;
+      border: none; border-radius: 50px;
+      background: linear-gradient(135deg, #C9A84C, #F5E7B8, #C9A84C);
+      background-size: 200% auto;
+      color: #1a0e00;
+      font-family: 'Cinzel', serif;
+      font-weight: 700; font-size: 13px;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      text-align: center; cursor: pointer;
+      box-shadow: 0 0 30px rgba(201,168,76,0.4), 0 4px 20px rgba(0,0,0,0.4);
+      transition: background-position 0.4s, transform 0.2s, box-shadow 0.2s;
+      animation: shimmer 3s linear infinite;
+    }
+    @keyframes shimmer {
+      0%   { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+    .btn-login:hover  { transform: translateY(-2px); box-shadow: 0 0 45px rgba(201,168,76,0.6), 0 8px 24px rgba(0,0,0,0.5); }
+    .btn-login:active { transform: scale(0.97); }
+    .btn-login:disabled { opacity: 0.5; cursor: not-allowed; animation: none; }
+  </style>
 </head>
 <body>
   <div class="stars"></div>
-
   <main class="login-page">
     <div class="login-card">
-      <div class="logo-flame">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="flameGradLogin" x1="0" y1="1" x2="0" y2="0">
-              <stop offset="0%" stop-color="#C9A84C" />
-              <stop offset="100%" stop-color="#F5E7B8" />
-            </linearGradient>
-          </defs>
-          <path
-            fill="url(#flameGradLogin)"
-            d="M12 2c1 3-2 4-2 7a3 3 0 1 0 6 0c0-1-.5-2-1-2 2 1 4 4 4 7a7 7 0 1 1-14 0c0-5 4-7 4-9 0 0 1.5 1 1.5 2.5C9.5 6 9 5 12 2z"
-          />
-        </svg>
+
+      <!-- Real logo -->
+      <div class="login-logo" style="width:140px;height:140px;">
+        <img src="images/icon-512.png" alt="Harmony App"
+          style="width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 0 28px rgba(255,107,43,0.5));"
+          onerror="this.src='images/logo-harmony.png'"
+        />
       </div>
 
-      <h1 class="brand-title">Harmony App</h1>
+      <h1 class="brand-title" style="text-align:center;font-size:28px;font-weight:700;letter-spacing:3px;color:#F0EAF8;">Harmony App 2.0</h1>
       <p class="brand-subtitle">Your Sacred Frequency Space</p>
 
       <form id="login-form" novalidate>
         <div class="form-group">
           <label for="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            autocomplete="email"
-            placeholder="you@example.com"
-            required
-          />
+          <input type="email" id="email" name="email" autocomplete="email" placeholder="you@example.com" required />
         </div>
-
         <div class="form-group">
           <label for="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            autocomplete="current-password"
-            placeholder="••••••••"
-            required
-          />
+          <input type="password" id="password" name="password" autocomplete="current-password" placeholder="••••••••" required />
         </div>
-
-        <button type="submit" class="btn-primary" id="login-btn">Access My Space</button>
-
+        <button type="submit" class="btn-login" id="login-btn">✦ Access My Space ✦</button>
         <div id="auth-message" class="auth-message" role="alert"></div>
       </form>
 
@@ -85,9 +87,7 @@
   <script type="module" src="js/auth.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').catch(() => {});
-      });
+      window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => {}); });
     }
   </script>
 </body>

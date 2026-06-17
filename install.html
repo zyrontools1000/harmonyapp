@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How To Install — Harmony App</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --bg: #0D0618; --purple: #6B21A8; --grad-start: #FF2D8A; --grad-end: #FFD700; --text: #F0EAF8; --muted: #9B89B8; --border: rgba(147,51,234,0.25); }
+  html, body { min-height: 100%; background: var(--bg); color: var(--text); font-family: 'Raleway', sans-serif; overflow-x: hidden; }
+  body { background-image: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(109,40,217,0.45) 0%, transparent 70%); }
+  .page { max-width: 500px; margin: 0 auto; padding: 24px 20px 100px; }
+
+  .topbar { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+  .back-btn { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border); color: var(--muted); text-decoration: none; flex-shrink: 0; transition: color 0.2s, border-color 0.2s; }
+  .back-btn:hover { color: #9333EA; border-color: #9333EA; }
+  .back-btn svg { width: 20px; height: 20px; }
+  .page-title { font-family: 'Cinzel', serif; font-size: 18px; letter-spacing: 1px; background: linear-gradient(90deg, var(--grad-start), var(--grad-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+  .intro { font-size: 13.5px; color: var(--muted); line-height: 1.7; margin-bottom: 24px; background: rgba(109,40,217,0.1); border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px; }
+  .intro strong { color: var(--text); }
+
+  .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+  .tab { flex: 1; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border); background: none; font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 1px; color: var(--muted); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .tab.active { background: linear-gradient(135deg, rgba(255,45,138,0.15), rgba(109,40,217,0.15)); border-color: rgba(255,45,138,0.4); color: var(--text); }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .card { background: linear-gradient(160deg, rgba(45,10,94,0.5), rgba(13,6,24,0.6)); border: 1px solid var(--border); border-radius: 18px; padding: 24px 20px; margin-bottom: 20px; }
+
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .step:last-child { border-bottom: none; padding-bottom: 0; }
+  .step:first-child { padding-top: 0; }
+  .step-num { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, rgba(255,45,138,0.2), rgba(109,40,217,0.2)); border: 1px solid rgba(255,45,138,0.35); display: flex; align-items: center; justify-content: center; font-family: 'Cinzel', serif; font-size: 13px; font-weight: 600; color: #FF2D8A; flex-shrink: 0; }
+  .step-num.done { background: linear-gradient(135deg, rgba(80,200,80,0.2), rgba(40,120,40,0.1)); border-color: rgba(80,200,80,0.4); color: #7ddc7d; }
+  .step-title { font-family: 'Cinzel', serif; font-size: 13px; color: var(--text); margin-bottom: 4px; }
+  .step-desc { font-size: 12.5px; color: var(--muted); line-height: 1.65; }
+  .step-desc strong { color: var(--text); }
+  .step-desc code { background: rgba(255,45,138,0.1); border: 1px solid rgba(255,45,138,0.2); border-radius: 6px; padding: 2px 7px; font-size: 11px; color: #FF2D8A; font-family: monospace; }
+
+  .support { text-align: center; border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; }
+  .support p { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+  .support a { color: #9333EA; font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 1px; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="topbar">
+    <a href="home.html" class="back-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </a>
+    <div class="page-title">How To Install the App</div>
+  </div>
+
+  <div class="intro">
+    <strong>No app store needed.</strong> Harmony App is a smart PWA — it installs directly from your browser in seconds, works like a native app, and is always up to date automatically.
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('android', this)">🤖 Android</button>
+    <button class="tab" onclick="switchTab('iphone', this)">🍎 iPhone</button>
+  </div>
+
+  <div class="panel active" id="panel-android">
+    <div class="card">
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div><div class="step-title">Open Chrome</div><div class="step-desc">Open the <strong>Chrome browser</strong> on your Android device.</div></div></div>
+        <div class="step"><div class="step-num">2</div><div><div class="step-title">Access Your Portal</div><div class="step-desc">Go to <code>harmonyapp-sand.vercel.app</code> and sign in.</div></div></div>
+        <div class="step"><div class="step-num">3</div><div><div class="step-title">Tap the Menu</div><div class="step-desc">In the top-right corner, tap the <strong>three-dot icon (⋮)</strong>.</div></div></div>
+        <div class="step"><div class="step-num">4</div><div><div class="step-title">Add to Home Screen</div><div class="step-desc">Select <strong>"Add to Home screen"</strong> or <strong>"Install app"</strong>.</div></div></div>
+        <div class="step"><div class="step-num">5</div><div><div class="step-title">Confirm</div><div class="step-desc">Tap <strong>"Add"</strong> in the popup that appears.</div></div></div>
+        <div class="step"><div class="step-num done">✓</div><div><div class="step-title">You're In!</div><div class="step-desc">Harmony App now appears on your home screen like a native app.</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-iphone">
+    <div class="card">
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div><div class="step-title">Open Safari</div><div class="step-desc">Open <strong>Safari</strong> on your iPhone — Chrome won't work for this step.</div></div></div>
+        <div class="step"><div class="step-num">2</div><div><div class="step-title">Access Your Portal</div><div class="step-desc">Type <code>harmonyapp-sand.vercel.app</code> and sign in.</div></div></div>
+        <div class="step"><div class="step-num">3</div><div><div class="step-title">Tap the Share Button</div><div class="step-desc">At the bottom, tap the <strong>Share icon ⬆︎</strong> (box with arrow).</div></div></div>
+        <div class="step"><div class="step-num">4</div><div><div class="step-title">Add to Home Screen</div><div class="step-desc">Scroll and tap <strong>"Add to Home Screen"</strong>.</div></div></div>
+        <div class="step"><div class="step-num">5</div><div><div class="step-title">Confirm</div><div class="step-desc">Tap <strong>"Add"</strong> in the top-right corner.</div></div></div>
+        <div class="step"><div class="step-num done">✓</div><div><div class="step-title">You're In!</div><div class="step-desc">Harmony App is now on your home screen — tap anytime to enter.</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="support">
+    <p>Still need help? Our team is here for you.</p>
+    <a href="mailto:sacredhealapp@gmail.com">✦ sacredhealapp@gmail.com ✦</a>
+  </div>
+</div>
+
+<script>
+function switchTab(tab, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>

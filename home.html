@@ -25,6 +25,7 @@
     <header class="topbar">
       <div class="topbar-brand">
         <div class="topbar-logo">
+          <!-- Real logo: swap SVG for <img src="images/logo-harmony.png"> when ready -->
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <linearGradient id="logoGrad" x1="0" y1="1" x2="0.5" y2="0">
@@ -60,68 +61,36 @@
       <p id="thought-text">Loading your daily reflection...</p>
     </div>
 
-    <!-- Social Proof -->
-    <div class="social-proof" style="margin-top: 14px;">
-      <div class="avatars">
-        <div class="avatar">S</div>
-        <div class="avatar">M</div>
-        <div class="avatar">L</div>
-        <div class="avatar">A</div>
-      </div>
-      <div class="social-proof-text">
-        <strong>People using Harmony App now</strong><br/>
-        Join thousands healing with sacred frequencies
-      </div>
-    </div>
-
     <!-- Products -->
     <div class="section-label" style="margin-top: 28px;">Your Experiences</div>
 
-    <div class="products-list">
+    <div class="products-list" style="padding-bottom: 110px;">
 
-      <!-- SacredHeal Experience — active -->
+      <!-- SacredHeal Experience -->
       <a href="dashboard.html" class="product-card">
-        <div class="product-card-inner">
+        <div class="product-card-inner" style="text-align:center;">
           <div class="product-badge">✦ Active · Included in your plan</div>
           <h2 class="grad-text">SacredHeal Experience</h2>
-          <p class="product-desc">
-            Healing frequencies rooted in Scripture and ancient Solfeggio tones.
-            47 sacred audios + 7 Archangel videos to restore body, mind, and spirit.
-          </p>
-          <div class="product-meta">
-            <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-              47 frequencies
-            </span>
-            <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-              7 videos
-            </span>
-            <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              6 modules
-            </span>
+
+          <!-- SacredHeal Logo — will show when image/logo-sacredheal.png exists -->
+          <div style="display:flex; justify-content:center; margin: 20px 0 16px;">
+            <img
+              src="images/logo-sacredheal.png"
+              alt="SacredHeal"
+              style="width:110px; height:110px; object-fit:contain;"
+              onerror="this.style.display='none'"
+            />
           </div>
-          <div class="btn-grad" style="pointer-events:none;">Enter Experience →</div>
+
+          <p class="product-desc">
+            <strong style="display:block; margin-bottom:8px; color:var(--text); font-size:15px; letter-spacing:0.3px;">
+              Healing Frequencies in Scripture
+            </strong>
+            Access the 7 Biblical Healing Frequencies designed to restore balance, vitality, and inner peace.
+          </p>
+          <div class="btn-grad" style="pointer-events:none; margin-top:22px;">Enter Experience →</div>
         </div>
       </a>
-
-      <!-- Prosperity Experience — coming soon -->
-      <div class="product-card coming-soon">
-        <div class="product-card-inner">
-          <div class="coming-soon-badge">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:12px;height:12px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            Coming Soon
-          </div>
-          <h2 style="color: var(--text-muted);">Prosperity Experience</h2>
-          <p class="product-desc">
-            Sacred frequencies and meditations aligned with abundance, financial flow, and divine prosperity.
-          </p>
-          <div style="font-size: 12px; color: var(--text-dim); font-style: italic;">
-            🔒 Available in a future update
-          </div>
-        </div>
-      </div>
 
     </div>
   </div>
@@ -157,18 +126,12 @@
   <script src="js/stars.js" defer></script>
   <script type="module">
     import { supabase } from './js/supabaseClient.js';
-
-    // Auth guard
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) { window.location.replace('index.html'); }
-
-    // Logout
     document.getElementById('logout-btn').addEventListener('click', async () => {
       await supabase.auth.signOut();
       window.location.replace('index.html');
     });
-
-    // Thoughts rotation
     const thoughts = [
       "You are not separate from the divine frequency — you are made of it.",
       "Every healing begins with a single sound of intention.",
@@ -178,8 +141,7 @@
       "Let the sacred tones wash over every cell — healing is your birthright.",
       "In the silence between the notes, God speaks."
     ];
-    const day = new Date().getDay();
-    document.getElementById('thought-text').textContent = thoughts[day];
+    document.getElementById('thought-text').textContent = thoughts[new Date().getDay()];
   </script>
   <script>
     if ('serviceWorker' in navigator) {

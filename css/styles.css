@@ -177,8 +177,9 @@ a { color: inherit; text-decoration: none; }
 /* Top bar shared */
 .topbar {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 20px 20px 8px;
+  padding: calc(env(safe-area-inset-top) + 14px) 20px 12px;
   max-width: 500px; margin: 0 auto;
+  min-height: calc(env(safe-area-inset-top) + 64px);
 }
 
 .topbar-brand {
@@ -480,19 +481,21 @@ a { color: inherit; text-decoration: none; }
    ============================================================ */
 .page-header {
   display: flex; align-items: center; gap: 14px;
-  padding: 20px 20px 4px;
+  padding: calc(env(safe-area-inset-top) + 14px) 20px 12px;
   max-width: 500px; margin: 0 auto;
+  min-height: calc(env(safe-area-inset-top) + 64px);
 }
 
 .back-btn {
   display: flex; align-items: center; justify-content: center;
-  width: 38px; height: 38px;
-  border-radius: 10px; border: 1px solid var(--border);
+  width: 44px; height: 44px;
+  border-radius: 12px; border: 1px solid var(--border);
   color: var(--text-muted); text-decoration: none; flex-shrink: 0;
   transition: color 0.2s, border-color 0.2s;
+  -webkit-tap-highlight-color: transparent;
 }
 .back-btn:hover { color: var(--purple-light); border-color: var(--purple-light); }
-.back-btn svg { width: 20px; height: 20px; }
+.back-btn svg { width: 22px; height: 22px; }
 
 .page-header-text { min-width: 0; }
 .page-eyebrow {

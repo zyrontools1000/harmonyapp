@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Terms of Service — HarmonyApp</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0D0618;
+      --accent-pink: #FF2D8A;
+      --accent-orange: #FF6B2B;
+      --accent-gold: #FFD700;
+      --purple-light: #9333EA;
+      --text: #e8e0f0;
+      --text-muted: #a090b8;
+      --border: rgba(147,51,234,0.25);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Raleway', sans-serif;
+      font-weight: 400;
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    .stars {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background: radial-gradient(ellipse at 20% 20%, rgba(107,33,168,0.15) 0%, transparent 60%),
+                  radial-gradient(ellipse at 80% 80%, rgba(255,45,138,0.08) 0%, transparent 60%);
+    }
+    .stars::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 15% 25%, rgba(255,215,0,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 60% 35%, rgba(255,215,0,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 80% 15%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 60%, rgba(255,215,0,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 5% 70%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 45% 80%, rgba(255,215,0,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 90%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 25% 55%, rgba(255,215,0,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 65%, rgba(255,255,255,0.3) 0%, transparent 100%);
+    }
+
+    .top-bar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(13,6,24,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .top-bar img { width: 36px; height: 36px; border-radius: 8px; }
+    .top-bar span {
+      font-family: 'Cinzel', serif;
+      font-size: 15px; font-weight: 600;
+      background: linear-gradient(90deg, var(--accent-pink), var(--accent-gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .back-btn {
+      margin-left: auto;
+      color: var(--text-muted); font-size: 13px;
+      text-decoration: none;
+      display: flex; align-items: center; gap: 6px;
+      transition: color 0.2s;
+    }
+    .back-btn:hover { color: var(--accent-gold); }
+
+    .wrapper {
+      position: relative; z-index: 1;
+      max-width: 780px; margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    .page-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 11px; letter-spacing: 3px;
+      color: var(--accent-gold); text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(26px, 5vw, 38px);
+      font-weight: 700; line-height: 1.2;
+      background: linear-gradient(135deg, #fff 0%, var(--accent-gold) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .last-updated {
+      font-size: 12px; color: var(--text-muted);
+      margin-bottom: 40px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Billing highlight — most important box */
+    .billing-card {
+      background: linear-gradient(135deg, rgba(255,45,138,0.08), rgba(255,107,43,0.06));
+      border: 1px solid rgba(255,107,43,0.35);
+      border-radius: 14px;
+      padding: 24px 28px;
+      margin-bottom: 40px;
+    }
+    .billing-card h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 14px; color: var(--accent-orange);
+      margin-bottom: 14px; letter-spacing: 1px;
+    }
+    .billing-card .price-row {
+      display: flex; align-items: baseline; gap: 8px;
+      margin-bottom: 14px;
+    }
+    .billing-card .price {
+      font-family: 'Cinzel', serif;
+      font-size: 32px; font-weight: 700;
+      background: linear-gradient(90deg, var(--accent-pink), var(--accent-gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .billing-card .period {
+      font-size: 14px; color: var(--text-muted);
+    }
+    .billing-card ul { list-style: none; padding: 0; }
+    .billing-card ul li {
+      font-size: 14px; color: var(--text);
+      padding: 5px 0 5px 20px; position: relative;
+    }
+    .billing-card ul li::before {
+      content: '✓'; position: absolute; left: 0;
+      color: var(--accent-gold); font-weight: 700;
+    }
+
+    .section { margin-bottom: 40px; }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 16px; font-weight: 600;
+      color: var(--accent-gold);
+      margin-bottom: 14px;
+      padding-left: 14px;
+      border-left: 3px solid var(--accent-pink);
+    }
+
+    p { font-size: 15px; color: var(--text); margin-bottom: 12px; }
+
+    ul { list-style: none; padding: 0; margin-bottom: 12px; }
+    ul li {
+      font-size: 15px; color: var(--text);
+      padding: 5px 0 5px 20px; position: relative;
+    }
+    ul li::before {
+      content: '›'; position: absolute; left: 0;
+      color: var(--accent-pink); font-weight: 700;
+    }
+
+    a { color: var(--accent-gold); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .highlight-box {
+      background: rgba(255,215,0,0.05);
+      border: 1px solid rgba(255,215,0,0.2);
+      border-radius: 12px;
+      padding: 18px 22px;
+      margin: 16px 0;
+    }
+    .highlight-box p { margin: 0; font-size: 14px; }
+
+    .cancel-box {
+      background: rgba(147,51,234,0.08);
+      border: 1px solid rgba(147,51,234,0.3);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 16px 0;
+    }
+    .cancel-box h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 13px; color: var(--purple-light);
+      margin-bottom: 10px; letter-spacing: 1px;
+    }
+    .cancel-box p { margin: 0; font-size: 14px; color: var(--text-muted); }
+    .cancel-box a { color: var(--accent-gold); }
+
+    .legal-footer {
+      margin-top: 60px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    .legal-footer p { font-size: 12px; color: var(--text-muted); margin-bottom: 14px; }
+    .footer-links {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px;
+      margin-bottom: 16px;
+    }
+    .footer-links a {
+      font-size: 12px; color: var(--text-muted); transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--accent-gold); text-decoration: none; }
+    .disclaimer-bar {
+      background: rgba(107,33,168,0.12);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 20px;
+      font-size: 11px; color: var(--text-muted); line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+
+  <div class="top-bar">
+    <img src="images/logo-harmony.png" alt="HarmonyApp"/>
+    <span>HarmonyApp</span>
+    <a href="home.html" class="back-btn">← Back</a>
+  </div>
+
+  <div class="wrapper">
+    <p class="page-eyebrow">Legal</p>
+    <h1>Terms of Service</h1>
+    <p class="last-updated">Last updated: June 2026 &nbsp;·&nbsp; Please read carefully before subscribing</p>
+
+    <!-- BILLING CARD — most visible, most important for Paddle/ROSCA -->
+    <div class="billing-card">
+      <h3>⚡ Subscription Summary</h3>
+      <div class="price-row">
+        <span class="price">$7.99</span>
+        <span class="period">/ month, billed monthly</span>
+      </div>
+      <ul>
+        <li>Full access to all HarmonyApp content and modules</li>
+        <li>Your subscription <strong>renews automatically</strong> every month</li>
+        <li>You will be charged on the same date each month until you cancel</li>
+        <li>Cancel anytime — no long-term commitment required</li>
+        <li>To cancel, email <a href="mailto:support@harmonyapp.com">support@harmonyapp.com</a> or manage via your Paddle billing portal</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>1. Acceptance of Terms</h2>
+      <p>By creating an account and subscribing to HarmonyApp, you agree to be bound by these Terms of Service. If you do not agree, please do not use the service.</p>
+      <p>These Terms apply to all users of HarmonyApp, operated by ZyronScale / Zyron Global Marketing Ltda.</p>
+    </div>
+
+    <div class="section">
+      <h2>2. Description of Service</h2>
+      <p>HarmonyApp is a spiritual wellness application (Progressive Web App) that provides:</p>
+      <ul>
+        <li>Biblical healing frequency audio sessions</li>
+        <li>Archangel frequency video content</li>
+        <li>Christian guided meditations and bedtime stories</li>
+        <li>Daily spiritual rituals and prayer content</li>
+        <li>Bonus spiritual wellness programs</li>
+      </ul>
+      <p>HarmonyApp is a digital content platform for spiritual reflection and personal faith. It is <strong>not</strong> a medical, therapeutic, or clinical service.</p>
+    </div>
+
+    <div class="section">
+      <h2>3. Subscription, Billing & Renewal</h2>
+      <p>HarmonyApp is offered as a monthly subscription service.</p>
+
+      <div class="highlight-box">
+        <p><strong>Important:</strong> By completing checkout, you authorize HarmonyApp (through Paddle, our payment processor) to charge your payment method <strong>$7.99 per month</strong>, automatically renewing on the same date each calendar month, until you cancel.</p>
+      </div>
+
+      <ul>
+        <li>Billing is processed by <strong>Paddle</strong> as Merchant of Record</li>
+        <li>Your subscription begins immediately upon successful payment</li>
+        <li>You will receive a confirmation email with your subscription details after purchase</li>
+        <li>Prices may change with 30 days' advance notice to your registered email</li>
+      </ul>
+
+      <div class="cancel-box">
+        <h4>How to Cancel</h4>
+        <p>To cancel your subscription at any time, email <a href="mailto:support@harmonyapp.com">support@harmonyapp.com</a> with the subject "Cancel Subscription," or access your billing portal via the confirmation email you received at sign-up. Cancellations take effect at the end of the current billing period. You will not be charged for the following month.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>4. Refund Policy</h2>
+      <p>We offer a <strong>30-day money-back guarantee</strong> for new subscribers. If you are not satisfied with HarmonyApp within your first 30 days, contact us at <a href="mailto:support@harmonyapp.com">support@harmonyapp.com</a> and we will issue a full refund, no questions asked.</p>
+      <p>After the initial 30-day period, subscription payments are non-refundable, but you may cancel at any time to prevent future charges.</p>
+      <p>For full details, see our <a href="refund-policy.html">Refund Policy</a>.</p>
+    </div>
+
+    <div class="section">
+      <h2>5. User Account</h2>
+      <ul>
+        <li>You must be 18 years or older to subscribe</li>
+        <li>You are responsible for maintaining the security of your account credentials</li>
+        <li>Your account is personal and non-transferable</li>
+        <li>We reserve the right to suspend accounts found in violation of these Terms</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>6. Acceptable Use</h2>
+      <p>You agree not to:</p>
+      <ul>
+        <li>Share your account credentials with others</li>
+        <li>Download, copy, or redistribute HarmonyApp content without authorization</li>
+        <li>Use the service for any unlawful purpose</li>
+        <li>Attempt to reverse-engineer or interfere with the application</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>7. Intellectual Property</h2>
+      <p>All content within HarmonyApp — including audio recordings, video content, text, images, and design — is the proprietary property of HarmonyApp / ZyronScale or its licensors. Unauthorized reproduction or distribution is prohibited.</p>
+    </div>
+
+    <div class="section">
+      <h2>8. Disclaimer of Warranties</h2>
+      <div class="highlight-box">
+        <p><strong>Medical Disclaimer:</strong> HarmonyApp is a spiritual and creative experience designed for personal reflection and faith. It is not intended to diagnose, treat, cure, or prevent any disease or medical condition. The content is for entertainment and spiritual enrichment purposes only. Always consult a qualified healthcare professional for medical advice.</p>
+      </div>
+      <p>HarmonyApp is provided "as is" without warranties of any kind. We do not guarantee uninterrupted access or specific spiritual outcomes from use of the service.</p>
+    </div>
+
+    <div class="section">
+      <h2>9. Limitation of Liability</h2>
+      <p>To the maximum extent permitted by law, HarmonyApp and ZyronScale shall not be liable for any indirect, incidental, or consequential damages arising from your use of or inability to use the service. Our total liability shall not exceed the amount paid by you in the 12 months preceding any claim.</p>
+    </div>
+
+    <div class="section">
+      <h2>10. Governing Law</h2>
+      <p>These Terms are governed by the laws of the State of Florida, United States. Any disputes shall be resolved through binding arbitration in accordance with the American Arbitration Association rules.</p>
+    </div>
+
+    <div class="section">
+      <h2>11. Changes to Terms</h2>
+      <p>We may update these Terms from time to time. We will notify you by email at least 14 days before significant changes take effect. Continued use of HarmonyApp after that date constitutes acceptance of the new Terms.</p>
+    </div>
+
+    <div class="section">
+      <h2>12. Contact</h2>
+      <ul>
+        <li>Email: <a href="mailto:support@harmonyapp.com">support@harmonyapp.com</a></li>
+        <li>Response time: within 48 business hours</li>
+      </ul>
+    </div>
+
+    <div class="legal-footer">
+      <p>© 2026 HarmonyApp · All rights reserved</p>
+      <div class="footer-links">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="refund-policy.html">Refund Policy</a>
+        <a href="support.html">Support</a>
+      </div>
+      <div class="disclaimer-bar">
+        HarmonyApp is a spiritual experience designed for personal reflection and faith. It is not intended to diagnose, treat, cure, or prevent any disease or medical condition. Consult a qualified healthcare professional for medical advice.
+      </div>
+    </div>
+  </div>
+</body>
+</html>

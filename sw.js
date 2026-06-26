@@ -1,6 +1,6 @@
 // HarmonyApp Service Worker — Network First Strategy
 // Sempre busca do servidor. Cache só como fallback offline.
-const CACHE_NAME = 'harmony-app-v4';
+const CACHE_NAME = 'harmony-app-v5';
 
 self.addEventListener('install', (event) => {
   // Ativa imediatamente sem esperar abas antigas fecharem

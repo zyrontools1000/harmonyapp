@@ -1,0 +1,19 @@
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [{"type": "host", "value": "harmonyapp.app"}],
+      "destination": "/landing.html"
+    },
+    {
+      "source": "/",
+      "has": [{"type": "host", "value": "www.harmonyapp.app"}],
+      "destination": "/landing.html"
+    },
+    {
+      "source": "/",
+      "has": [{"type": "host", "value": "my.harmonyapp.app"}],
+      "destination": "/index.html"
+    }
+  ]
+}

@@ -110,10 +110,10 @@
   <script type="module">
     import { supabase } from './js/supabaseClient.js';
     const { data: { session } } = await supabase.auth.getSession();
-    if (!session) { window.location.replace('index.html'); }
+    if (!session) { window.location.replace('login.html'); }
     document.getElementById('logout-btn').addEventListener('click', async () => {
       await supabase.auth.signOut();
-      window.location.replace('index.html');
+      window.location.replace('login.html');
     });
     const thoughts = [
       "You are not separate from the divine frequency — you are made of it.",

@@ -26,7 +26,7 @@ async function init() {
   const { data, error } = await supabase.auth.getSession();
 
   if (error || !data || !data.session) {
-    window.location.href = 'index.html';
+    window.location.href = 'login.html';
     return;
   }
 
@@ -36,13 +36,13 @@ async function init() {
 if (logoutBtn) {
   logoutBtn.addEventListener('click', async () => {
     await supabase.auth.signOut();
-    window.location.href = 'index.html';
+    window.location.href = 'login.html';
   });
 }
 
 supabase.auth.onAuthStateChange((event, session) => {
   if (event === 'SIGNED_OUT' || !session) {
-    window.location.href = 'index.html';
+    window.location.href = 'login.html';
   }
 });
 

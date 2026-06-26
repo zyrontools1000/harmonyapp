@@ -2,93 +2,601 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Harmony App — Sign In</title>
-  <meta name="theme-color" content="#0D0618" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Harmony App" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="icons/icon.svg" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HarmonyApp — Your Daily Sacred Space</title>
+  <meta name="description" content="Join thousands of believers who start each day in His presence. Unlimited access to sacred audio content, guided prayers, and Scripture-inspired meditations — $4.97/month."/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
-    .login-logo {
-      width: 120px; height: 120px;
-      margin: 0 auto 20px;
-      display: flex; align-items: center; justify-content: center;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0D0618;
+      --bg-card: #130822;
+      --accent-pink: #FF2D8A;
+      --accent-orange: #FF6B2B;
+      --accent-gold: #FFD700;
+      --purple-deep: #6B21A8;
+      --text: #f0eaf8;
+      --text-muted: #a090b8;
+      --border: rgba(147,51,234,0.22);
     }
-    .login-logo img {
-      width: 100%; height: 100%;
-      object-fit: contain;
-      filter: drop-shadow(0 0 24px rgba(255,107,43,0.45));
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Raleway', sans-serif;
+      font-weight: 400;
+      line-height: 1.75;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
-    .btn-login {
-      display: block; width: 100%;
-      padding: 17px 24px;
-      border: none; border-radius: 50px;
-      background: linear-gradient(135deg, #C9A84C, #F5E7B8, #C9A84C);
-      background-size: 200% auto;
-      color: #1a0e00;
+
+    /* ─── STARS ─── */
+    .stars {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    }
+    .stars::before, .stars::after {
+      content: '';
+      position: absolute; inset: 0;
+    }
+    .stars::before {
+      background-image:
+        radial-gradient(1px 1px at 8% 12%, rgba(255,215,0,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 22% 6%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 38% 18%, rgba(255,215,0,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 8%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 72% 22%, rgba(255,215,0,0.4) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 88% 10%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 95% 35%, rgba(255,215,0,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 4% 45%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 18% 38%, rgba(255,215,0,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 33% 52%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 50% 42%, rgba(255,215,0,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 65% 55%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 80% 48%, rgba(255,215,0,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 12% 68%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 28% 75%, rgba(255,215,0,0.5) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 45% 82%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 62% 70%, rgba(255,215,0,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 78% 85%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 92% 72%, rgba(255,215,0,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 6% 90%, rgba(255,255,255,0.5) 0%, transparent 100%);
+    }
+    .stars::after {
+      background: radial-gradient(ellipse at 20% 10%, rgba(107,33,168,0.18) 0%, transparent 55%),
+                  radial-gradient(ellipse at 80% 85%, rgba(255,45,138,0.10) 0%, transparent 55%),
+                  radial-gradient(ellipse at 50% 50%, rgba(13,6,24,0) 0%, rgba(13,6,24,0.4) 100%);
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(13,6,24,0.94);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px;
+    }
+    .nav-brand {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+    .nav-brand img { width: 36px; height: 36px; border-radius: 9px; }
+    .nav-brand span {
+      font-family: 'Cinzel', serif; font-size: 16px; font-weight: 700;
+      background: linear-gradient(90deg, var(--accent-pink), var(--accent-gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .nav-cta {
+      background: linear-gradient(135deg, var(--accent-pink), var(--accent-orange));
+      color: #fff; font-family: 'Raleway', sans-serif; font-weight: 700;
+      font-size: 13px; letter-spacing: 0.3px;
+      padding: 9px 20px; border-radius: 50px;
+      text-decoration: none; white-space: nowrap;
+      box-shadow: 0 0 20px rgba(255,45,138,0.35);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    /* ─── LAYOUT ─── */
+    .container {
+      position: relative; z-index: 1;
+      max-width: 900px; margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    section { padding: 80px 0; }
+
+    /* ─── HERO ─── */
+    .hero {
+      padding: 100px 0 80px;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--accent-gold);
+      background: rgba(255,215,0,0.08);
+      border: 1px solid rgba(255,215,0,0.2);
+      border-radius: 50px; padding: 6px 18px;
+      margin-bottom: 28px;
+    }
+    .hero h1 {
       font-family: 'Cinzel', serif;
-      font-weight: 700; font-size: 13px;
-      letter-spacing: 2.5px; text-transform: uppercase;
-      text-align: center; cursor: pointer;
-      box-shadow: 0 0 30px rgba(201,168,76,0.4), 0 4px 20px rgba(0,0,0,0.4);
-      transition: background-position 0.4s, transform 0.2s, box-shadow 0.2s;
-      animation: shimmer 3s linear infinite;
+      font-size: clamp(28px, 5.5vw, 54px);
+      font-weight: 900; line-height: 1.15;
+      background: linear-gradient(135deg, #ffffff 0%, #f0d8ff 40%, var(--accent-gold) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 24px;
+      max-width: 760px; margin-left: auto; margin-right: auto;
     }
-    @keyframes shimmer {
-      0%   { background-position: 0% center; }
-      100% { background-position: 200% center; }
+    .hero-sub {
+      font-size: clamp(16px, 2.2vw, 19px); color: var(--text-muted);
+      max-width: 600px; margin: 0 auto 40px;
+      line-height: 1.8;
     }
-    .btn-login:hover  { transform: translateY(-2px); box-shadow: 0 0 45px rgba(201,168,76,0.6), 0 8px 24px rgba(0,0,0,0.5); }
-    .btn-login:active { transform: scale(0.97); }
-    .btn-login:disabled { opacity: 0.5; cursor: not-allowed; animation: none; }
+    .renewal-notice {
+      font-size: 12px; color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .btn-primary {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--accent-pink) 0%, var(--accent-orange) 60%, var(--accent-gold) 100%);
+      color: #fff; font-family: 'Raleway', sans-serif; font-weight: 700;
+      font-size: clamp(15px, 2vw, 18px);
+      padding: 18px 40px; border-radius: 60px;
+      text-decoration: none; border: none; cursor: pointer;
+      box-shadow: 0 8px 40px rgba(255,45,138,0.45), 0 2px 12px rgba(0,0,0,0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+      letter-spacing: 0.2px;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 50px rgba(255,45,138,0.55), 0 4px 16px rgba(0,0,0,0.4);
+    }
+    .btn-secondary-label {
+      display: block; font-size: 12px; color: var(--text-muted);
+      margin-top: 14px; letter-spacing: 0.3px;
+    }
+    .hero-stats {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 32px;
+      margin-top: 64px; padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Cinzel', serif; font-size: 28px; font-weight: 700;
+      background: linear-gradient(90deg, var(--accent-pink), var(--accent-gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      display: block;
+    }
+    .stat-label { font-size: 12px; color: var(--text-muted); letter-spacing: 0.5px; }
+
+    /* ─── SECTION HEADER ─── */
+    .section-eyebrow {
+      font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--accent-gold);
+      margin-bottom: 14px; display: block;
+    }
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(22px, 4vw, 36px); font-weight: 700;
+      background: linear-gradient(135deg, #fff, var(--accent-gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 16px; line-height: 1.2;
+    }
+    .section-sub {
+      font-size: 16px; color: var(--text-muted); max-width: 540px;
+      line-height: 1.8;
+    }
+
+    /* ─── WHAT'S INSIDE ─── */
+    .inside { background: rgba(19,8,34,0.6); }
+    .inside .container { padding-top: 80px; padding-bottom: 80px; }
+    .inside-header { margin-bottom: 48px; }
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .content-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 22px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .content-card:hover {
+      border-color: rgba(255,45,138,0.35);
+      transform: translateY(-2px);
+    }
+    .card-icon {
+      font-size: 28px; margin-bottom: 12px; display: block;
+    }
+    .card-title {
+      font-family: 'Cinzel', serif; font-size: 14px; font-weight: 600;
+      color: var(--accent-gold); margin-bottom: 8px; line-height: 1.3;
+    }
+    .card-desc {
+      font-size: 13px; color: var(--text-muted); line-height: 1.65;
+    }
+    .new-badge {
+      display: inline-block; font-size: 10px; letter-spacing: 1px;
+      text-transform: uppercase; font-weight: 700;
+      background: linear-gradient(90deg, var(--accent-pink), var(--accent-orange));
+      color: #fff; padding: 2px 8px; border-radius: 50px;
+      margin-left: 6px; vertical-align: middle;
+    }
+
+    /* ─── FOR YOU IF ─── */
+    .for-you { }
+    .for-you .container { padding-top: 80px; padding-bottom: 80px; }
+    .fit-list {
+      display: flex; flex-direction: column; gap: 14px;
+      margin-top: 36px; max-width: 620px;
+    }
+    .fit-item {
+      display: flex; align-items: flex-start; gap: 16px;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 18px 22px;
+    }
+    .fit-check {
+      width: 32px; height: 32px; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--accent-pink), var(--accent-gold));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: #fff;
+      margin-top: 2px;
+    }
+    .fit-text { font-size: 15px; color: var(--text); line-height: 1.6; }
+
+    /* ─── PRICING ─── */
+    .pricing { background: rgba(19,8,34,0.6); }
+    .pricing .container { padding-top: 80px; padding-bottom: 80px; }
+    .pricing-header { text-align: center; margin-bottom: 48px; }
+    .pricing-card {
+      max-width: 520px; margin: 0 auto;
+      background: linear-gradient(135deg, rgba(255,45,138,0.07), rgba(255,107,43,0.05), rgba(255,215,0,0.04));
+      border: 1px solid rgba(255,107,43,0.4);
+      border-radius: 24px; padding: 44px 40px;
+      text-align: center;
+      box-shadow: 0 0 60px rgba(255,45,138,0.10), 0 20px 40px rgba(0,0,0,0.3);
+    }
+    .price-label {
+      font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent-orange);
+      margin-bottom: 16px; display: block;
+    }
+    .price-display {
+      display: flex; align-items: baseline; justify-content: center; gap: 4px;
+      margin-bottom: 8px;
+    }
+    .price-dollar { font-family: 'Cinzel', serif; font-size: 28px; color: var(--text-muted); margin-top: 8px; }
+    .price-amount {
+      font-family: 'Cinzel', serif; font-size: 72px; font-weight: 900;
+      background: linear-gradient(90deg, var(--accent-pink), var(--accent-orange), var(--accent-gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      line-height: 1;
+    }
+    .price-period { font-size: 18px; color: var(--text-muted); font-weight: 400; }
+    .price-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 32px; }
+    .pricing-features {
+      list-style: none; text-align: left;
+      margin-bottom: 36px; display: flex; flex-direction: column; gap: 10px;
+    }
+    .pricing-features li {
+      font-size: 14px; color: var(--text);
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .pricing-features li::before {
+      content: '✓';
+      color: var(--accent-gold); font-weight: 700; flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .disclosure-box {
+      background: rgba(255,45,138,0.06);
+      border: 1px solid rgba(255,45,138,0.22);
+      border-radius: 12px; padding: 16px 20px;
+      margin-bottom: 28px; text-align: left;
+    }
+    .disclosure-box p {
+      font-size: 13px; color: var(--text-muted); line-height: 1.65; margin: 0;
+    }
+    .disclosure-box strong { color: var(--text); }
+
+    /* ─── CTA FINAL ─── */
+    .cta-final { text-align: center; padding: 80px 0 100px; }
+    .cta-final .section-title { margin-bottom: 12px; }
+    .cta-final .section-sub { margin: 0 auto 40px; }
+    .secure-label {
+      display: block; font-size: 12px; color: var(--text-muted);
+      margin-top: 16px; letter-spacing: 0.3px;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: rgba(8,3,16,0.9);
+      border-top: 1px solid var(--border);
+      padding: 48px 20px;
+      position: relative; z-index: 1;
+      text-align: center;
+    }
+    .footer-links {
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: 6px 20px; margin-bottom: 20px;
+    }
+    .footer-links a {
+      font-size: 13px; color: var(--text-muted); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--accent-gold); }
+    .footer-links span { color: var(--border); font-size: 13px; }
+    .footer-email {
+      font-size: 13px; color: var(--text-muted); margin-bottom: 20px;
+    }
+    .footer-email a { color: var(--accent-gold); text-decoration: none; }
+    .footer-copy { font-size: 12px; color: var(--text-muted); margin-bottom: 24px; }
+    .footer-disclaimer {
+      max-width: 640px; margin: 0 auto;
+      background: rgba(107,33,168,0.08);
+      border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px 20px;
+      font-size: 11px; color: var(--text-muted); line-height: 1.65;
+    }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, var(--accent-pink), var(--accent-gold));
+      border-radius: 2px; margin: 0 auto 0 0;
+      margin-bottom: 32px;
+    }
+    .divider-center { margin: 0 auto 32px; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 600px) {
+      nav { padding: 12px 16px; }
+      .nav-brand span { font-size: 14px; }
+      .nav-cta { font-size: 12px; padding: 8px 14px; }
+      .hero { padding: 64px 0 60px; }
+      .pricing-card { padding: 32px 24px; }
+      .price-amount { font-size: 56px; }
+      section { padding: 60px 0; }
+      .inside .container, .for-you .container, .pricing .container { padding-top: 60px; padding-bottom: 60px; }
+    }
   </style>
 </head>
 <body>
   <div class="stars"></div>
-  <main class="login-page">
-    <div class="login-card">
 
-      <!-- Real logo -->
-      <div class="login-logo" style="width:140px;height:140px;">
-        <img src="images/icon-512.png" alt="Harmony App"
-          style="width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 0 28px rgba(255,107,43,0.5));"
-          onerror="this.src='images/logo-harmony.png'"
-        />
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-brand">
+      <img src="images/logo-harmony.png" alt="HarmonyApp logo"/>
+      <span>HarmonyApp</span>
+    </a>
+    <a href="#pricing" class="nav-cta">Start for $4.97/mo</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <span class="hero-eyebrow">Christian Audio Devotionals</span>
+      <h1>Your Daily Sacred Space — Christian Audio Devotionals, Prayer &amp; Scripture-Inspired Reflections</h1>
+      <p class="hero-sub">Join thousands of believers who start each day in His presence. Unlimited access to sacred audio content, guided prayers, and Scripture-inspired meditations — all in one beautiful app.</p>
+      <p class="renewal-notice">Subscription renews automatically every month. Cancel anytime by emailing <a href="mailto:support@harmonyapp.app" style="color: var(--accent-gold);">support@harmonyapp.app</a></p>
+      <a href="#pricing" id="paddle-checkout-btn" class="btn-primary">Start My Spiritual Journey — $4.97/month</a>
+      <span class="btn-secondary-label">🔒 Secure checkout · Cancel anytime</span>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num">41+</span>
+          <span class="stat-label">Devotional Audios</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">7</span>
+          <span class="stat-label">Scripture Series</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">10+</span>
+          <span class="stat-label">Bonus Programs</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">$4.97</span>
+          <span class="stat-label">Per Month</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT'S INSIDE -->
+  <section class="inside">
+    <div class="container">
+      <div class="inside-header">
+        <span class="section-eyebrow">Your Membership Includes</span>
+        <h2 class="section-title">Everything Inside Your Sacred Library</h2>
+        <div class="divider"></div>
+        <p class="section-sub">One membership. Unlimited access to all content below — plus new additions every month.</p>
       </div>
 
-      <h1 class="brand-title" style="text-align:center;font-size:26px;font-weight:700;letter-spacing:2px;color:#F0EAF8;white-space:nowrap;">Harmony App 2.0</h1>
-      <p class="brand-subtitle">Your Sacred Frequency Space</p>
-
-      <form id="login-form" novalidate>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" autocomplete="email" placeholder="you@example.com" required />
+      <div class="content-grid">
+        <div class="content-card">
+          <span class="card-icon">🎵</span>
+          <div class="card-title">7 Biblical Frequency Meditations</div>
+          <p class="card-desc">Seven Scripture-inspired audio sessions crafted for moments of stillness, prayer, and deep reflection in His presence.</p>
         </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" autocomplete="current-password" placeholder="••••••••" required />
-        </div>
-        <button type="submit" class="btn-login" id="login-btn">✦ Access My Space ✦</button>
-        <div id="auth-message" class="auth-message" role="alert"></div>
-      </form>
 
-      <a href="#" id="forgot-link" class="forgot-link">Forgot password?</a>
+        <div class="content-card">
+          <span class="card-icon">🌿</span>
+          <div class="card-title">Sacred Audio Vault</div>
+          <p class="card-desc">41 devotional audio experiences across 4 sacred categories: Peace, Rest, Focus &amp; Prosperity in Faith.</p>
+        </div>
+
+        <div class="content-card">
+          <span class="card-icon">✨</span>
+          <div class="card-title">Archangel Scripture Series</div>
+          <p class="card-desc">7 video devotionals inspired by biblical accounts of divine messengers — powerful visual faith experiences.</p>
+        </div>
+
+        <div class="content-card">
+          <span class="card-icon">⚡</span>
+          <div class="card-title">Divine Accelerator</div>
+          <p class="card-desc">6 guided audio sessions paired with a companion Scripture study guide for deeper daily devotion.</p>
+        </div>
+
+        <div class="content-card">
+          <span class="card-icon">🌙</span>
+          <div class="card-title">Christian Bedtime Stories</div>
+          <p class="card-desc">5 original stories rooted in faith and grace — crafted for peaceful evening reflection and prayer.</p>
+        </div>
+
+        <div class="content-card">
+          <span class="card-icon">📖</span>
+          <div class="card-title">Biblical Prosperity Guide</div>
+          <p class="card-desc">Video devotional and companion study guide exploring God's promise of abundance through Scripture.</p>
+        </div>
+
+        <div class="content-card">
+          <span class="card-icon">🕊️</span>
+          <div class="card-title">Youth of Spirit Protocol</div>
+          <p class="card-desc">Renewal audio sessions and a spiritual wellness guide to help you walk in the fullness of His promises.</p>
+        </div>
+
+        <div class="content-card">
+          <span class="card-icon">🙏</span>
+          <div class="card-title">Sacred Prayer Collection</div>
+          <p class="card-desc">A powerful prayer audio crafted for moments of deep communion — when words fail, let this guide you.</p>
+        </div>
+
+        <div class="content-card">
+          <span class="card-icon">🗓️</span>
+          <div class="card-title">7-Day Spiritual Ritual</div>
+          <p class="card-desc">A structured daily devotional journey with Archangel Michael Scripture readings to anchor your week in faith.</p>
+        </div>
+
+        <div class="content-card" style="border-color: rgba(255,215,0,0.25); background: rgba(255,215,0,0.03);">
+          <span class="card-icon">🌟</span>
+          <div class="card-title">New Content <span class="new-badge">Ongoing</span></div>
+          <p class="card-desc">New sacred audio, video devotionals, and guided experiences added regularly — your library keeps growing.</p>
+        </div>
+      </div>
     </div>
-  </main>
+  </section>
 
-  <script src="js/stars.js" defer></script>
-  <script type="module" src="js/auth.js"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => {}); });
-    }
-  </script>
+  <!-- FOR YOU IF -->
+  <section class="for-you">
+    <div class="container">
+      <span class="section-eyebrow">Is This For You?</span>
+      <h2 class="section-title">This Is For You If…</h2>
+      <div class="divider"></div>
+
+      <div class="fit-list">
+        <div class="fit-item">
+          <div class="fit-check">✓</div>
+          <span class="fit-text">You long for a deeper, more consistent prayer life and a closer walk with God</span>
+        </div>
+        <div class="fit-item">
+          <div class="fit-check">✓</div>
+          <span class="fit-text">You want to start each morning anchored in Scripture and sacred devotion</span>
+        </div>
+        <div class="fit-item">
+          <div class="fit-check">✓</div>
+          <span class="fit-text">You feel spiritually dry and are seeking genuine renewal and restoration</span>
+        </div>
+        <div class="fit-item">
+          <div class="fit-check">✓</div>
+          <span class="fit-text">You're seeking inner peace and stillness in a world full of noise and distraction</span>
+        </div>
+        <div class="fit-item">
+          <div class="fit-check">✓</div>
+          <span class="fit-text">You want beautiful, professionally produced Christian content always at your fingertips</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <div class="pricing-header">
+        <span class="section-eyebrow">Simple Pricing</span>
+        <h2 class="section-title">Full Access. One Simple Price.</h2>
+        <div class="divider divider-center"></div>
+      </div>
+
+      <div class="pricing-card">
+        <span class="price-label">Monthly Membership</span>
+        <div class="price-display">
+          <span class="price-dollar">$</span>
+          <span class="price-amount">4.97</span>
+          <span class="price-period">/month</span>
+        </div>
+        <p class="price-sub">Everything included. No hidden fees. No long-term contract.</p>
+
+        <ul class="pricing-features">
+          <li>7 Biblical Frequency Meditations</li>
+          <li>Sacred Audio Vault — 41 devotional audios</li>
+          <li>Archangel Scripture Video Series</li>
+          <li>Divine Accelerator + Study Guide</li>
+          <li>Christian Bedtime Stories Collection</li>
+          <li>Biblical Prosperity Video &amp; Guide</li>
+          <li>Youth of Spirit Protocol &amp; Guide</li>
+          <li>Sacred Prayer Audio Collection</li>
+          <li>7-Day Spiritual Daily Ritual</li>
+          <li>All future content additions included</li>
+        </ul>
+
+        <div class="disclosure-box">
+          <p><strong>Important billing disclosure:</strong> Your subscription begins today and renews automatically every month at <strong>$4.97</strong>. You may cancel at any time by emailing <a href="mailto:support@harmonyapp.app" style="color: var(--accent-gold);">support@harmonyapp.app</a> — no complicated process, no questions asked.</p>
+        </div>
+
+        <p class="renewal-notice" style="margin-bottom: 24px; font-size: 13px; color: var(--text-muted);">
+          Subscription renews automatically every month. Cancel anytime by emailing support@harmonyapp.app
+        </p>
+
+        <a href="#" id="paddle-checkout-btn" class="btn-primary" style="width: 100%; display: block; text-align: center;">
+          Join HarmonyApp Today — $4.97/month
+        </a>
+        <span class="secure-label">🔒 Secure checkout powered by Paddle · Cancel anytime</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="cta-final">
+    <div class="container">
+      <span class="section-eyebrow" style="display:block; text-align:center;">Begin Your Journey</span>
+      <h2 class="section-title" style="text-align:center;">Your Sacred Space Is Waiting</h2>
+      <div class="divider divider-center"></div>
+      <p class="section-sub" style="text-align:center; margin: 0 auto 40px;">Start your spiritual journey today. Thousands of believers are already walking closer to God — join them for less than a cup of coffee a month.</p>
+
+      <p class="renewal-notice" style="margin-bottom: 18px;">Subscription renews automatically every month. Cancel anytime by emailing <a href="mailto:support@harmonyapp.app" style="color: var(--accent-gold);">support@harmonyapp.app</a></p>
+
+      <a href="#pricing" class="btn-primary">Join HarmonyApp Today — $4.97/month</a>
+      <span class="secure-label">🔒 Secure checkout powered by Paddle · Cancel anytime</span>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-links">
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <span>|</span>
+      <a href="terms.html">Terms of Service</a>
+      <span>|</span>
+      <a href="refund-policy.html">Refund Policy</a>
+      <span>|</span>
+      <a href="support.html">Support</a>
+    </div>
+    <p class="footer-email">Questions? Email us: <a href="mailto:support@harmonyapp.app">support@harmonyapp.app</a></p>
+    <p class="footer-copy">© 2026 HarmonyApp · Operated by Zampier Co. Ltda</p>
+    <div class="footer-disclaimer">
+      HarmonyApp is a spiritual and entertainment experience for personal reflection and Christian devotion. It is not intended to diagnose, treat, cure, or prevent any disease or condition. Consult a qualified healthcare professional for medical advice.
+    </div>
+  </footer>
 </body>
 </html>

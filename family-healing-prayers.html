@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Family Healing Prayers — Harmony App</title>
+  <meta name="theme-color" content="#0D0618" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .prayers-page { position:relative; z-index:1; padding-bottom:110px; }
+    .prayers-body { padding:4px 20px 30px; max-width:500px; margin:0 auto; }
+
+    .prayer-card {
+      background:linear-gradient(135deg,rgba(45,10,94,0.5),rgba(13,6,24,0.6));
+      border:1px solid var(--border); border-radius:18px;
+      padding:20px; margin-bottom:18px;
+    }
+    .prayer-card-head { display:flex; gap:12px; align-items:flex-start; margin-bottom:12px; }
+    .prayer-icon {
+      width:44px; height:44px; border-radius:12px; flex-shrink:0;
+      background:linear-gradient(135deg,rgba(255,45,138,0.2),rgba(109,40,217,0.2));
+      border:1px solid rgba(255,45,138,0.3);
+      display:flex; align-items:center; justify-content:center;
+      font-size:20px; box-shadow:0 0 16px rgba(255,45,138,0.2);
+    }
+    .prayer-title { font-family:'Cinzel',serif; font-size:14.5px; font-weight:700; line-height:1.35; }
+    .prayer-subtitle { font-size:11.5px; color:var(--text-muted); margin-top:3px; }
+    .prayer-desc { font-size:13px; line-height:1.75; color:var(--text-muted); margin-bottom:16px; }
+
+    .prayer-player { display:flex; align-items:center; gap:12px; margin-bottom:14px; }
+    .prayer-play {
+      flex-shrink:0; width:40px; height:40px; border-radius:50%; border:none;
+      background:linear-gradient(135deg,var(--grad-start),var(--grad-mid));
+      color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer;
+      box-shadow:0 0 14px rgba(255,45,138,0.3); transition:transform 0.15s, box-shadow 0.2s;
+    }
+    .prayer-play:hover { transform:scale(1.06); box-shadow:0 0 20px rgba(255,45,138,0.5); }
+    .prayer-play svg { width:16px; height:16px; margin-left:2px; }
+    .prayer-card.playing .prayer-play { background:linear-gradient(135deg,var(--grad-mid),var(--grad-end)); }
+    .prayer-progress-wrap { flex:1; min-width:0; }
+    .prayer-progress { width:100%; height:4px; border-radius:2px; background:rgba(255,255,255,0.1); cursor:pointer; margin-bottom:5px; }
+    .prayer-fill { height:100%; border-radius:2px; width:0%; background:linear-gradient(90deg,var(--grad-start),var(--grad-mid)); pointer-events:none; }
+    .prayer-time { display:flex; justify-content:space-between; font-size:10.5px; color:var(--text-muted); }
+
+    .read-toggle {
+      width:100%; padding:12px; border-radius:12px;
+      border:1px solid rgba(147,51,234,0.35); background:rgba(147,51,234,0.08);
+      color:var(--text); font-family:'Cinzel',serif; font-size:11px; letter-spacing:1.5px; text-transform:uppercase;
+      cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;
+      transition:background 0.2s, border-color 0.2s;
+    }
+    .read-toggle:hover { background:rgba(147,51,234,0.16); border-color:rgba(255,45,138,0.4); }
+    .read-toggle .chevron { width:14px; height:14px; transition:transform 0.25s; flex-shrink:0; }
+    .read-toggle.open .chevron { transform:rotate(180deg); }
+
+    .prayer-text-panel { max-height:0; overflow:hidden; transition:max-height 0.5s ease; }
+    .prayer-text-panel.open { max-height:9000px; transition:max-height 0.8s ease; }
+    .prayer-text-inner { padding-top:16px; }
+    .prayer-text-inner p { font-size:13.5px; line-height:1.85; color:#C4B8D8; margin-bottom:14px; }
+    .prayer-verse-box {
+      background:linear-gradient(135deg,rgba(201,168,76,0.08),rgba(109,40,217,0.1));
+      border:1px solid rgba(201,168,76,0.3); border-radius:14px; padding:16px 18px; margin-bottom:16px;
+    }
+    .prayer-verse-box p { font-style:italic; color:#F0EAF8; margin-bottom:0; }
+    .prayer-declare-box {
+      background:linear-gradient(135deg,rgba(255,45,138,0.08),rgba(109,40,217,0.1));
+      border:1px solid var(--border-hot); border-radius:14px; padding:16px 18px; margin-top:6px;
+    }
+    .prayer-declare-box p { color:#F0EAF8; margin-bottom:0; }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="prayers-page">
+
+    <header class="page-header">
+      <a href="dashboard.html" class="back-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </a>
+      <div class="page-header-text">
+        <div class="page-eyebrow">Special Content</div>
+        <h1 class="page-title">Family Healing Prayers</h1>
+      </div>
+    </header>
+
+    <p class="page-intro">Seven prayers for the relationships that matter most</p>
+
+    <div class="prayers-body">
+
+      <!-- Prayer 1 -->
+      <div class="prayer-card" id="card-1">
+        <div class="prayer-card-head">
+          <div class="prayer-icon">🕯️</div>
+          <div>
+            <div class="prayer-title">Prayer for a Prodigal Child</div>
+            <div class="prayer-subtitle">For the heart that is still waiting</div>
+          </div>
+        </div>
+        <div class="prayer-desc">For every parent and grandparent carrying the quiet ache of a child who has walked away — from home, from faith, or from themselves. Bring your love and your exhaustion before God, and trust Him with the one you cannot reach.</div>
+        <div class="prayer-player" data-src="https://harmonyapp-audios.b-cdn.net/family-healing-prayers/fp1-Prayer-for-a-Prodigal-Child.mp3">
+          <button class="prayer-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+          <div class="prayer-progress-wrap">
+            <div class="prayer-progress"><div class="prayer-fill"></div></div>
+            <div class="prayer-time"><span class="prayer-cur">0:00</span><span class="prayer-tot">--:--</span></div>
+          </div>
+        </div>
+        <button class="read-toggle" onclick="toggleRead(this)">
+          <span class="read-label">Read This Prayer</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="prayer-text-panel">
+          <div class="prayer-text-inner">
+            <p>If you're listening to this… you already know the ache. That empty chair at the table. That phone you check — hoping, always hoping. That name you whisper before you fall asleep.</p>
+            <p>You have not stopped loving them. Not for a single day. And God has not stopped loving them either.</p>
+            <p>This prayer is for you — for every parent, every grandparent, every heart that is quietly waiting for someone to come home.</p>
+            <div class="prayer-verse-box"><p>Luke 15:20 — "But while he was still a long way off, his father saw him and was filled with compassion for him. He ran to his son, threw his arms around him, and kissed him."</p></div>
+            <p>The father ran. He didn't wait at the door with crossed arms. He ran. That is the heart of God toward your child. Right now. Today.</p>
+            <p>Heavenly Father — we come to You right now with hearts that are tender and tired. We carry the weight of watching someone we love walk a road that frightens us. A road we cannot follow them down. A road only You can reach.</p>
+            <p>Lord, You know their name. You knew them before they were born. You counted every hair on their head when they were small enough to hold. And You see them right now — wherever they are, whatever they are doing, however far they have walked from home.</p>
+            <p>We ask You, Father — send Your Spirit ahead of them. Into every room they enter. Into every moment of silence when the world gets quiet and they are alone with their thoughts. Let them feel a pull they cannot explain. A longing they cannot satisfy with anything this world offers.</p>
+            <p>Break the chains that are holding them, Lord. Whatever has a grip on them — the addiction, the anger, the wounds they carry, the lies they have believed about themselves — let Your truth be louder.</p>
+            <p>Protect them, Father. Cover them with Your mercy even when they are not asking for it. Surround them with people who carry Your light — the right word at the right moment — a kindness that opens a door they thought was sealed forever.</p>
+            <p>And give us grace, Lord. Grace to keep our arms open when we are exhausted from waiting. Grace to love without conditions. Grace to trust Your timing even when it feels unbearable.</p>
+            <p>We release them into Your hands right now. Not because we stop caring — but because Your hands are bigger than ours. Your reach is longer. Your love is stronger.</p>
+            <p>We believe in the miracle of return. We believe that the same God who brought the prodigal son to his senses is working in the life of our child right now — in ways we cannot see, in ways we may never fully understand this side of heaven.</p>
+            <p>We trust You, Father. We trust You with the most precious thing we have ever held.</p>
+            <p>In the name of Jesus — Amen.</p>
+            <div class="prayer-declare-box"><p>I declare that my child is not lost — they are being found. I declare that God's love is pursuing them with a force greater than any distance between us. I declare that this family will be restored. And I will keep the light on.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prayer 2 -->
+      <div class="prayer-card" id="card-2">
+        <div class="prayer-card-head">
+          <div class="prayer-icon">💍</div>
+          <div>
+            <div class="prayer-title">Prayer for a Broken Marriage</div>
+            <div class="prayer-subtitle">For the covenant that is hurting</div>
+          </div>
+        </div>
+        <div class="prayer-desc">For every husband and wife standing at the edge of something breaking — and for every heart that still believes God can restore what love has lost.</div>
+        <div class="prayer-player" data-src="https://harmonyapp-audios.b-cdn.net/family-healing-prayers/fp2-Prayer-for-a-Broken-Marriage.mp3">
+          <button class="prayer-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+          <div class="prayer-progress-wrap">
+            <div class="prayer-progress"><div class="prayer-fill"></div></div>
+            <div class="prayer-time"><span class="prayer-cur">0:00</span><span class="prayer-tot">--:--</span></div>
+          </div>
+        </div>
+        <button class="read-toggle" onclick="toggleRead(this)">
+          <span class="read-label">Read This Prayer</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="prayer-text-panel">
+          <div class="prayer-text-inner">
+            <p>If your marriage has felt more like a battleground than a sanctuary lately… you are not alone. Many have stood exactly where you are standing — tired, hurt, wondering if anything can still be saved.</p>
+            <p>But God is in the business of resurrection. And that includes marriages.</p>
+            <div class="prayer-verse-box"><p>Ephesians 4:32 — "Be kind and compassionate to one another, forgiving each other, just as in Christ God forgave you."</p></div>
+            <p>That word — forgiving. Not forgetting. Not pretending nothing happened. Forgiving. The way God forgave us — completely, and at great cost.</p>
+            <p>Heavenly Father — we come to You with a union that is hurting. Two people who once chose each other, who once looked at one another and said yes — and who are now struggling to find their way back to that place.</p>
+            <p>You were there on the day this covenant was made. You witnessed the vows. And You have not forgotten them, even when we have.</p>
+            <p>Lord, soften what has become hard. The walls that went up to protect wounded hearts — begin to bring them down, stone by stone, with Your grace. Where there is bitterness, plant forgiveness. Where there is silence, restore honest and gentle words. Where there is distance, draw two hearts back together.</p>
+            <p>Heal the wounds that neither of us can fully see — the old hurts we brought into this marriage, the patterns we learned long before we ever met, the pain we have caused each other without always meaning to.</p>
+            <p>Father, remove what does not belong in this home. Any spirit of pride that refuses to bend. Any root of resentment that has grown in the dark. Any voice — from outside or within — that whispers this is beyond saving.</p>
+            <p>We declare that it is not beyond You. Nothing is beyond You.</p>
+            <p>Give each of us the courage to go first. To apologize before it feels deserved. To extend grace before it feels earned. To choose this person again — not because the feelings are easy, but because the covenant is sacred.</p>
+            <p>And where reconciliation feels impossible right now — Lord, be the bridge. Be the peace that passes understanding. Be the reason we stay at the table one more day.</p>
+            <p>We surrender this marriage to You. Not as something broken beyond repair — but as something holy, placed back into the hands of the One who created it.</p>
+            <p>In the name of Jesus — Amen.</p>
+            <div class="prayer-declare-box"><p>I declare that my marriage is not over — it is being renewed. I declare that God's hand is on this covenant. I declare that what He has joined together, no force on earth can permanently destroy. And I choose to believe that again. Today.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prayer 3 -->
+      <div class="prayer-card" id="card-3">
+        <div class="prayer-card-head">
+          <div class="prayer-icon">🤝</div>
+          <div>
+            <div class="prayer-title">Prayer for Reconciliation with a Sibling</div>
+            <div class="prayer-subtitle">For the bond that silence has broken</div>
+          </div>
+        </div>
+        <div class="prayer-desc">For every brother and sister separated by old wounds, unspoken words, or the slow drift of years — and for every heart that still hopes for the embrace that reconciliation brings.</div>
+        <div class="prayer-player" data-src="https://harmonyapp-audios.b-cdn.net/family-healing-prayers/fp3-Prayer-for-Reconciliation-with-a-Sibling.mp3">
+          <button class="prayer-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+          <div class="prayer-progress-wrap">
+            <div class="prayer-progress"><div class="prayer-fill"></div></div>
+            <div class="prayer-time"><span class="prayer-cur">0:00</span><span class="prayer-tot">--:--</span></div>
+          </div>
+        </div>
+        <button class="read-toggle" onclick="toggleRead(this)">
+          <span class="read-label">Read This Prayer</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="prayer-text-panel">
+          <div class="prayer-text-inner">
+            <p>There is a particular kind of loneliness that comes from being estranged from a sibling. Someone who shared your childhood. Your family table. The same roof, the same parents, the same early memories. And yet — somewhere along the way — a wall went up.</p>
+            <p>Maybe it was one conversation that went too far. Maybe it was years of small wounds that quietly accumulated. Maybe it was an inheritance, a misunderstanding, a choice one of you made that the other could not accept.</p>
+            <p>Whatever built that wall — God is bigger than it.</p>
+            <div class="prayer-verse-box"><p>Genesis 33:4 — "But Esau ran to meet Jacob and embraced him. He threw his arms around his neck and kissed him. And they wept."</p></div>
+            <p>Two brothers. Decades of betrayal between them. And still — they wept in each other's arms. That is what God can do with a broken bond.</p>
+            <p>Lord God — we come before You carrying the weight of a relationship that has gone quiet. A sibling we have lost — not to death, but to distance. And sometimes that kind of loss is harder to grieve, because there is no funeral, no closure, no clear moment to mourn.</p>
+            <p>You see the full picture, Father. You see what happened on both sides. You see the hurt that was given and the hurt that was received. You see the pride that has kept two people from picking up the phone. And You love both of them with the same relentless love.</p>
+            <p>We ask You today — begin the work of softening. Not just in them — in us. Show us honestly where we have contributed to this fracture. Where we held onto offense longer than was right. Where we chose being right over being reconciled. Give us the humility to see our own part clearly, without excuse.</p>
+            <p>And then, Lord — give us the courage to move first. The way Esau ran. Not walked, not cautiously approached — ran. Let something in us be willing to run toward restoration, even before we know how it will be received.</p>
+            <p>Protect this reconciliation from the enemy of our souls, who profits from division within families. Silence every voice that says the damage is too old, the wound is too deep, too much time has passed.</p>
+            <p>You are the God who restores what the years have eaten. We believe that applies here.</p>
+            <p>If there are conversations that need to happen — prepare both hearts for them. Let the words that come be honest, but gentle. Let the listening be real. Let neither of us leave that moment without knowing we were heard.</p>
+            <p>And if full reconciliation is not yet possible — we ask at minimum for peace. The kind of peace that releases us from carrying bitterness any further. The kind that allows us to pray for them genuinely, to wish them well, to hold no debt against them in our hearts.</p>
+            <p>We surrender this relationship to You, Father. We have tried to fix it in our own strength, and it has not been enough. So we place it in Your hands — the only hands capable of making something whole again.</p>
+            <p>In the name of Jesus — Amen.</p>
+            <div class="prayer-declare-box"><p>I release every offense I have held against my brother, my sister. I forgive what hurt me. I open the door to what God wants to restore. And I trust Him with the timing of what comes next.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prayer 4 -->
+      <div class="prayer-card" id="card-4">
+        <div class="prayer-card-head">
+          <div class="prayer-icon">🌙</div>
+          <div>
+            <div class="prayer-title">Prayer for a Grandchild in Darkness</div>
+            <div class="prayer-subtitle">For the child you carry in your heart every day</div>
+          </div>
+        </div>
+        <div class="prayer-desc">For every grandparent watching a grandchild walk through darkness — and for every soul that refuses to stop interceding for the next generation.</div>
+        <div class="prayer-player" data-src="https://harmonyapp-audios.b-cdn.net/family-healing-prayers/fp4-Prayer-for-a-Grandchild-in-Darkness.mp3">
+          <button class="prayer-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+          <div class="prayer-progress-wrap">
+            <div class="prayer-progress"><div class="prayer-fill"></div></div>
+            <div class="prayer-time"><span class="prayer-cur">0:00</span><span class="prayer-tot">--:--</span></div>
+          </div>
+        </div>
+        <button class="read-toggle" onclick="toggleRead(this)">
+          <span class="read-label">Read This Prayer</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="prayer-text-panel">
+          <div class="prayer-text-inner">
+            <p>There is something uniquely painful about watching a grandchild struggle. Because you have lived long enough to know what is at stake. You have seen what faith can do. You have seen what its absence costs. And you love this child with a depth that words were never quite designed to carry.</p>
+            <p>Maybe they have walked away from the church. Maybe they are caught in something that frightens you. Maybe the world has gotten to them in ways you never anticipated, and you feel helpless watching from a distance.</p>
+            <p>You are not helpless. A grandparent on their knees is one of the most powerful forces in the universe.</p>
+            <div class="prayer-verse-box"><p>Isaiah 54:13 — "All your children will be taught by the Lord, and great will be their peace."</p></div>
+            <p>All your children. That promise has not expired. It was written for this moment, for this grandchild, for this prayer.</p>
+            <p>Father in heaven — we come to You on behalf of a child we love beyond measure. A child You love even more than we do — and that is almost impossible for us to comprehend.</p>
+            <p>You knew this child before they were formed. You wrote their name in eternity before they drew their first breath. And the darkness they are walking through right now has not surprised You, has not alarmed You, has not caused You to turn away from them.</p>
+            <p>We ask You, Lord — reach into where they are. Not where we wish they were. Not where they used to be. Where they are right now. Meet them there, in the middle of it, the way only You can.</p>
+            <p>Protect them from harm that we cannot see and cannot prevent. Send Your angels to surround them — before them, behind them, beside them. Let no weapon formed against this child's future take root and prosper.</p>
+            <p>Lord, plant a hunger in them that the world cannot satisfy. A restlessness that drives them back toward You. Let them find that every counterfeit they chase leaves them emptier than before — until the only thing left that makes sense is You.</p>
+            <p>Raise up the right people in their life at the right time. A friend who carries Your light without being heavy-handed. A moment, a conversation, a song, a sunset — whatever it takes, Lord — use it. You are not limited in how You reach a soul.</p>
+            <p>And sustain us, Father, while we wait. Give us faith that does not waver with every report we receive. Give us hope that is anchored not in what we can see, but in who You are. Give us the grace to love this child fully and freely, without letting our fear come out as pressure.</p>
+            <p>We speak life over this grandchild today. We speak destiny. We speak the promise that what You began in this family line, You are faithful to complete.</p>
+            <p>In the name of Jesus — Amen.</p>
+            <div class="prayer-declare-box"><p>I declare that my grandchild is not lost to darkness. I declare that the prayers of this family have built a wall around their future. I declare that God's hand was on them the day they were born, and it has not lifted. They are coming home. I believe it. And I will not stop praying until they do.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prayer 5 -->
+      <div class="prayer-card" id="card-5">
+        <div class="prayer-card-head">
+          <div class="prayer-icon">⛓️</div>
+          <div>
+            <div class="prayer-title">Prayer to Release Generational Wounds</div>
+            <div class="prayer-subtitle">For the pain that was passed down before you had a choice</div>
+          </div>
+        </div>
+        <div class="prayer-desc">For every heart ready to name what has been inherited — addiction, abandonment, anger, fear — and to declare that the cycle ends here, with this generation.</div>
+        <div class="prayer-player" data-src="https://harmonyapp-audios.b-cdn.net/family-healing-prayers/fp5-Prayer-to-Release-Generational-Wounds.mp3">
+          <button class="prayer-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+          <div class="prayer-progress-wrap">
+            <div class="prayer-progress"><div class="prayer-fill"></div></div>
+            <div class="prayer-time"><span class="prayer-cur">0:00</span><span class="prayer-tot">--:--</span></div>
+          </div>
+        </div>
+        <button class="read-toggle" onclick="toggleRead(this)">
+          <span class="read-label">Read This Prayer</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="prayer-text-panel">
+          <div class="prayer-text-inner">
+            <p>Some wounds did not begin with us. They arrived before we were old enough to understand them. Patterns we watched as children and swore we would never repeat — and yet somehow found ourselves repeating. Pain that seemed to skip no one in the family line. Fear that had no clear origin. Anger that felt bigger than any single moment could explain.</p>
+            <p>This is what scripture calls the sins of the fathers — not as a sentence, but as a cycle. And cycles, by the grace of God, can be broken.</p>
+            <div class="prayer-verse-box"><p>Exodus 20:5-6 — "I, the Lord your God, am a jealous God, punishing the children for the sin of the parents to the third and fourth generation — but showing love to a thousand generations of those who love me and keep my commandments."</p></div>
+            <p>A thousand generations of love. That is the side of this promise God wants us to live on. And it begins with someone willing to stand up and say — not in my family. Not anymore. Not through me.</p>
+            <p>Heavenly Father — we come before You today not just as individuals, but as members of a family line. A lineage that carries both beauty and brokenness, both blessing and burden. And we come with the courage to name what has been passed down that was never meant to be inherited.</p>
+            <p>We name the addiction that has moved through our family like a shadow. We name the abandonment — fathers who left, mothers who were absent in spirit even when present in body. We name the anger that erupted without warning and left damage in every room it entered. We name the fear, the shame, the silence, the patterns of hurt that one generation handed to the next without meaning to and sometimes without even knowing.</p>
+            <p>We bring all of it before You now, Lord. Not to assign blame. Not to dishonor those who came before us — many of whom were themselves victims of what they carried. But to lay it down. To say clearly and deliberately — this stops here.</p>
+            <p>By the authority of the name of Jesus Christ, we renounce every generational pattern that is not from You. Every inherited agreement with darkness. Every lie that has been believed across generations — that we are not worthy, that we are destined to fail, that love always leaves, that we are too broken to be made whole.</p>
+            <p>We break those agreements now. We cancel their claim over our lives and over the lives of our children and grandchildren.</p>
+            <p>Father, fill every place those patterns occupied with something new. Where addiction ruled — plant sobriety and self-possession. Where abandonment wounded — plant belonging and security. Where anger burned — plant patience and gentleness. Where shame whispered — let Your voice speak louder, calling us beloved, calling us chosen, calling us Yours.</p>
+            <p>We declare that we are not what was done to us. We are not the worst thing that ran through our family line. We are image-bearers of the living God, and our future is not determined by our past.</p>
+            <p>Seal this prayer with Your Spirit, Lord. Let what is broken off today stay broken off. Let what is planted today take root and bear fruit in generations we will never live to meet.</p>
+            <p>In the name of Jesus — Amen.</p>
+            <div class="prayer-declare-box"><p>I declare that generational cycles of pain are broken in my family today. I declare that I am the turning point. What was passed to me will not be passed through me. A new inheritance begins here — one of faith, of wholeness, of love that does not wound. It starts with me. It starts today.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prayer 6 -->
+      <div class="prayer-card" id="card-6">
+        <div class="prayer-card-head">
+          <div class="prayer-icon">🕊️</div>
+          <div>
+            <div class="prayer-title">Prayer for a Grieving Family</div>
+            <div class="prayer-subtitle">For the home that loss has changed forever</div>
+          </div>
+        </div>
+        <div class="prayer-desc">For every family trying to find its way back to one another after grief has rearranged everything — and for every heart that wonders if the pieces can ever be gathered again.</div>
+        <div class="prayer-player" data-src="https://harmonyapp-audios.b-cdn.net/family-healing-prayers/fp6-Prayer-for-a-Grieving-Family.mp3">
+          <button class="prayer-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+          <div class="prayer-progress-wrap">
+            <div class="prayer-progress"><div class="prayer-fill"></div></div>
+            <div class="prayer-time"><span class="prayer-cur">0:00</span><span class="prayer-tot">--:--</span></div>
+          </div>
+        </div>
+        <button class="read-toggle" onclick="toggleRead(this)">
+          <span class="read-label">Read This Prayer</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="prayer-text-panel">
+          <div class="prayer-text-inner">
+            <p>Loss does something to a family that nothing else quite does. It rearranges everything. The chair that will always feel empty. The holiday that will never feel the same. The name that hangs in every room without being spoken.</p>
+            <p>And sometimes, in the middle of that grief, the people who need each other most find it hardest to reach one another. Because everyone is drowning in their own version of the same loss. And there is no map for this.</p>
+            <p>But there is a God who has walked through death and come out the other side. And He is not distant from where you are right now.</p>
+            <div class="prayer-verse-box"><p>John 11:35 — "Jesus wept."</p></div>
+            <p>The shortest verse in all of scripture. He did not stand at the tomb of Lazarus with a theological explanation. He stood there and He wept. That is the God we bring our grief to today. One who is not above our sorrow — but who enters it with us.</p>
+            <p>Lord Jesus — we come to You from inside a grief that has changed the shape of everything. A loss that has left a mark on this family that no amount of time has fully been able to reach.</p>
+            <p>We do not come with tidy words or strong faith today. We come exactly as we are — tired, hollowed out in places, still finding unexpected moments when the weight of this hits us all over again.</p>
+            <p>And we thank You that You can receive us this way. That You do not require us to be further along than we are. That You wept at a grave, and so You understand what it means to stand at one.</p>
+            <p>Father, tend to each member of this family individually. You know that grief looks different in every person in this house. Some have gone quiet. Some have gone angry. Some have thrown themselves into busyness to avoid the stillness where the sadness lives. Some are holding everyone else together while quietly falling apart on the inside. You see each one. Meet each one exactly where they are.</p>
+            <p>Do not let this loss drive this family apart. We know that grief can do that — can make people strangers to each other in their own home, can build invisible walls in the middle of shared pain. We resist that, Lord. We ask instead that this loss become the thing that draws us toward one another rather than away.</p>
+            <p>Give us patience with each other's grief. Grace for the one who cannot stop crying. Grace for the one who cannot cry at all. Grace for the one who says the wrong thing because they do not know what to say. Grace for the silence when words fail every one of us.</p>
+            <p>Remind us, Father, of the hope we carry. Not a hope that pretends this did not hurt. But the hope of resurrection — the unshakeable promise that death does not have the final word. That the one we have lost is not gone, only gone ahead. That we serve a God who turns graves into gardens.</p>
+            <p>Hold this family together, Lord. With cords that grief cannot cut and time cannot fray. Let love be the thing that survives everything else.</p>
+            <p>In the name of Jesus — Amen.</p>
+            <div class="prayer-declare-box"><p>I declare that grief will not have the last word in this family. I declare that we will find our way back to each other. I declare that the love we share is stronger than the loss we carry. And I declare that we will see them again.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prayer 7 -->
+      <div class="prayer-card" id="card-7">
+        <div class="prayer-card-head">
+          <div class="prayer-icon">💔</div>
+          <div>
+            <div class="prayer-title">Prayer for a Wayward Spouse</div>
+            <div class="prayer-subtitle">For the one still standing in the gap</div>
+          </div>
+        </div>
+        <div class="prayer-desc">For every husband and wife watching their partner drift from God, from family, or from themselves — and for every heart still standing in the gap for someone who may not yet know they need it.</div>
+        <div class="prayer-player" data-src="https://harmonyapp-audios.b-cdn.net/family-healing-prayers/fp7-Prayer-for-a-Wayward-Spouse.mp3">
+          <button class="prayer-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+          <div class="prayer-progress-wrap">
+            <div class="prayer-progress"><div class="prayer-fill"></div></div>
+            <div class="prayer-time"><span class="prayer-cur">0:00</span><span class="prayer-tot">--:--</span></div>
+          </div>
+        </div>
+        <button class="read-toggle" onclick="toggleRead(this)">
+          <span class="read-label">Read This Prayer</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="prayer-text-panel">
+          <div class="prayer-text-inner">
+            <p>There is a loneliness that exists inside a marriage that the world rarely talks about. The loneliness of lying beside someone and feeling miles away from them. Of watching the person you built your life with drift — from faith, from family, from the version of themselves you fell in love with.</p>
+            <p>Maybe they have walked away from God and taken a coldness into your home with them. Maybe they are caught in something — a habit, a bitterness, a secret — that is slowly consuming who they used to be. Maybe the drift has been so gradual you cannot even point to where it began. You only know that something is missing. And you are tired of carrying the spiritual weight of this household alone.</p>
+            <div class="prayer-verse-box"><p>1 Peter 3:1 — "Wives, in the same way submit yourselves to your own husbands so that, if any of them do not believe the word, they may be won over without words by the behavior of their wives."</p></div>
+            <p>Won over without words. Not by argument. Not by pressure. Not by one more conversation that ends in silence or conflict. But by something they cannot argue with — a life lived in quiet, faithful, unshakeable love. And for the husbands listening — that same principle holds. Love that does not quit is the most powerful sermon ever preached inside a home.</p>
+            <p>Father God — we come to You on behalf of a marriage that is carrying a weight it was never meant to carry alone. We come on behalf of a spouse who has drifted — and on behalf of the one still standing, still faithful, still hoping, still exhausted from hoping.</p>
+            <p>Lord, You see my husband. You see my wife. You see exactly where they are and exactly what has pulled them to this place. Nothing about their wandering has caught You off guard. And Your love for them has not diminished by a single degree.</p>
+            <p>We ask You to pursue them, Father. The way the shepherd left the ninety-nine to find the one. Let them feel the relentless kindness of a God who refuses to give up on them — even when they have given up on themselves.</p>
+            <p>Break through whatever has hardened around their heart. The disappointment, the doubt, the distraction, the sin that has made itself at home in the space where You used to live. Remind them of who they were before the drift began. Remind them of what they believed, what they felt, what they knew to be true in their better moments.</p>
+            <p>And Lord — sustain the one who is waiting. Give them strength that does not depend on their spouse's progress. Fill the loneliness that a drifting partner leaves behind. Let them find in You the companionship, the peace, the sense of being fully known and fully loved, that no human being can provide on their best day.</p>
+            <p>Guard their heart against bitterness. It is easy, Lord — so easy — to let the waiting turn into resentment. Protect them from that slow poison. Let their love remain clean, remain open, remain the kind that covers rather than exposes.</p>
+            <p>Bring this spouse home, Father. Back to You first. And then back to this marriage, back to this family, back to the calling that was placed on this union from the very beginning.</p>
+            <p>We believe You are working in what we cannot see. We believe this marriage is not beyond Your reach. We trust You with the one we love most in this world.</p>
+            <p>In the name of Jesus — Amen.</p>
+            <div class="prayer-declare-box"><p>I declare that my spouse is not beyond God's reach. I declare that the same Spirit that raised Christ from the dead is alive and working in their life today. I declare that this marriage carries a purpose the enemy has tried to destroy — and has failed. I will not stop believing. Not today.</p></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+    <!-- Navigation Drawer -->
+  <div id="nav-modal" onclick="closeNav()" style="display:none;position:fixed;inset:0;z-index:40;background:rgba(0,0,0,0.7);backdrop-filter:blur(6px);"></div>
+  <div id="nav-drawer" style="position:fixed;bottom:-100%;left:0;right:0;z-index:50;background:linear-gradient(160deg,#1A0A2E,#0D0618);border-top:1px solid rgba(147,51,234,0.3);border-radius:24px 24px 0 0;padding:20px 20px 50px;transition:bottom 0.3s ease;max-height:80vh;overflow-y:auto;">
+    <div style="width:36px;height:4px;background:rgba(255,255,255,0.15);border-radius:2px;margin:0 auto 20px;"></div>
+    <div style="font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#9B89B8;margin-bottom:14px;">All Modules</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <a href="7-biblical-healing-frequencies.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(255,45,138,0.08);border:1px solid rgba(255,45,138,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">📖 7 Biblical Healing Frequencies</a>
+      <a href="healing-frequencies-vault.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(255,107,43,0.08);border:1px solid rgba(255,107,43,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">🔮 Healing Frequencies Vault</a>
+      <a href="archangel-frequencies.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">👼 7 Sacred Archangel Frequencies</a>
+      <a href="divine-accelerator.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(147,51,234,0.08);border:1px solid rgba(147,51,234,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">☀️ Divine Frequencies Accelerator</a>
+      <a href="bedtime-stories.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(147,51,234,0.08);border:1px solid rgba(147,51,234,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">🛏️ Bedtime Stories</a>
+      <a href="biblical-prosperity.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">✨ Biblical Prosperity Guide</a>
+      <a href="youth-protocol.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(147,51,234,0.08);border:1px solid rgba(147,51,234,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">⚡ Youth Frequency Protocol</a>
+      <a href="special-prayer.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(255,45,138,0.08);border:1px solid rgba(255,45,138,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">🙏 Special Prayer for Rapid Healing</a>
+      <a href="ritual-home.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">⚔️ 7-Day Ritual with Archangel Michael</a>
+      <a href="family-healing-prayers.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(255,45,138,0.08);border:1px solid rgba(255,45,138,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">👪 Family Healing Prayers</a>
+    </div>
+  </div>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav" style="justify-content:space-around;">
+    <a href="home.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M12 2C8 7 3 8 3 14a9 9 0 1 0 18 0c0-6-5-7-9-12z"/></svg>
+      <span>HarmonyApp</span>
+    </a>
+    <a href="dashboard.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/></svg>
+      <span>Home</span>
+    </a>
+    <a href="support.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 3.5"/><line x1="12" y1="17" x2="12" y2="17.01"/></svg>
+      <span>Support</span>
+    </a>
+    <button onclick="openNav()" class="nav-item" style="background:none;border:none;cursor:pointer;color:var(--text-dim);font-size:10px;display:flex;flex-direction:column;align-items:center;gap:4px;padding:4px 0;flex:1;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <span>Navigation</span>
+    </button>
+  </nav>
+  <script>
+  function openNav(){document.getElementById('nav-modal').style.display='block';document.getElementById('nav-drawer').style.bottom='0';}
+  function closeNav(){document.getElementById('nav-modal').style.display='none';document.getElementById('nav-drawer').style.bottom='-100%';}
+  </script><audio id="prayer-audio" preload="none"></audio>
+
+  <script src="js/stars.js" defer></script>
+  <script type="module" src="js/authGuard.js"></script>
+  <script>
+    const audio = document.getElementById('prayer-audio');
+    const pauseSVG = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+    const playSVG  = '<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
+    const fmt = s => `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
+    let currentCard = null;
+
+    document.querySelectorAll('.prayer-player').forEach(player => {
+      const card = player.closest('.prayer-card');
+      const src = player.dataset.src;
+      const playBtn = player.querySelector('.prayer-play');
+      const bar = player.querySelector('.prayer-progress');
+      const fill = player.querySelector('.prayer-fill');
+      const curEl = player.querySelector('.prayer-cur');
+      const totEl = player.querySelector('.prayer-tot');
+
+      const probe = new Audio();
+      probe.preload = 'metadata';
+      probe.src = src;
+      probe.addEventListener('loadedmetadata', () => { totEl.textContent = fmt(probe.duration); });
+
+      playBtn.addEventListener('click', () => {
+        if (currentCard && currentCard !== card) {
+          currentCard.classList.remove('playing');
+          currentCard.querySelector('.prayer-play').innerHTML = playSVG;
+        }
+        if (audio.src !== src || audio.paused) {
+          audio.src = src;
+          audio.play();
+          card.classList.add('playing');
+          playBtn.innerHTML = pauseSVG;
+          currentCard = card;
+        } else {
+          audio.pause();
+          card.classList.remove('playing');
+          playBtn.innerHTML = playSVG;
+        }
+      });
+
+      bar.addEventListener('click', e => {
+        if (currentCard !== card || !audio.duration) return;
+        const r = bar.getBoundingClientRect();
+        audio.currentTime = ((e.clientX - r.left) / r.width) * audio.duration;
+      });
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      if (!currentCard) return;
+      const pct = (audio.currentTime / audio.duration) * 100 || 0;
+      currentCard.querySelector('.prayer-fill').style.width = pct + '%';
+      currentCard.querySelector('.prayer-cur').textContent = fmt(audio.currentTime);
+    });
+    audio.addEventListener('ended', () => {
+      if (currentCard) {
+        currentCard.classList.remove('playing');
+        currentCard.querySelector('.prayer-play').innerHTML = playSVG;
+      }
+      currentCard = null;
+    });
+
+    function toggleRead(btn) {
+      const panel = btn.nextElementSibling;
+      const isOpen = panel.classList.toggle('open');
+      btn.classList.toggle('open', isOpen);
+      btn.querySelector('.read-label').textContent = isOpen ? 'Hide This Prayer' : 'Read This Prayer';
+    }
+
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+  </script>
+</body>
+</html>

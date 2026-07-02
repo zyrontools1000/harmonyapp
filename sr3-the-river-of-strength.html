@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Holy Interruptions: Embracing Divine Detours — Harmony App</title>
+  <title>The River of Strength — Sacred Resonance — Harmony App</title>
   <meta name="theme-color" content="#0D0618" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <link rel="manifest" href="manifest.json" />
@@ -12,23 +12,47 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
   <style>
-    .scroll-page { position:relative; z-index:1; padding-bottom:110px; }
-    .scroll-hero { width:100%; max-width:500px; margin:0 auto; position:relative; aspect-ratio:16/9; overflow:hidden; }
-    .scroll-hero img { width:100%; height:100%; object-fit:cover; display:block; }
-    .scroll-hero-overlay { position:absolute; inset:0; background:linear-gradient(to bottom, rgba(13,6,24,0) 40%, rgba(13,6,24,1) 100%); }
-    .scroll-body { padding:0 20px 30px; max-width:500px; margin:0 auto; }
-    .scroll-main-title { font-family:'Cinzel',serif; font-size:21px; font-weight:700; color:#F0EAF8; margin-bottom:16px; line-height:1.3; }
-    .scroll-content p { font-size:13.5px; line-height:1.85; color:#C4B8D8; margin-bottom:14px; }
-    .scroll-content h3 { font-family:'Cinzel',serif; font-size:14.5px; font-weight:700; color:#F0EAF8; margin:24px 0 10px; line-height:1.4; }
-    .scroll-content ul { list-style:none; padding:0; margin:0 0 14px; display:flex; flex-direction:column; gap:6px; }
-    .scroll-content ul li { font-size:13.5px; line-height:1.7; color:#C4B8D8; padding-left:18px; position:relative; }
-    .scroll-content ul li::before { content:'•'; position:absolute; left:2px; color:#FF6B2B; font-weight:700; }
-    .scroll-content .scroll-label { font-weight:700; color:#F0EAF8; margin-bottom:8px; }
-    .scroll-verse { background:linear-gradient(135deg,rgba(201,168,76,0.08),rgba(109,40,217,0.1)); border:1px solid rgba(201,168,76,0.3); border-radius:14px; padding:16px 18px; margin:6px 0 16px; }
-    .scroll-verse p { font-style:italic; color:#F0EAF8; margin-bottom:0; font-size:13.5px; line-height:1.75; }
-    .scroll-closing { background:linear-gradient(135deg,rgba(255,45,138,0.08),rgba(109,40,217,0.1)); border:1px solid rgba(255,45,138,0.3); border-radius:14px; padding:18px 20px; margin-top:8px; }
-    .scroll-closing p { color:#F0EAF8; margin-bottom:0; }
-    .scroll-closing p + p { margin-top:12px; }
+    .srs-page { position:relative; z-index:1; padding-bottom:110px; }
+    .srs-body { padding:4px 20px 30px; max-width:520px; margin:0 auto; }
+
+    .srs-freq-badge {
+      display:inline-flex; align-items:center; gap:8px;
+      font-family:'Cinzel',serif; font-size:11px; letter-spacing:1px; font-weight:600;
+      color:#FFD700; background:rgba(255,215,0,0.08); border:1px solid rgba(255,215,0,0.3);
+      border-radius:20px; padding:7px 16px; margin-bottom:18px;
+    }
+    .srs-desc { font-size:13.5px; line-height:1.9; color:#C4B8D8; margin-bottom:22px; }
+
+    .srs-video-frame {
+      position:relative; width:100%; padding-top:56.25%;
+      border-radius:18px; overflow:hidden;
+      border:1px solid rgba(147,51,234,0.3);
+      box-shadow:0 8px 30px rgba(0,0,0,0.4);
+      margin-bottom:22px;
+    }
+    .srs-video-frame iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+    .read-toggle {
+      width:100%; padding:12px; border-radius:12px;
+      border:1px solid rgba(255,215,0,0.35); background:rgba(255,215,0,0.06);
+      color:var(--text); font-family:'Cinzel',serif; font-size:11px; letter-spacing:1.5px; text-transform:uppercase;
+      cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;
+      transition:background 0.2s, border-color 0.2s;
+    }
+    .read-toggle:hover { background:rgba(255,215,0,0.12); border-color:rgba(255,215,0,0.55); }
+    .read-toggle .chevron { width:14px; height:14px; transition:transform 0.25s; flex-shrink:0; }
+    .read-toggle.open .chevron { transform:rotate(180deg); }
+
+    .srs-text-panel { max-height:0; overflow:hidden; transition:max-height 0.5s ease; }
+    .srs-text-panel.open { max-height:9000px; transition:max-height 0.8s ease; }
+    .srs-text-inner { padding-top:16px; }
+    .srs-text-inner p { font-size:13.5px; line-height:1.85; color:#C4B8D8; margin-bottom:14px; }
+    .srs-verse-box {
+      background:linear-gradient(135deg,rgba(255,215,0,0.08),rgba(109,40,217,0.1));
+      border:1px solid rgba(255,215,0,0.3); border-radius:14px; padding:16px 18px; margin-bottom:16px;
+    }
+    .srs-verse-box p { font-style:italic; color:#F0EAF8; margin-bottom:0; }
+
     .back-btn-bottom { display:block; text-align:center; padding:15px 24px; border-radius:50px; background:linear-gradient(135deg,rgba(109,40,217,0.5),rgba(45,10,94,0.7)); border:1px solid rgba(147,51,234,0.4); color:#E8DFF8; font-family:'Cinzel',serif; font-size:13px; font-weight:600; letter-spacing:1.5px; text-decoration:none; margin-top:24px; }
 
     .harmony-legal-footer { position:relative; z-index:10; margin-top:40px; padding:28px 20px 20px; border-top:1px solid rgba(147,51,234,0.25); text-align:center; background:rgba(13,6,24,0.6); }
@@ -41,67 +65,56 @@
 </head>
 <body>
   <div class="stars"></div>
-  <div class="scroll-page">
+  <div class="srs-page">
+
     <header class="page-header">
-      <a href="spiritual-scrolls.html" class="back-btn">
+      <a href="sacred-resonance.html" class="back-btn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
       </a>
       <div class="page-header-text">
-        <div class="page-eyebrow">Spiritual Scrolls</div>
-        <h1 class="page-title">Holy Interruptions: Embracing Divine Detours</h1>
+        <div class="page-eyebrow" style="color:#FFD700;">Sacred Resonance</div>
+        <h1 class="page-title">The River of Strength</h1>
       </div>
     </header>
 
-    <div class="scroll-hero">
-      <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=900&h=600&fit=crop&q=80" alt="Holy Interruptions: Embracing Divine Detours" />
-      <div class="scroll-hero-overlay"></div>
-    </div>
+    <div class="srs-body">
 
-    <div class="scroll-body">
-      <h2 class="scroll-main-title">Holy Interruptions: Embracing Divine Detours</h2>
+      <div class="srs-freq-badge">✦ 396Hz — The Liberation Tone</div>
+      <p class="srs-desc">For the anxiety that has become familiar. For the grief that never fully lifted. For the emotional exhaustion that no amount of rest seems to touch. This session does not ask God to numb what you feel — it asks Him to release what you have been carrying.</p>
 
-      <div class="scroll-content">
-        <p class="scroll-label">Reframing delays and redirections as signs of God's protective timing.</p>
-        <div class="scroll-verse"><p>"Many are the plans in a person's heart, but it is the Lord's purpose that prevails." — Proverbs 19:21</p></div>
-        <p>We don't often recognize it while it's happening — but some of the most sacred moments in life come disguised as interruptions.</p>
-        <p>A canceled trip.<br>A delayed opportunity.<br>A door that once seemed wide open… suddenly shut.</p>
-        <p>It feels confusing, frustrating, even painful.</p>
-        <p>But in Heaven's perspective, it may be a divine detour — placed there to protect, redirect, or even elevate you.</p>
+      <div class="srs-video-frame">
+        <iframe
+          src="https://player.mediadelivery.net/play/680172/cd0f810a-ef55-4c66-b4de-2ec077b475e5"
+          loading="lazy"
+          allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;"
+          allowfullscreen="true"
+          title="The River of Strength"
+        ></iframe>
+      </div>
 
-        <h3>🌿 The Gift Inside the Interruption</h3>
-        <p>Sometimes the greatest acts of love from God are the ones that stop us from rushing ahead.</p>
-        <p>He sees the full road — the turns, the dangers, the unseen intersections.</p>
-        <p>And what feels like delay is often God's hand shielding you from something your eyes can't yet see.</p>
-        <div class="scroll-verse"><p>"Wait for the Lord; be strong and take heart…" — Psalm 27:14</p></div>
-
-        <h3>🔄 Detours Lead to Alignment</h3>
-        <p>Detours can feel like we're off-track. But spiritually, they often mean we're being realigned:</p>
-        <ul>
-          <li>You didn't miss your chance — God is adjusting the timing.</li>
-          <li>You didn't lose the blessing — it's being preserved for the right season.</li>
-          <li>You're not falling behind — you're being positioned for greater clarity.</li>
-        </ul>
-        <p>Realignment is rarely comfortable. But it is always meaningful.</p>
-
-        <h3>🙏 Reframing the Delay</h3>
-        <p>Next time something doesn't go as planned, pause and ask:</p>
-        <ul>
-          <li>"Is God making space for something I couldn't have imagined?"</li>
-          <li>"Could this delay be divine protection?"</li>
-          <li>"What lesson or redirection is being offered to me right now?"</li>
-        </ul>
-        <p>These questions shift your heart from anxiety to spiritual trust.</p>
-
-        <h3>🕊 Final Thought</h3>
-        <div class="scroll-closing">
-          <p>God's timing is not based on convenience — it's based on eternal vision.</p>
-          <p>The interruptions you resist may become the very doors that lead to your next breakthrough.</p>
-          <p>So walk slowly. Stay open. And trust that when the path shifts… you're still being led.</p>
-          <p>Not lost. Not forgotten. Just guided differently — for a purpose you'll one day understand.</p>
+      <button class="read-toggle" onclick="toggleRead(this)">
+        <span class="read-label">Read This Prayer</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="srs-text-panel">
+        <div class="srs-text-inner">
+          <p>Some burdens don't announce themselves anymore. They just become part of how you carry yourself. The tension in your shoulders that never fully leaves. The low hum of worry that runs beneath every ordinary moment. The grief that you have learned to live around rather than through.</p>
+          <p>You have been carrying this for a long time. And today — you are going to put some of it down.</p>
+          <div class="srs-verse-box"><p>1 Peter 5:7 — "Cast all your anxiety on Him — because He cares for you."</p></div>
+          <p>Not some of it. Not the manageable parts. All of it. That is not a suggestion. That is an invitation from a God who already knows the weight of what you are holding — and who is asking you to let Him take it.</p>
+          <p>Take a slow breath in. And as you breathe out — imagine setting something heavy on the floor in front of you. You don't have to name it perfectly. God already knows what it is.</p>
+          <p>Lord — we come to You carrying things we were never designed to carry alone. Anxiety that has become so familiar we have stopped recognizing it as a burden. Grief that settled into the bones years ago and never fully left. Emotional exhaustion that runs so deep that even rest does not reach it.</p>
+          <p>We name it before You now. Not to dwell in it — but to release it. To hand it deliberately into Your hands and trust that Your hands are strong enough to hold what ours are not.</p>
+          <p>Move through us now with this Liberation Tone, Father. Let it reach the places where fear has taken up residence. Where guilt has built a home it was never given permission to occupy. Where the weight of other people's pain has settled into our own spirit without us even realizing it happened.</p>
+          <p>Release it, Lord. Not by numbing us to what we feel — but by lifting what we were never meant to feel alone. Restore the lightness that belongs to a spirit that is truly free.</p>
+          <p>We declare that anxiety is not our inheritance. Fear is not our identity. Emotional exhaustion is not our destiny. We were made for a freedom that the world did not give us — and that the world cannot take away.</p>
+          <p>And we receive that freedom now. In this moment. In this room. In this body that has been holding on for far too long.</p>
+          <p>In the name of Jesus — Amen.</p>
+          <p>Breathe. Whatever just shifted — let it go. You don't have to pick it back up.</p>
         </div>
       </div>
 
-      <a href="spiritual-scrolls.html" class="back-btn-bottom">← Back to Spiritual Scrolls</a>
+      <a href="sacred-resonance.html" class="back-btn-bottom">← Back to Sacred Resonance</a>
     </div>
   </div>
 
@@ -152,7 +165,15 @@
   </script>
   <script src="js/stars.js" defer></script>
   <script type="module" src="js/authGuard.js"></script>
-  <script>if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+  <script>
+    function toggleRead(btn) {
+      const panel = btn.nextElementSibling;
+      const isOpen = panel.classList.toggle('open');
+      btn.classList.toggle('open', isOpen);
+      btn.querySelector('.read-label').textContent = isOpen ? 'Hide This Prayer' : 'Read This Prayer';
+    }
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+  </script>
 
   <!-- Legal Footer -->
   <footer class="harmony-legal-footer">

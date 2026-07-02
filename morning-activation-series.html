@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Morning Activation Series — Harmony App</title>
+  <meta name="theme-color" content="#0D0618" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .activation-page { position:relative; z-index:1; padding-bottom:110px; }
+    .activation-hero { width:100%; max-width:500px; margin:0 auto; position:relative; aspect-ratio:16/9; overflow:hidden; }
+    .activation-hero img { width:100%; height:100%; object-fit:cover; display:block; }
+    .activation-hero-overlay { position:absolute; inset:0; background:linear-gradient(to bottom, rgba(13,6,24,0) 40%, rgba(13,6,24,1) 100%); }
+    .activation-body { padding:4px 20px 30px; max-width:500px; margin:0 auto; }
+
+    .activation-card {
+      background:linear-gradient(135deg,rgba(45,10,94,0.5),rgba(13,6,24,0.6));
+      border:1px solid var(--border); border-radius:18px;
+      padding:20px; margin-bottom:18px;
+    }
+    .activation-card-head { display:flex; gap:12px; align-items:flex-start; margin-bottom:12px; }
+    .activation-icon {
+      width:44px; height:44px; border-radius:12px; flex-shrink:0;
+      background:linear-gradient(135deg,rgba(255,45,138,0.2),rgba(109,40,217,0.2));
+      border:1px solid rgba(255,45,138,0.3);
+      display:flex; align-items:center; justify-content:center;
+      font-size:20px; box-shadow:0 0 16px rgba(255,45,138,0.2);
+    }
+    .activation-title { font-family:'Cinzel',serif; font-size:14.5px; font-weight:700; line-height:1.35; }
+    .activation-subtitle { font-size:11.5px; color:var(--text-muted); margin-top:3px; }
+    .activation-desc { font-size:13px; line-height:1.75; color:var(--text-muted); margin-bottom:16px; }
+
+    .activation-player { display:flex; align-items:center; gap:12px; margin-bottom:14px; }
+    .activation-play {
+      flex-shrink:0; width:40px; height:40px; border-radius:50%; border:none;
+      background:linear-gradient(135deg,var(--grad-start),var(--grad-mid));
+      color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer;
+      box-shadow:0 0 14px rgba(255,45,138,0.3); transition:transform 0.15s, box-shadow 0.2s;
+    }
+    .activation-play:hover { transform:scale(1.06); box-shadow:0 0 20px rgba(255,45,138,0.5); }
+    .activation-play svg { width:16px; height:16px; margin-left:2px; }
+    .activation-card.playing .activation-play { background:linear-gradient(135deg,var(--grad-mid),var(--grad-end)); }
+    .activation-progress-wrap { flex:1; min-width:0; }
+    .activation-progress { width:100%; height:4px; border-radius:2px; background:rgba(255,255,255,0.1); cursor:pointer; margin-bottom:5px; }
+    .activation-fill { height:100%; border-radius:2px; width:0%; background:linear-gradient(90deg,var(--grad-start),var(--grad-mid)); pointer-events:none; }
+    .activation-time { display:flex; justify-content:space-between; font-size:10.5px; color:var(--text-muted); }
+
+    .read-toggle {
+      width:100%; padding:12px; border-radius:12px;
+      border:1px solid rgba(147,51,234,0.35); background:rgba(147,51,234,0.08);
+      color:var(--text); font-family:'Cinzel',serif; font-size:11px; letter-spacing:1.5px; text-transform:uppercase;
+      cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;
+      transition:background 0.2s, border-color 0.2s;
+    }
+    .read-toggle:hover { background:rgba(147,51,234,0.16); border-color:rgba(255,45,138,0.4); }
+    .read-toggle .chevron { width:14px; height:14px; transition:transform 0.25s; flex-shrink:0; }
+    .read-toggle.open .chevron { transform:rotate(180deg); }
+
+    .activation-text-panel { max-height:0; overflow:hidden; transition:max-height 0.5s ease; }
+    .activation-text-panel.open { max-height:2000px; transition:max-height 0.8s ease; }
+    .activation-text-inner { padding-top:16px; display:flex; flex-direction:column; gap:4px; }
+
+    .affirmation-item { display:flex; gap:12px; align-items:flex-start; padding:11px 0; border-bottom:1px solid rgba(147,51,234,0.12); }
+    .affirmation-item:last-child { border-bottom:none; padding-bottom:0; }
+    .affirmation-num {
+      flex-shrink:0; width:24px; height:24px; border-radius:50%;
+      background:linear-gradient(135deg,var(--grad-start),var(--grad-mid));
+      color:#fff; font-family:'Cinzel',serif; font-size:11px; font-weight:700;
+      display:flex; align-items:center; justify-content:center;
+      box-shadow:0 0 10px rgba(255,45,138,0.25);
+    }
+    .affirmation-text { font-size:13.5px; line-height:1.75; color:#C4B8D8; padding-top:2px; }
+
+    /* Frequency card — visually distinct, gold/amber accent */
+    .frequency-section-label {
+      font-family:'Cinzel',serif; font-size:11px; letter-spacing:2px; text-transform:uppercase;
+      color:#C9A84C; margin:6px 0 12px; display:flex; align-items:center; gap:8px;
+    }
+    .frequency-section-label::before, .frequency-section-label::after {
+      content:''; flex:1; height:1px; background:linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent);
+    }
+    .frequency-card {
+      background:linear-gradient(135deg,rgba(201,168,76,0.1),rgba(13,6,24,0.7));
+      border:1px solid rgba(201,168,76,0.4); border-radius:18px;
+      padding:20px; margin-bottom:8px;
+      box-shadow:0 0 24px rgba(201,168,76,0.1);
+    }
+    .frequency-card-head { display:flex; gap:12px; align-items:flex-start; margin-bottom:12px; }
+    .frequency-icon {
+      width:44px; height:44px; border-radius:12px; flex-shrink:0;
+      background:linear-gradient(135deg,rgba(201,168,76,0.25),rgba(255,107,43,0.15));
+      border:1px solid rgba(201,168,76,0.4);
+      display:flex; align-items:center; justify-content:center;
+      font-size:20px; box-shadow:0 0 16px rgba(201,168,76,0.25);
+    }
+    .frequency-title { font-family:'Cinzel',serif; font-size:14.5px; font-weight:700; line-height:1.35; color:#F0EAF8; }
+    .frequency-subtitle { font-size:11.5px; color:#9B89B8; margin-top:3px; line-height:1.5; }
+    .frequency-tag {
+      display:inline-flex; align-items:center; gap:6px;
+      font-family:'Cinzel',serif; font-size:11px; font-weight:600; letter-spacing:0.5px;
+      color:#C9A84C; background:rgba(201,168,76,0.1); border:1px solid rgba(201,168,76,0.3);
+      border-radius:20px; padding:6px 14px; margin-bottom:16px;
+    }
+    .frequency-player { display:flex; align-items:center; gap:12px; }
+    .frequency-play {
+      flex-shrink:0; width:40px; height:40px; border-radius:50%; border:none;
+      background:linear-gradient(135deg,#C9A84C,#FF6B2B);
+      color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer;
+      box-shadow:0 0 14px rgba(201,168,76,0.35); transition:transform 0.15s, box-shadow 0.2s;
+    }
+    .frequency-play:hover { transform:scale(1.06); box-shadow:0 0 20px rgba(201,168,76,0.55); }
+    .frequency-play svg { width:16px; height:16px; margin-left:2px; }
+    .frequency-card.playing .frequency-play { background:linear-gradient(135deg,#FF6B2B,#C9A84C); }
+    .frequency-progress-wrap { flex:1; min-width:0; }
+    .frequency-progress { width:100%; height:4px; border-radius:2px; background:rgba(255,255,255,0.1); cursor:pointer; margin-bottom:5px; }
+    .frequency-fill { height:100%; border-radius:2px; width:0%; background:linear-gradient(90deg,#C9A84C,#FF6B2B); pointer-events:none; }
+    .frequency-time { display:flex; justify-content:space-between; font-size:10.5px; color:var(--text-muted); }
+
+    .harmony-legal-footer { position:relative; z-index:10; margin-top:40px; padding:28px 20px 20px; border-top:1px solid rgba(147,51,234,0.25); text-align:center; background:rgba(13,6,24,0.6); }
+    .harmony-legal-footer .footer-links { display:flex; flex-wrap:wrap; justify-content:center; gap:6px 18px; margin-bottom:14px; }
+    .harmony-legal-footer .footer-links a { font-family:'Raleway',sans-serif; font-size:12px; color:#a090b8; text-decoration:none; transition:color 0.2s; }
+    .harmony-legal-footer .footer-links a:hover { color:#FFD700; }
+    .harmony-legal-footer .footer-copy { font-family:'Raleway',sans-serif; font-size:11px; color:#6b5a80; margin-bottom:12px; }
+    .harmony-legal-footer .disclaimer-bar { background:rgba(107,33,168,0.10); border:1px solid rgba(147,51,234,0.2); border-radius:10px; padding:12px 18px; font-family:'Raleway',sans-serif; font-size:11px; color:#7a6a90; line-height:1.6; max-width:600px; margin:0 auto; }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="activation-page">
+
+    <header class="page-header">
+      <a href="dashboard.html" class="back-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </a>
+      <div class="page-header-text">
+        <div class="page-eyebrow">Sacred Bonus</div>
+        <h1 class="page-title">Morning Activation Series</h1>
+      </div>
+    </header>
+
+    <div class="activation-hero">
+      <img src="images/modules/morningactivation.jpg" alt="Morning Activation Series" />
+      <div class="activation-hero-overlay"></div>
+    </div>
+
+    <p class="page-intro">Start your day in sacred alignment. These morning activations were created for the moments that matter most — when you wake up anxious, when the day ahead feels heavy, or when silence makes you feel alone. Three minutes with God in the morning changes everything that follows.</p>
+
+    <div class="activation-body">
+
+      <!-- Activation 1 -->
+      <div class="activation-card" id="card-1">
+        <div class="activation-card-head">
+          <div class="activation-icon">🌅</div>
+          <div>
+            <div class="activation-title">When You Wake Up Anxious</div>
+            <div class="activation-subtitle">To breathe faith back in, and ease back out</div>
+          </div>
+        </div>
+        <div class="activation-desc">For the mornings when worry arrives before you do. This activation was made for the days your heart feels heavy before they even begin — to breathe faith back in, and ease back out.</div>
+        <div class="activation-player" data-src="https://harmonyapp-audios.b-cdn.net/morning-activation-series/mas1-When-You-Wake-Up-Anxious.mp3">
+          <button class="activation-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+          <div class="activation-progress-wrap">
+            <div class="activation-progress"><div class="activation-fill"></div></div>
+            <div class="activation-time"><span class="activation-cur">0:00</span><span class="activation-tot">--:--</span></div>
+          </div>
+        </div>
+        <button class="read-toggle" onclick="toggleRead(this)">
+          <span class="read-label">Read Affirmations</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="activation-text-panel">
+          <div class="activation-text-inner">
+            <div class="affirmation-item"><div class="affirmation-num">1</div><div class="affirmation-text">I do not carry this day alone. God went before me into this morning before I even opened my eyes.</div></div>
+            <div class="affirmation-item"><div class="affirmation-num">2</div><div class="affirmation-text">Anxiety is not my identity. I am a child of God — held, sustained, and not moved.</div></div>
+            <div class="affirmation-item"><div class="affirmation-num">3</div><div class="affirmation-text">Every worry I release makes room for a peace that surpasses anything I could manufacture on my own.</div></div>
+            <div class="affirmation-item"><div class="affirmation-num">4</div><div class="affirmation-text">This feeling is temporary. God's presence in my life is permanent.</div></div>
+            <div class="affirmation-item"><div class="affirmation-num">5</div><div class="affirmation-text">I choose faith over fear — not because I have all the answers, but because I trust the One who does.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Activation 2 -->
+      <div class="activation-card" id="card-2">
+        <div class="activation-card-head">
+          <div class="activation-icon">💪</div>
+          <div>
+            <div class="activation-title">When You Need Strength for the Day</div>
+            <div class="activation-subtitle">Strength that flows through you, not from you</div>
+          </div>
+        </div>
+        <div class="activation-desc">For the days that ask more of you than you feel you have. This activation will fill you before you face them — with the strength that doesn't come from you, but flows through you.</div>
+        <div class="activation-player" data-src="https://harmonyapp-audios.b-cdn.net/morning-activation-series/mas2-When-You-Need-Strength-for-the-Day.mp3">
+          <button class="activation-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+          <div class="activation-progress-wrap">
+            <div class="activation-progress"><div class="activation-fill"></div></div>
+            <div class="activation-time"><span class="activation-cur">0:00</span><span class="activation-tot">--:--</span></div>
+          </div>
+        </div>
+        <button class="read-toggle" onclick="toggleRead(this)">
+          <span class="read-label">Read Affirmations</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="activation-text-panel">
+          <div class="activation-text-inner">
+            <div class="affirmation-item"><div class="affirmation-num">1</div><div class="affirmation-text">I am not expected to face today in my own strength. Divine strength is available to me right now.</div></div>
+            <div class="affirmation-item"><div class="affirmation-num">2</div><div class="affirmation-text">What lies ahead of me today is already known by God — and He has already prepared the way.</div></div>
+            <div class="affirmation-item"><div class="affirmation-num">3</div><div class="affirmation-text">I am not too weak for this day. I am exactly where God can show Himself strong on my behalf.</div></div>
+            <div class="affirmation-item"><div class="affirmation-num">4</div><div class="affirmation-text">Every hard moment I will face today has already been covered by grace I haven't even needed yet.</div></div>
+            <div class="affirmation-item"><div class="affirmation-num">5</div><div class="affirmation-text">I rise today as someone who is equipped, guided, and accompanied by the living God.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Activation 3 -->
+      <div class="activation-card" id="card-3">
+        <div class="activation-card-head">
+          <div class="activation-icon">🕊️</div>
+          <div>
+            <div class="activation-title">When You Feel Lonely or Forgotten</div>
+            <div class="activation-subtitle">You have not been left. Not for a moment.</div>
+          </div>
+        </div>
+        <div class="activation-desc">For the mornings that feel too quiet. This activation is for every heart that wakes up feeling unseen, unremembered, or alone — and needs to be reminded that God has not taken His eyes off you for a single moment.</div>
+        <div class="activation-player" data-src="https://harmonyapp-audios.b-cdn.net/morning-activation-series/mas3-When-You-Feel-Lonely-or-Forgotten.mp3">
+          <button class="activation-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+          <div class="activation-progress-wrap">
+            <div class="activation-progress"><div class="activation-fill"></div></div>
+            <div class="activation-time"><span class="activation-cur">0:00</span><span class="activation-tot">--:--</span></div>
+          </div>
+        </div>
+        <button class="read-toggle" onclick="toggleRead(this)">
+          <span class="read-label">Read Affirmations</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="activation-text-panel">
+          <div class="activation-text-inner">
+            <div class="affirmation-item"><div class="affirmation-num">1</div><div class="affirmation-text">I am not invisible. God sees me completely — and what He sees, He loves without condition.</div></div>
+            <div class="affirmation-item"><div class="affirmation-num">2</div><div class="affirmation-text">This quiet morning is not emptiness. It is sacred space where God and I are alone together.</div></div>
+            <div class="affirmation-item"><div class="affirmation-num">3</div><div class="affirmation-text">I am known by name in heaven. I am thought of. I am remembered. I am never truly alone.</div></div>
+            <div class="affirmation-item"><div class="affirmation-num">4</div><div class="affirmation-text">The loneliness I feel is real — but it is not the truth. The truth is that I am permanently accompanied by a God who does not leave.</div></div>
+            <div class="affirmation-item"><div class="affirmation-num">5</div><div class="affirmation-text">I open this day knowing I am seen, chosen, and deeply loved — by the One whose love never runs out.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="frequency-section-label">Frequency Activation</div>
+
+      <!-- Frequency Card -->
+      <div class="frequency-card" id="card-freq">
+        <div class="frequency-card-head">
+          <div class="frequency-icon">🎵</div>
+          <div>
+            <div class="frequency-title">Sacred Morning Frequency — Divine Energy Activation</div>
+            <div class="frequency-subtitle">A sacred tone to energize your spirit and align your frequency with God's presence</div>
+          </div>
+        </div>
+        <div class="frequency-tag">✨ 528Hz — The Miracle Tone</div>
+        <div class="frequency-player" data-src="https://harmonyapp-audios.b-cdn.net/morning-activation-series/masf1-528Hz-MiracleTone.mp3">
+          <button class="frequency-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+          <div class="frequency-progress-wrap">
+            <div class="frequency-progress"><div class="frequency-fill"></div></div>
+            <div class="frequency-time"><span class="frequency-cur">0:00</span><span class="frequency-tot">--:--</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+    <!-- Navigation Drawer -->
+  <div id="nav-modal" onclick="closeNav()" style="display:none;position:fixed;inset:0;z-index:40;background:rgba(0,0,0,0.7);backdrop-filter:blur(6px);"></div>
+  <div id="nav-drawer" style="position:fixed;bottom:-100%;left:0;right:0;z-index:50;background:linear-gradient(160deg,#1A0A2E,#0D0618);border-top:1px solid rgba(147,51,234,0.3);border-radius:24px 24px 0 0;padding:20px 20px 50px;transition:bottom 0.3s ease;max-height:80vh;overflow-y:auto;">
+    <div style="width:36px;height:4px;background:rgba(255,255,255,0.15);border-radius:2px;margin:0 auto 20px;"></div>
+    <div style="font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#9B89B8;margin-bottom:14px;">All Modules</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <a href="7-biblical-healing-frequencies.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(255,45,138,0.08);border:1px solid rgba(255,45,138,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">📖 7 Biblical Healing Frequencies</a>
+      <a href="healing-frequencies-vault.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(255,107,43,0.08);border:1px solid rgba(255,107,43,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">🔮 Healing Frequencies Vault</a>
+      <a href="archangel-frequencies.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">👼 7 Sacred Archangel Frequencies</a>
+      <a href="divine-accelerator.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(147,51,234,0.08);border:1px solid rgba(147,51,234,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">☀️ Divine Frequencies Accelerator</a>
+      <a href="bedtime-stories.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(147,51,234,0.08);border:1px solid rgba(147,51,234,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">🛏️ Bedtime Stories</a>
+      <a href="biblical-prosperity.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">✨ Biblical Prosperity Guide</a>
+      <a href="youth-protocol.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(147,51,234,0.08);border:1px solid rgba(147,51,234,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">⚡ Youth Frequency Protocol</a>
+      <a href="special-prayer.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(255,45,138,0.08);border:1px solid rgba(255,45,138,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">🙏 Special Prayer for Rapid Healing</a>
+      <a href="ritual-home.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">⚔️ 7-Day Ritual with Archangel Michael</a>
+      <a href="family-healing-prayers.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(255,45,138,0.08);border:1px solid rgba(255,45,138,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">👪 Family Healing Prayers</a>
+      <a href="spiritual-scrolls.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(147,51,234,0.08);border:1px solid rgba(147,51,234,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">📜 Spiritual Scrolls</a>
+      <a href="morning-activation-series.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">🌅 Morning Activation Series</a>
+    </div>
+  </div>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav" style="justify-content:space-around;">
+    <a href="home.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M12 2C8 7 3 8 3 14a9 9 0 1 0 18 0c0-6-5-7-9-12z"/></svg>
+      <span>HarmonyApp</span>
+    </a>
+    <a href="dashboard.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/></svg>
+      <span>Home</span>
+    </a>
+    <a href="support.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 3.5"/><line x1="12" y1="17" x2="12" y2="17.01"/></svg>
+      <span>Support</span>
+    </a>
+    <button onclick="openNav()" class="nav-item" style="background:none;border:none;cursor:pointer;color:var(--text-dim);font-size:10px;display:flex;flex-direction:column;align-items:center;gap:4px;padding:4px 0;flex:1;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <span>Navigation</span>
+    </button>
+  </nav>
+  <script>
+  function openNav(){document.getElementById('nav-modal').style.display='block';document.getElementById('nav-drawer').style.bottom='0';}
+  function closeNav(){document.getElementById('nav-modal').style.display='none';document.getElementById('nav-drawer').style.bottom='-100%';}
+  </script><audio id="activation-audio" preload="none"></audio>
+
+  <script src="js/stars.js" defer></script>
+  <script type="module" src="js/authGuard.js"></script>
+  <script>
+    const audio = document.getElementById('activation-audio');
+    const pauseSVG = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+    const playSVG  = '<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
+    const fmt = s => `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
+    let currentCard = null;
+
+    function wirePlayer(player, opts) {
+      const card = player.closest(opts.cardSelector);
+      const src = player.dataset.src;
+      const playBtn = player.querySelector(opts.playSelector);
+      const bar = player.querySelector(opts.barSelector);
+      const fill = player.querySelector(opts.fillSelector);
+      const curEl = player.querySelector(opts.curSelector);
+      const totEl = player.querySelector(opts.totSelector);
+
+      const probe = new Audio();
+      probe.preload = 'metadata';
+      probe.src = src;
+      probe.addEventListener('loadedmetadata', () => { totEl.textContent = fmt(probe.duration); });
+
+      playBtn.addEventListener('click', () => {
+        if (currentCard && currentCard.card !== card) {
+          currentCard.card.classList.remove('playing');
+          currentCard.card.querySelector(currentCard.playSelector).innerHTML = playSVG;
+        }
+        if (audio.src !== src || audio.paused) {
+          audio.src = src;
+          audio.play();
+          card.classList.add('playing');
+          playBtn.innerHTML = pauseSVG;
+          currentCard = { card, fillSelector: opts.fillSelector, curSelector: opts.curSelector, playSelector: opts.playSelector };
+        } else {
+          audio.pause();
+          card.classList.remove('playing');
+          playBtn.innerHTML = playSVG;
+          currentCard = null;
+        }
+      });
+
+      bar.addEventListener('click', e => {
+        if (!currentCard || currentCard.card !== card || !audio.duration) return;
+        const r = bar.getBoundingClientRect();
+        audio.currentTime = ((e.clientX - r.left) / r.width) * audio.duration;
+      });
+    }
+
+    document.querySelectorAll('.activation-player').forEach(player => {
+      wirePlayer(player, {
+        cardSelector: '.activation-card',
+        playSelector: '.activation-play',
+        barSelector: '.activation-progress',
+        fillSelector: '.activation-fill',
+        curSelector: '.activation-cur',
+        totSelector: '.activation-tot'
+      });
+    });
+    document.querySelectorAll('.frequency-player').forEach(player => {
+      wirePlayer(player, {
+        cardSelector: '.frequency-card',
+        playSelector: '.frequency-play',
+        barSelector: '.frequency-progress',
+        fillSelector: '.frequency-fill',
+        curSelector: '.frequency-cur',
+        totSelector: '.frequency-tot'
+      });
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      if (!currentCard) return;
+      const pct = (audio.currentTime / audio.duration) * 100 || 0;
+      currentCard.card.querySelector(currentCard.fillSelector).style.width = pct + '%';
+      currentCard.card.querySelector(currentCard.curSelector).textContent = fmt(audio.currentTime);
+    });
+    audio.addEventListener('ended', () => {
+      if (currentCard) {
+        currentCard.card.classList.remove('playing');
+        currentCard.card.querySelector(currentCard.playSelector).innerHTML = playSVG;
+      }
+      currentCard = null;
+    });
+
+    function toggleRead(btn) {
+      const panel = btn.nextElementSibling;
+      const isOpen = panel.classList.toggle('open');
+      btn.classList.toggle('open', isOpen);
+      btn.querySelector('.read-label').textContent = isOpen ? 'Hide Affirmations' : 'Read Affirmations';
+    }
+
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+  </script>
+
+  <!-- Legal Footer -->
+  <footer class="harmony-legal-footer">
+    <div class="footer-links">
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="refund-policy.html">Refund Policy</a>
+      <a href="support.html">Support</a>
+    </div>
+    <p class="footer-copy">© 2026 HarmonyApp · All rights reserved</p>
+    <div class="disclaimer-bar">
+      HarmonyApp is a spiritual experience for personal reflection and faith. Not intended to diagnose, treat, cure, or prevent any disease or medical condition. Consult a healthcare professional for medical advice.
+    </div>
+  </footer>
+</body>
+</html>

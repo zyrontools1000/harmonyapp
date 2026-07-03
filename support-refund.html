@@ -50,7 +50,19 @@
     .success-msg { display:none; text-align:center; padding:24px; background:rgba(109,40,217,0.12); border:1px solid rgba(147,51,234,0.3); border-radius:14px; }
     .success-msg h3 { font-family:'Cinzel',serif; color:#F0EAF8; margin-bottom:8px; }
     .success-msg p { font-size:13px; color:#C4B8D8; line-height:1.7; }
-  </style>
+  
+    /* bottom-nav overlay fix */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+    body {
+      padding-bottom: calc(80px + env(safe-area-inset-bottom));
+    }
+</style>
 </head>
 <body>
   <div class="stars"></div>

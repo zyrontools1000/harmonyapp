@@ -71,7 +71,19 @@
     .day-title { font-family:'Cinzel',serif; font-size:13px; font-weight:600; margin-bottom:3px; }
     .day-sub { font-size:11px; color:#9B89B8; }
     .day-arrow svg { width:16px; height:16px; color:#9B89B8; }
-  </style>
+  
+    /* bottom-nav overlay fix */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+    body {
+      padding-bottom: calc(80px + env(safe-area-inset-bottom));
+    }
+</style>
 </head>
 <body>
   <div class="stars"></div>

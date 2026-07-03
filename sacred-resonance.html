@@ -12,43 +12,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
   <style>
-    .sr-page { position:relative; z-index:1; padding-bottom:110px; }
+    .sr-page { position:relative; z-index:1; padding-bottom:calc(80px + env(safe-area-inset-bottom)); }
     .sr-body { padding:0 20px 30px; max-width:520px; margin:0 auto; }
 
     .sr-hero { text-align:center; padding:10px 10px 30px; }
     .sr-hero-sub { font-family:'Raleway',sans-serif; font-style:italic; font-size:13px; letter-spacing:0.5px; color:rgba(255,215,0,0.8); margin-bottom:18px; }
     .sr-hero-desc { font-size:13.5px; line-height:1.9; color:#C4B8D8; max-width:440px; margin:0 auto; }
-
-    /* Intro video placeholder */
-    .sr-video-placeholder {
-      position:relative; border-radius:22px; overflow:hidden;
-      border:1px solid rgba(255,215,0,0.3);
-      background:linear-gradient(150deg, rgba(45,10,94,0.55), rgba(13,6,24,0.9));
-      aspect-ratio:16/9; margin:0 0 22px;
-      display:flex; flex-direction:column; align-items:center; justify-content:center;
-      text-align:center; padding:30px;
-      box-shadow:0 0 40px rgba(255,215,0,0.08), inset 0 0 60px rgba(107,33,168,0.15);
-    }
-    .sr-video-placeholder::before {
-      content:''; position:absolute; inset:0;
-      background:radial-gradient(circle at 50% 45%, rgba(255,215,0,0.08), transparent 65%);
-      pointer-events:none;
-    }
-    .sr-play-icon {
-      position:relative; width:56px; height:56px; border-radius:50%;
-      border:1px solid rgba(255,215,0,0.4);
-      background:rgba(255,215,0,0.06);
-      display:flex; align-items:center; justify-content:center;
-      margin-bottom:16px; box-shadow:0 0 24px rgba(255,215,0,0.15);
-    }
-    .sr-play-icon svg { width:20px; height:20px; color:#FFD700; margin-left:2px; }
-    .sr-video-title { position:relative; font-family:'Cinzel',serif; font-size:15px; font-weight:700; color:#F0EAF8; margin-bottom:8px; letter-spacing:0.5px; }
-    .sr-video-badge {
-      position:relative; display:inline-block; font-family:'Cinzel',serif; font-size:9.5px; letter-spacing:2px; text-transform:uppercase;
-      color:#FFD700; background:rgba(255,215,0,0.08); border:1px solid rgba(255,215,0,0.3);
-      border-radius:20px; padding:5px 14px; margin-bottom:14px;
-    }
-    .sr-video-note { position:relative; font-size:12.5px; line-height:1.7; color:#9B89B8; max-width:320px; }
 
     /* Guide card */
     .sr-guide-card {
@@ -125,7 +94,19 @@
     .harmony-legal-footer .footer-links a:hover { color:#FFD700; }
     .harmony-legal-footer .footer-copy { font-family:'Raleway',sans-serif; font-size:11px; color:#6b5a80; margin-bottom:12px; }
     .harmony-legal-footer .disclaimer-bar { background:rgba(107,33,168,0.10); border:1px solid rgba(147,51,234,0.2); border-radius:10px; padding:12px 18px; font-family:'Raleway',sans-serif; font-size:11px; color:#7a6a90; line-height:1.6; max-width:600px; margin:0 auto; }
-  </style>
+  
+    /* bottom-nav overlay fix */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+    body {
+      padding-bottom: calc(80px + env(safe-area-inset-bottom));
+    }
+</style>
 </head>
 <body>
   <div class="stars"></div>
@@ -148,14 +129,15 @@
         <p class="sr-hero-desc">Seven sessions, each pairing a biblical prayer with a sacred healing frequency — a channel through which God's healing can move into every part of who you are.</p>
       </div>
 
-      <!-- Introduction video placeholder -->
-      <div class="sr-video-placeholder">
-        <div class="sr-play-icon">
-          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-        </div>
-        <div class="sr-video-title">The Sacred Resonance Introduction</div>
-        <div class="sr-video-badge">Coming Soon</div>
-        <div class="sr-video-note">Introduction video coming soon — begin your journey below.</div>
+      <!-- Introduction video -->
+      <div style="position:relative;padding-top:56.25%;border-radius:16px;overflow:hidden;margin:0 0 22px;">
+        <iframe
+          src="https://iframe.mediadelivery.net/embed/680172/599b274a-bd73-49c7-b3c6-d164a5a8386f?autoplay=false&loop=false&muted=false&preload=true&responsive=true"
+          loading="lazy"
+          style="border:0;position:absolute;top:0;height:100%;width:100%;"
+          allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;"
+          allowfullscreen="true">
+        </iframe>
       </div>
 
       <!-- Guide button -->

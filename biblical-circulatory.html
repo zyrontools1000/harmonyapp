@@ -116,7 +116,19 @@
     ul.how-list li::before {
       content:'✦'; color:#9333EA; flex-shrink:0; font-size:10px; margin-top:4px;
     }
-  </style>
+  
+    /* bottom-nav overlay fix */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+    body {
+      padding-bottom: calc(80px + env(safe-area-inset-bottom));
+    }
+</style>
 </head>
 <body>
   <div class="stars"></div>

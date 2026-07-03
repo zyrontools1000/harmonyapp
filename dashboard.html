@@ -156,7 +156,19 @@
       background: linear-gradient(90deg, transparent, rgba(147,51,234,0.2), transparent);
       margin: 4px 20px 32px;
     }
-  </style>
+  
+    /* bottom-nav overlay fix */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+    body {
+      padding-bottom: calc(80px + env(safe-area-inset-bottom));
+    }
+</style>
 </head>
 <body>
   <div class="stars"></div>

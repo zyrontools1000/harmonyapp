@@ -33,7 +33,19 @@
     .complete-btn { display:block; text-align:center; padding:18px 24px; border-radius:50px; background:linear-gradient(135deg,#C9A84C,#FFD700,#C9A84C); background-size:200% auto; color:#1a0e00; font-family:'Cinzel',serif; font-size:14px; font-weight:700; letter-spacing:2px; text-decoration:none; box-shadow:0 0 30px rgba(201,168,76,0.5); animation:shimmer 3s linear infinite; margin-bottom:12px; }
     @keyframes shimmer { 0%{background-position:0% center;} 100%{background-position:200% center;} }
     .back-link { display:block; text-align:center; padding:14px; border-radius:50px; border:1px solid rgba(147,51,234,0.3); color:#9B89B8; font-family:'Cinzel',serif; font-size:12px; letter-spacing:1.5px; text-decoration:none; }
-  </style>
+  
+    /* bottom-nav overlay fix */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+    body {
+      padding-bottom: calc(80px + env(safe-area-inset-bottom));
+    }
+</style>
 </head>
 <body>
   <div class="stars"></div>

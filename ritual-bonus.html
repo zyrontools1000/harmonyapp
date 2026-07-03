@@ -23,7 +23,19 @@
     .bonus-desc { font-size:13.5px; color:#C4B8D8; line-height:1.8; margin-bottom:14px; }
     .btn-gold { display:block; text-align:center; padding:14px 24px; border-radius:50px; background:linear-gradient(135deg,#C9A84C,#FFD700); color:#1a0e00; font-family:'Cinzel',serif; font-size:12px; font-weight:700; letter-spacing:2px; text-decoration:none; box-shadow:0 0 20px rgba(201,168,76,0.4); }
     .audio-wrap { background:rgba(0,0,0,0.3); border-radius:12px; padding:4px; overflow:hidden; }
-  </style>
+  
+    /* bottom-nav overlay fix */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+    body {
+      padding-bottom: calc(80px + env(safe-area-inset-bottom));
+    }
+</style>
 </head>
 <body>
   <div class="stars"></div>

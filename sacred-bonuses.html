@@ -23,6 +23,19 @@
   />
 
   <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    /* bottom-nav overlay fix */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+    body {
+      padding-bottom: calc(80px + env(safe-area-inset-bottom));
+    }
+  </style>
 </head>
 <body>
   <div class="stars"></div>

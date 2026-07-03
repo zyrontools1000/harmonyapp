@@ -42,7 +42,19 @@
     .check-list li::before { content:'✓'; color:#C9A84C; flex-shrink:0; font-weight:700; }
     .best-card { background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.07); border-radius:14px; padding:18px 20px; margin-bottom:20px; }
     .back-btn-bottom { display:block; text-align:center; padding:15px 24px; border-radius:50px; background:linear-gradient(135deg,rgba(109,40,217,0.5),rgba(45,10,94,0.7)); border:1px solid rgba(147,51,234,0.4); color:#E8DFF8; font-family:'Cinzel',serif; font-size:13px; font-weight:600; letter-spacing:1.5px; text-decoration:none; }
-  </style>
+  
+    /* bottom-nav overlay fix */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+    body {
+      padding-bottom: calc(80px + env(safe-area-inset-bottom));
+    }
+</style>
 </head>
 <body>
   <div class="stars"></div>

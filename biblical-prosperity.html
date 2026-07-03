@@ -65,7 +65,19 @@
     .closing-quote { text-align:center; padding:20px; background:rgba(201,168,76,0.05); border:1px solid rgba(201,168,76,0.2); border-radius:14px; margin-bottom:4px; }
     .closing-text { font-size:14px; color:#F0EAF8; font-style:italic; line-height:1.8; margin-bottom:8px; }
     .closing-emoji { font-size:20px; }
-  </style>
+  
+    /* bottom-nav overlay fix */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+    body {
+      padding-bottom: calc(80px + env(safe-area-inset-bottom));
+    }
+</style>
 </head>
 <body>
   <div class="stars"></div>

@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
   <style>
-    .activation-page { position:relative; z-index:1; padding-bottom:110px; }
+    .activation-page { position:relative; z-index:1; padding-bottom:calc(80px + env(safe-area-inset-bottom)); }
     .activation-hero { width:100%; max-width:500px; margin:0 auto; position:relative; aspect-ratio:16/9; overflow:hidden; }
     .activation-hero img { width:100%; height:100%; object-fit:cover; display:block; }
     .activation-hero-overlay { position:absolute; inset:0; background:linear-gradient(to bottom, rgba(13,6,24,0) 40%, rgba(13,6,24,1) 100%); }
@@ -127,7 +127,19 @@
     .harmony-legal-footer .footer-links a:hover { color:#FFD700; }
     .harmony-legal-footer .footer-copy { font-family:'Raleway',sans-serif; font-size:11px; color:#6b5a80; margin-bottom:12px; }
     .harmony-legal-footer .disclaimer-bar { background:rgba(107,33,168,0.10); border:1px solid rgba(147,51,234,0.2); border-radius:10px; padding:12px 18px; font-family:'Raleway',sans-serif; font-size:11px; color:#7a6a90; line-height:1.6; max-width:600px; margin:0 auto; }
-  </style>
+  
+    /* bottom-nav overlay fix */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+    body {
+      padding-bottom: calc(80px + env(safe-area-inset-bottom));
+    }
+</style>
 </head>
 <body>
   <div class="stars"></div>

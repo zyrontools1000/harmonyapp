@@ -83,7 +83,19 @@
     }
     .contact-row p { font-size:13px; color:#9B89B8; margin-bottom:6px; }
     .contact-row a { color:#9333EA; font-size:13px; }
-  </style>
+  
+    /* bottom-nav overlay fix */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+    body {
+      padding-bottom: calc(80px + env(safe-area-inset-bottom));
+    }
+</style>
 </head>
 <body>
   <div class="stars"></div>

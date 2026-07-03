@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
   <style>
-    .prayers-page { position:relative; z-index:1; padding-bottom:110px; }
+    .prayers-page { position:relative; z-index:1; padding-bottom:calc(80px + env(safe-area-inset-bottom)); }
     .prayers-body { padding:4px 20px 30px; max-width:500px; margin:0 auto; }
 
     .prayer-card {
@@ -72,7 +72,19 @@
       border:1px solid var(--border-hot); border-radius:14px; padding:16px 18px; margin-top:6px;
     }
     .prayer-declare-box p { color:#F0EAF8; margin-bottom:0; }
-  </style>
+  
+    /* bottom-nav overlay fix */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+    body {
+      padding-bottom: calc(80px + env(safe-area-inset-bottom));
+    }
+</style>
 </head>
 <body>
   <div class="stars"></div>

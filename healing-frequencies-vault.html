@@ -74,7 +74,19 @@
     .mini-close svg { width:16px; height:16px; }
     .mini-bar { width:100%; height:3px; border-radius:2px; background:rgba(255,255,255,0.1); cursor:pointer; }
     .mini-fill { height:100%; border-radius:2px; width:0%; background:linear-gradient(90deg,#FF2D8A,#FF6B2B); pointer-events:none; }
-  </style>
+  
+    /* bottom-nav overlay fix */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+    body {
+      padding-bottom: calc(80px + env(safe-area-inset-bottom));
+    }
+</style>
 </head>
 <body>
   <div class="stars"></div>

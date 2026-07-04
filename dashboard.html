@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="css/styles.css" />
   <style>
     /* ── Netflix-style rows ── */
-    .dash-content { padding-bottom: 0; }
+    .dash-content { padding-bottom:0; }
 
     .shelf { margin-bottom: 32px; }
 
@@ -201,7 +201,7 @@
     </nav>
 
     <!-- Header -->
-    <header style="display:flex;align-items:center;justify-content:space-between;padding:20px 20px 8px;max-width:500px;margin:0 auto;">
+    <header style="display:flex;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top) + 14px) 20px 12px;min-height:calc(env(safe-area-inset-top) + 64px);max-width:500px;margin:0 auto;">
       <div style="display:flex;align-items:center;gap:10px;">
         <button onclick="openMenu()" style="background:none;border:1px solid rgba(147,51,234,0.3);color:#9B89B8;border-radius:10px;padding:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:20px;height:20px;"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -359,7 +359,6 @@
         </div>
       </div>
 
-
       <!-- ── SACREDHEAL PODCAST ── -->
       <div class="shelf" style="margin-top: 8px; margin-bottom: 0;">
         <div class="shelf-header">
@@ -369,7 +368,6 @@
           </div>
         </div>
         <div class="shelf-track">
-
           <div class="shelf-card" style="background:linear-gradient(160deg,#1a0a2e,#0d0618); border:1px solid rgba(147,51,234,0.4); cursor:default; opacity:0.85;">
             <div style="position:absolute;top:10px;left:10px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:#FF2D8A;background:rgba(255,45,138,0.15);padding:3px 8px;border-radius:50px;border:1px solid rgba(255,45,138,0.3);">EP. 01</div>
             <div style="position:absolute;bottom:0;left:0;right:0;padding:12px;background:linear-gradient(0deg,rgba(13,6,24,0.95),transparent);">
@@ -380,7 +378,6 @@
               <svg viewBox="0 0 24 24" fill="#FF2D8A" style="width:16px;height:16px;margin-left:2px;"><path d="M8 5v14l11-7z"/></svg>
             </div>
           </div>
-
           <div class="shelf-card" style="background:linear-gradient(160deg,#1a0a2e,#0d0618); border:1px solid rgba(147,51,234,0.4); cursor:default; opacity:0.85;">
             <div style="position:absolute;top:10px;left:10px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:#FF2D8A;background:rgba(255,45,138,0.15);padding:3px 8px;border-radius:50px;border:1px solid rgba(255,45,138,0.3);">EP. 02</div>
             <div style="position:absolute;bottom:0;left:0;right:0;padding:12px;background:linear-gradient(0deg,rgba(13,6,24,0.95),transparent);">
@@ -391,7 +388,6 @@
               <svg viewBox="0 0 24 24" fill="#FF2D8A" style="width:16px;height:16px;margin-left:2px;"><path d="M8 5v14l11-7z"/></svg>
             </div>
           </div>
-
           <div class="shelf-card" style="background:linear-gradient(160deg,#1a0a2e,#0d0618); border:1px solid rgba(147,51,234,0.4); cursor:default; opacity:0.85;">
             <div style="position:absolute;top:10px;left:10px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:#FF2D8A;background:rgba(255,45,138,0.15);padding:3px 8px;border-radius:50px;border:1px solid rgba(255,45,138,0.3);">EP. 03</div>
             <div style="position:absolute;bottom:0;left:0;right:0;padding:12px;background:linear-gradient(0deg,rgba(13,6,24,0.95),transparent);">
@@ -402,7 +398,6 @@
               <svg viewBox="0 0 24 24" fill="#FF2D8A" style="width:16px;height:16px;margin-left:2px;"><path d="M8 5v14l11-7z"/></svg>
             </div>
           </div>
-
           <div class="shelf-card coming" style="border:1px dashed rgba(255,215,0,0.3); cursor:default;">
             <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;">
               <div style="font-size:22px;margin-bottom:8px;">🎙️</div>
@@ -410,7 +405,6 @@
               <div style="font-size:10px;color:#7a6a90;">Coming in August</div>
             </div>
           </div>
-
         </div>
       </div>
 

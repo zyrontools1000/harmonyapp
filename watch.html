@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>A Message From Daniel Cross — HarmonyApp</title>
+  <meta name="description" content="A personal message from Daniel Cross, co-founder of HarmonyApp. Please watch until the end."/>
+  <meta name="theme-color" content="#0D0618"/>
+  <link rel="icon" href="images/icon-192.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0D0618;
+      --accent-pink: #FF2D8A;
+      --accent-orange: #FF6B2B;
+      --accent-gold: #FFD700;
+      --text: #e8e0f0;
+      --text-muted: #a090b8;
+      --border: rgba(147,51,234,0.25);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Raleway', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Stars */
+    .stars {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(107,33,168,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 80%, rgba(255,45,138,0.08) 0%, transparent 60%);
+    }
+    .stars::before {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 20%, rgba(255,215,0,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 30% 8%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 30%, rgba(255,215,0,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 78% 12%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 92% 55%, rgba(255,215,0,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 5% 65%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 42% 78%, rgba(255,215,0,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 68% 88%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 22% 50%, rgba(255,215,0,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 50% 60%, rgba(255,255,255,0.3) 0%, transparent 100%);
+    }
+
+    /* Top bar */
+    .topbar {
+      position: relative; z-index: 10;
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,6,24,0.8);
+      backdrop-filter: blur(12px);
+    }
+    .topbar img { width: 32px; height: 32px; border-radius: 8px; margin-right: 10px; }
+    .topbar-name {
+      font-family: 'Cinzel', serif; font-size: 15px; font-weight: 600;
+      background: linear-gradient(90deg, var(--accent-pink), var(--accent-gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    /* Main wrapper */
+    .wrapper {
+      position: relative; z-index: 1;
+      max-width: 520px; margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    /* Eyebrow alert */
+    .eyebrow-alert {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .eyebrow-alert-inner {
+      display: inline-block;
+      background: linear-gradient(135deg, rgba(255,45,138,0.12), rgba(255,107,43,0.08));
+      border: 1px solid rgba(255,107,43,0.4);
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--accent-gold);
+      line-height: 1.6;
+    }
+
+    /* Headline */
+    .vsl-headline {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(22px, 5vw, 30px);
+      font-weight: 700;
+      line-height: 1.25;
+      text-align: center;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #fff 0%, var(--accent-gold) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .vsl-subheadline {
+      font-size: 15px;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.7;
+      margin-bottom: 28px;
+      font-style: italic;
+    }
+
+    /* Video container */
+    .video-wrap {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 0 40px rgba(107,33,168,0.3), 0 0 80px rgba(255,45,138,0.1);
+      margin-bottom: 16px;
+      background: #000;
+    }
+
+    /* Microcopy — hidden initially, VTurb reveals at 5:02 */
+    #vsl-microcopy {
+      display: none;
+      text-align: center;
+      margin-top: 14px;
+      padding: 10px 16px;
+      background: rgba(255,215,0,0.06);
+      border: 1px solid rgba(255,215,0,0.2);
+      border-radius: 10px;
+    }
+    #vsl-microcopy p {
+      font-family: 'Raleway', sans-serif;
+      font-size: 13px;
+      color: var(--accent-gold);
+      letter-spacing: 0.5px;
+    }
+    #vsl-microcopy p span {
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    /* Trust bar below video */
+    .trust-bar {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .trust-item {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12px; color: var(--text-muted);
+    }
+    .trust-item span { font-size: 14px; }
+
+    /* Footer */
+    .vsl-footer {
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    .vsl-footer .footer-links {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px;
+      margin-bottom: 12px;
+    }
+    .vsl-footer .footer-links a {
+      font-size: 12px; color: var(--text-muted); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .vsl-footer .footer-links a:hover { color: var(--accent-gold); }
+    .vsl-footer .copy { font-size: 11px; color: #6b5a80; margin-bottom: 12px; }
+    .vsl-footer .disclaimer {
+      background: rgba(107,33,168,0.10);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 11px; color: #7a6a90; line-height: 1.6;
+      max-width: 440px; margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <img src="images/logo-harmony.png" alt="HarmonyApp" onerror="this.style.display='none'"/>
+    <span class="topbar-name">HarmonyApp</span>
+  </div>
+
+  <div class="wrapper">
+
+    <!-- Eyebrow -->
+    <div class="eyebrow-alert">
+      <div class="eyebrow-alert-inner">
+        ✦ PLEASE WATCH THIS FULL MESSAGE BEFORE CONTINUING ✦
+      </div>
+    </div>
+
+    <!-- Headline -->
+    <h1 class="vsl-headline">A Personal Message From Daniel Cross — Co-Founder of HarmonyApp</h1>
+    <p class="vsl-subheadline">This will only take 2 minutes. Please watch until the end — what we share here won't be repeated anywhere else.</p>
+
+    <!-- VTurb Video -->
+    <div class="video-wrap">
+      <vturb-smartplayer id="vid-6a4cfec0c9ce0142b1d17ff1" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;">
+        <div class="vturb-player-placeholder" style="position: relative; width: 100%; padding: 177.77777777777777% 0 0; z-index: 0; background-color: black;"></div>
+      </vturb-smartplayer>
+      <script type="text/javascript">
+        var s = document.createElement("script");
+        s.src = "https://scripts.converteai.net/8e2d2add-82c7-4c9f-889a-600fba41f9a1/players/6a4cfec0c9ce0142b1d17ff1/v4/player.js";
+        s.async = true;
+        document.head.appendChild(s);
+      </script>
+    </div>
+
+    <!-- Microcopy — hidden, revealed by VTurb at 5:02 -->
+    <!-- Configure in VTurb: Action Button > Show Hidden Content > ID: vsl-microcopy > Time: 5:02 -->
+    <div id="vsl-microcopy">
+      <p>$4.99/month. Locked forever. <span>Cancel anytime.</span></p>
+    </div>
+
+    <!-- Trust bar -->
+    <div class="trust-bar">
+      <div class="trust-item"><span>🔒</span> Secure checkout via Paddle</div>
+      <div class="trust-item"><span>✦</span> Cancel anytime</div>
+      <div class="trust-item"><span>🙏</span> Full refund guaranteed</div>
+    </div>
+
+    <!-- Footer -->
+    <div class="vsl-footer">
+      <div class="footer-links">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="refund-policy.html">Refund Policy</a>
+        <a href="support.html">Support</a>
+      </div>
+      <p class="copy">© 2026 HarmonyApp · Operated by Zampier Co. Ltda</p>
+      <div class="disclaimer">
+        HarmonyApp is a spiritual experience for personal reflection and faith. Not intended to diagnose, treat, cure, or prevent any disease or medical condition. Consult a healthcare professional for medical advice.
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

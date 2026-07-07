@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Manage Subscription — HarmonyApp</title>
+  <meta name="theme-color" content="#0D0618" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .cancel-page { position:relative; z-index:1; }
+    .cancel-body { padding: 0 20px 30px; max-width: 500px; margin: 0 auto; }
+
+    /* Steps indicator */
+    .steps-bar {
+      display: flex; align-items: center; justify-content: center;
+      gap: 8px; padding: 20px 20px 0; max-width: 500px; margin: 0 auto;
+    }
+    .step-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(147,51,234,0.25);
+      transition: all 0.3s;
+    }
+    .step-dot.active { background: #FF2D8A; width: 24px; border-radius: 4px; }
+    .step-dot.done { background: rgba(255,45,138,0.4); }
+
+    /* Screen */
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    /* Hero text */
+    .screen-hero {
+      text-align: center; padding: 28px 0 20px;
+    }
+    .screen-emoji { font-size: 44px; display: block; margin-bottom: 12px; }
+    .screen-title {
+      font-family: 'Cinzel', serif; font-size: 20px; font-weight: 700;
+      color: #F0EAF8; margin-bottom: 10px; line-height: 1.3;
+    }
+    .screen-sub { font-size: 14px; color: #C4B8D8; line-height: 1.8; }
+
+    /* Radio options */
+    .reason-list { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+    .reason-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 16px;
+      background: rgba(147,51,234,0.06);
+      border: 1px solid rgba(147,51,234,0.2);
+      border-radius: 12px; cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .reason-item:hover { border-color: rgba(255,45,138,0.4); }
+    .reason-item.selected {
+      border-color: #FF2D8A;
+      background: rgba(255,45,138,0.08);
+    }
+    .reason-item input[type="radio"] { display: none; }
+    .reason-radio {
+      width: 20px; height: 20px; border-radius: 50%;
+      border: 2px solid rgba(147,51,234,0.4);
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s;
+    }
+    .reason-item.selected .reason-radio {
+      border-color: #FF2D8A;
+      background: #FF2D8A;
+    }
+    .reason-item.selected .reason-radio::after {
+      content: ''; width: 8px; height: 8px;
+      border-radius: 50%; background: white;
+    }
+    .reason-text { font-size: 14px; color: #E8DFF8; font-family: 'Raleway', sans-serif; }
+
+    /* Offer card */
+    .offer-card {
+      background: linear-gradient(135deg, rgba(255,45,138,0.08), rgba(255,107,43,0.06));
+      border: 1px solid rgba(255,107,43,0.35);
+      border-radius: 16px; padding: 24px; margin: 20px 0; text-align: center;
+    }
+    .offer-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #FF2D8A, #FF6B2B);
+      color: white; font-family: 'Cinzel', serif; font-size: 10px;
+      letter-spacing: 2px; padding: 5px 14px; border-radius: 50px;
+      margin-bottom: 14px;
+    }
+    .offer-price-row {
+      display: flex; align-items: baseline; justify-content: center; gap: 8px;
+      margin: 12px 0;
+    }
+    .offer-old-price {
+      font-size: 16px; color: #7a6a90;
+      text-decoration: line-through;
+    }
+    .offer-new-price {
+      font-family: 'Cinzel', serif; font-size: 36px; font-weight: 700;
+      background: linear-gradient(135deg, #FF2D8A, #FFD700);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .offer-period { font-size: 14px; color: #9B89B8; }
+    .offer-desc { font-size: 13px; color: #C4B8D8; line-height: 1.7; margin-top: 10px; }
+
+    /* Buttons */
+    .btn-primary-cancel {
+      display: block; width: 100%; padding: 17px 24px;
+      background: linear-gradient(135deg, #FF2D8A, #FF6B2B);
+      color: white; font-family: 'Cinzel', serif; font-weight: 700;
+      font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase;
+      border: none; border-radius: 50px; cursor: pointer;
+      text-align: center; text-decoration: none;
+      box-shadow: 0 0 30px rgba(255,45,138,0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin-bottom: 12px;
+    }
+    .btn-primary-cancel:hover { transform: translateY(-2px); }
+
+    .btn-secondary-cancel {
+      display: block; width: 100%; padding: 15px 24px;
+      background: transparent;
+      color: #9B89B8; font-family: 'Raleway', sans-serif;
+      font-size: 13px; letter-spacing: 0.5px;
+      border: 1px solid rgba(147,51,234,0.25);
+      border-radius: 50px; cursor: pointer;
+      text-align: center; text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+      margin-bottom: 12px;
+    }
+    .btn-secondary-cancel:hover { border-color: rgba(147,51,234,0.5); color: #E8DFF8; }
+
+    /* Final screen */
+    .email-box {
+      background: rgba(147,51,234,0.08);
+      border: 1px solid rgba(147,51,234,0.25);
+      border-radius: 14px; padding: 20px; margin: 20px 0;
+      text-align: center;
+    }
+    .email-box .email-addr {
+      font-family: 'Cinzel', serif; font-size: 14px;
+      color: #FFD700; margin: 10px 0;
+    }
+    .email-box p { font-size: 13px; color: #C4B8D8; line-height: 1.8; }
+
+    .btn-email {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; padding: 17px 24px;
+      background: linear-gradient(135deg, rgba(109,40,217,0.6), rgba(45,10,94,0.8));
+      border: 1px solid rgba(147,51,234,0.5);
+      color: #E8DFF8; font-family: 'Cinzel', serif; font-weight: 600;
+      font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase;
+      border-radius: 50px; cursor: pointer;
+      text-decoration: none; text-align: center;
+      transition: transform 0.2s;
+      margin-bottom: 12px;
+    }
+    .btn-email:hover { transform: translateY(-2px); }
+
+    .offer-accepted {
+      background: linear-gradient(135deg, rgba(255,215,0,0.08), rgba(255,45,138,0.06));
+      border: 1px solid rgba(255,215,0,0.3);
+      border-radius: 16px; padding: 28px 20px; text-align: center;
+      margin: 20px 0;
+    }
+    .offer-accepted h3 {
+      font-family: 'Cinzel', serif; font-size: 18px; color: #FFD700;
+      margin-bottom: 12px;
+    }
+    .offer-accepted p { font-size: 14px; color: #C4B8D8; line-height: 1.8; }
+
+    /* bottom-nav fix */
+    .bottom-nav { position:fixed; bottom:0; left:0; right:0; z-index:100; }
+    body { padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="cancel-page">
+
+    <header class="page-header">
+      <a href="support.html" class="back-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </a>
+      <div class="page-header-text">
+        <div class="page-eyebrow">HarmonyApp</div>
+        <h1 class="page-title">Manage Subscription</h1>
+      </div>
+    </header>
+
+    <!-- Steps indicator -->
+    <div class="steps-bar">
+      <div class="step-dot active" id="dot-1"></div>
+      <div class="step-dot" id="dot-2"></div>
+      <div class="step-dot" id="dot-3"></div>
+    </div>
+
+    <div class="cancel-body">
+
+      <!-- SCREEN 1: Reason -->
+      <div class="screen active" id="screen-1">
+        <div class="screen-hero">
+          <span class="screen-emoji">💬</span>
+          <h2 class="screen-title">Before you go, help us understand</h2>
+          <p class="screen-sub">Your feedback helps us improve HarmonyApp for everyone. What's the main reason you're considering canceling?</p>
+        </div>
+
+        <div class="reason-list">
+          <label class="reason-item" onclick="selectReason(this, 'expensive')">
+            <input type="radio" name="reason" value="expensive"/>
+            <div class="reason-radio"></div>
+            <span class="reason-text">It's too expensive for me right now</span>
+          </label>
+          <label class="reason-item" onclick="selectReason(this, 'not-using')">
+            <input type="radio" name="reason" value="not-using"/>
+            <div class="reason-radio"></div>
+            <span class="reason-text">I'm not using it enough</span>
+          </label>
+          <label class="reason-item" onclick="selectReason(this, 'technical')">
+            <input type="radio" name="reason" value="technical"/>
+            <div class="reason-radio"></div>
+            <span class="reason-text">I had technical issues</span>
+          </label>
+          <label class="reason-item" onclick="selectReason(this, 'other')">
+            <input type="radio" name="reason" value="other"/>
+            <div class="reason-radio"></div>
+            <span class="reason-text">Other reason</span>
+          </label>
+        </div>
+
+        <button class="btn-primary-cancel" id="btn-continue-1" onclick="goToOffer()" disabled style="opacity:0.5;">
+          Continue
+        </button>
+        <a href="support.html" class="btn-secondary-cancel">Keep My Subscription</a>
+      </div>
+
+      <!-- SCREEN 2: Offer -->
+      <div class="screen" id="screen-2">
+        <div class="screen-hero">
+          <span class="screen-emoji">🎁</span>
+          <h2 class="screen-title" id="offer-title">We don't want to lose you</h2>
+          <p class="screen-sub" id="offer-sub">As a valued member of our community, we'd like to make you a special offer.</p>
+        </div>
+
+        <div class="offer-card">
+          <div class="offer-badge">✦ EXCLUSIVE MEMBER OFFER</div>
+          <div class="offer-price-row">
+            <span class="offer-old-price">$4.99</span>
+            <span class="offer-new-price">$2.49</span>
+            <span class="offer-period">/month</span>
+          </div>
+          <p class="offer-desc">50% off for the next 3 months — stay connected to your daily sacred space and keep your spiritual journey growing.</p>
+        </div>
+
+        <button class="btn-primary-cancel" onclick="acceptOffer()">
+          ✦ Accept 50% Off — Stay
+        </button>
+        <button class="btn-secondary-cancel" onclick="goToFinal()">
+          No thanks, I still want to cancel
+        </button>
+      </div>
+
+      <!-- SCREEN 3: Offer accepted -->
+      <div class="screen" id="screen-accepted">
+        <div class="screen-hero">
+          <span class="screen-emoji">🙏</span>
+          <h2 class="screen-title">We're so glad you're staying!</h2>
+        </div>
+        <div class="offer-accepted">
+          <h3>✦ Your offer is confirmed</h3>
+          <p>Your 50% discount has been noted. Our team will apply it to your account within 24 hours and you'll receive a confirmation email at your registered address.</p>
+          <br>
+          <p style="font-size:12px; color:#7a6a90;">Questions? Email us at <a href="mailto:support@harmonyapp.app" style="color:#FFD700;">support@harmonyapp.app</a></p>
+        </div>
+        <a href="dashboard.html" class="btn-primary-cancel">Return to My Sacred Space</a>
+      </div>
+
+      <!-- SCREEN 4: Final - Cancel confirmation -->
+      <div class="screen" id="screen-3">
+        <div class="screen-hero">
+          <span class="screen-emoji">🕊️</span>
+          <h2 class="screen-title">We understand, and we respect your decision</h2>
+          <p class="screen-sub">To complete your cancellation, please send us an email. We'll process it within 24 hours and confirm by email.</p>
+        </div>
+
+        <div class="email-box">
+          <p>Send a cancellation request to:</p>
+          <div class="email-addr">support@harmonyapp.app</div>
+          <p style="font-size:12px; margin-top:8px; color:#7a6a90;">Subject: <strong style="color:#C4B8D8;">Cancel Subscription</strong><br/>We'll handle everything from there.</p>
+        </div>
+
+        <a href="mailto:support@harmonyapp.app?subject=Cancel%20Subscription&body=Hello%2C%20I%20would%20like%20to%20cancel%20my%20HarmonyApp%20subscription.%20My%20account%20email%20is%3A%20" class="btn-email">
+          📩 Send Cancellation Email
+        </a>
+        <a href="dashboard.html" class="btn-secondary-cancel">Actually, keep my subscription</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav" style="justify-content:space-around;">
+    <a href="home.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M12 2C8 7 3 8 3 14a9 9 0 1 0 18 0c0-6-5-7-9-12z"/></svg>
+      <span>HarmonyApp</span>
+    </a>
+    <a href="dashboard.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/></svg>
+      <span>Home</span>
+    </a>
+    <a href="support.html" class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 3.5"/><line x1="12" y1="17" x2="12" y2="17.01"/></svg>
+      <span>Support</span>
+    </a>
+    <button onclick="openNav()" class="nav-item" style="background:none;border:none;cursor:pointer;color:var(--text-dim);font-size:10px;display:flex;flex-direction:column;align-items:center;gap:4px;padding:4px 0;flex:1;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <span>Navigation</span>
+    </button>
+  </nav>
+
+  <footer class="harmony-legal-footer">
+    <div class="footer-links">
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="refund-policy.html">Refund Policy</a>
+      <a href="support.html">Support</a>
+    </div>
+    <p class="footer-copy">© 2026 HarmonyApp · All rights reserved</p>
+    <div class="disclaimer-bar">
+      HarmonyApp is a spiritual experience for personal reflection and faith. Not intended to diagnose, treat, cure, or prevent any disease or medical condition. Consult a healthcare professional for medical advice.
+    </div>
+  </footer>
+
+  <script src="js/stars.js" defer></script>
+  <script type="module" src="js/authGuard.js"></script>
+  <script>if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+  <script>
+    let selectedReason = null;
+
+    function selectReason(el, reason) {
+      document.querySelectorAll('.reason-item').forEach(i => i.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedReason = reason;
+      const btn = document.getElementById('btn-continue-1');
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }
+
+    function goToOffer() {
+      if (!selectedReason) return;
+      const titles = {
+        'expensive': "We understand — let us help",
+        'not-using': "Let us help you reconnect",
+        'technical': "We're sorry for the trouble",
+        'other': "We don't want to lose you"
+      };
+      const subs = {
+        'expensive': "We never want price to stand between you and your spiritual journey. Here's a special offer just for you:",
+        'not-using': "Sometimes we need a gentle reminder to return to our sacred space. We'd love to help you reconnect — at half the price:",
+        'technical': "We sincerely apologize for any issues you experienced. Let us make it right with a special offer:",
+        'other': "As a valued member of our community, we'd like to make you a special offer before you go:"
+      };
+      document.getElementById('offer-title').textContent = titles[selectedReason] || titles['other'];
+      document.getElementById('offer-sub').textContent = subs[selectedReason] || subs['other'];
+      showScreen('screen-2');
+    }
+
+    function acceptOffer() {
+      showScreen('screen-accepted');
+    }
+
+    function goToFinal() {
+      showScreen('screen-3');
+    }
+
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      // Update dots
+      const map = {'screen-1': 1, 'screen-2': 2, 'screen-accepted': 2, 'screen-3': 3};
+      const step = map[id] || 1;
+      for (let i = 1; i <= 3; i++) {
+        const dot = document.getElementById('dot-' + i);
+        dot.className = 'step-dot' + (i === step ? ' active' : i < step ? ' done' : '');
+      }
+      window.scrollTo(0, 0);
+    }
+
+    function openNav(){document.getElementById('nav-modal').style.display='block';document.getElementById('nav-drawer').style.bottom='0';}
+    function closeNav(){document.getElementById('nav-modal').style.display='none';document.getElementById('nav-drawer').style.bottom='-100%';}
+  </script>
+</body>
+</html>

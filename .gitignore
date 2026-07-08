@@ -1,2 +1,7 @@
 .claude/settings.local.json
 node_modules/
+
+# Supabase Edge Functions secrets / local state
+supabase/functions/**/.env
+supabase/.temp
+supabase/.branches

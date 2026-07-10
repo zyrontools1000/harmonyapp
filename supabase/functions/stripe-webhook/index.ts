@@ -190,6 +190,25 @@ async function generateMagicLink(email: string): Promise<string> {
 
 // ---------- Supabase profiles table via PostgREST (fetch only) ----------
 
+async function getProfileByEmail(
+  email: string,
+): Promise<{ stripe_customer_id: string | null; subscription_status: SubscriptionStatus } | null> {
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/profiles?email=eq.${encodeURIComponent(email)}&select=stripe_customer_id,subscription_status`,
+    {
+      headers: {
+        apikey: SUPABASE_SERVICE_ROLE_KEY,
+        Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+      },
+    },
+  );
+  if (!res.ok) {
+    throw new Error(`profiles lookup failed: ${res.status} ${await res.text()}`);
+  }
+  const rows = await res.json();
+  return rows[0] ?? null;
+}
+
 async function upsertProfileByEmail(params: {
   email: string;
   subscriptionStatus: SubscriptionStatus;
@@ -323,6 +342,40 @@ async function sendWelcomeEmail(email: string, magicLink: string) {
   }
 }
 
+const OPS_ALERT_EMAIL = 'janzampier@zyronscale.com';
+
+async function sendDuplicateSubscriptionAlert(params: {
+  email: string;
+  existingCustomerId: string;
+  newCustomerId: string;
+  newSubscriptionId: string | null;
+}) {
+  const { email, existingCustomerId, newCustomerId, newSubscriptionId } = params;
+  const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+    method: 'POST',
+    headers: {
+      'api-key': BREVO_API_KEY,
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify({
+      sender: { name: 'HarmonyApp Alerts', email: 'support@harmonyapp.app' },
+      to: [{ email: OPS_ALERT_EMAIL }],
+      subject: `⚠ Duplicate subscription: ${email}`,
+      htmlContent: `<p><strong>${email}</strong> just completed checkout again while already having an active subscription. No action was taken automatically &mdash; needs manual review.</p>
+<ul>
+  <li>Existing (active) customer: <code>${existingCustomerId}</code></li>
+  <li>New (duplicate) customer: <code>${newCustomerId}</code></li>
+  <li>New subscription: <code>${newSubscriptionId ?? 'n/a'}</code></li>
+</ul>
+<p>To fix: cancel the new subscription and refund its charge in Stripe if this is a genuine duplicate.</p>`,
+    }),
+  });
+  if (!res.ok) {
+    throw new Error(`Brevo send failed: ${res.status} ${await res.text()}`);
+  }
+}
+
 // ---------- Event handlers ----------
 
 async function handleCheckoutCompleted(session: any) {
@@ -350,6 +403,34 @@ async function handleCheckoutCompleted(session: any) {
 
   if (!email || !stripeCustomerId) {
     console.error('checkout.session.completed missing email or customer id', session.id);
+    return;
+  }
+
+  // Guard against the same email ending up with two active subscriptions
+  // (double-click, reusing an old link, forgetting they already subscribed).
+  // The Stripe Payment Link has no built-in dedup. We only detect and alert
+  // here — canceling the subscription or refunding the charge always
+  // requires manual review, never done automatically.
+  const existingProfile = await getProfileByEmail(email);
+  const isDuplicateActiveSubscription =
+    existingProfile?.subscription_status === 'active' &&
+    !!existingProfile.stripe_customer_id &&
+    existingProfile.stripe_customer_id !== stripeCustomerId;
+
+  if (isDuplicateActiveSubscription) {
+    console.warn(
+      `Duplicate subscription detected for ${email}: existing=${existingProfile!.stripe_customer_id}, new=${stripeCustomerId}`,
+    );
+    try {
+      await sendDuplicateSubscriptionAlert({
+        email,
+        existingCustomerId: existingProfile!.stripe_customer_id!,
+        newCustomerId: stripeCustomerId,
+        newSubscriptionId: stripeSubscriptionId,
+      });
+    } catch (err) {
+      console.error('Failed to send duplicate subscription alert', err);
+    }
     return;
   }
 

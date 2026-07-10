@@ -198,57 +198,27 @@ async function upsertProfileByEmail(params: {
 }) {
   const { email, subscriptionStatus, stripeCustomerId, stripeSubscriptionId } = params;
 
-  const selectRes = await fetch(
-    `${SUPABASE_URL}/rest/v1/profiles?email=eq.${encodeURIComponent(email)}&select=id`,
-    {
-      headers: {
-        apikey: SUPABASE_SERVICE_ROLE_KEY,
-        Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
-      },
+  // Atomic upsert (INSERT ... ON CONFLICT (email) DO UPDATE) instead of
+  // select-then-insert/update, which raced under Stripe's webhook retries
+  // and produced duplicate rows for the same email. Requires a UNIQUE
+  // constraint on profiles.email.
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/profiles?on_conflict=email`, {
+    method: 'POST',
+    headers: {
+      apikey: SUPABASE_SERVICE_ROLE_KEY,
+      Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+      'Content-Type': 'application/json',
+      Prefer: 'resolution=merge-duplicates,return=minimal',
     },
-  );
-  if (!selectRes.ok) {
-    throw new Error(`profiles select failed: ${selectRes.status} ${await selectRes.text()}`);
-  }
-  const existing = await selectRes.json();
-
-  if (existing.length > 0) {
-    const updateRes = await fetch(`${SUPABASE_URL}/rest/v1/profiles?id=eq.${existing[0].id}`, {
-      method: 'PATCH',
-      headers: {
-        apikey: SUPABASE_SERVICE_ROLE_KEY,
-        Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
-        'Content-Type': 'application/json',
-        Prefer: 'return=minimal',
-      },
-      body: JSON.stringify({
-        subscription_status: subscriptionStatus,
-        stripe_customer_id: stripeCustomerId,
-        stripe_subscription_id: stripeSubscriptionId,
-      }),
-    });
-    if (!updateRes.ok) {
-      throw new Error(`profiles update failed: ${updateRes.status} ${await updateRes.text()}`);
-    }
-  } else {
-    const insertRes = await fetch(`${SUPABASE_URL}/rest/v1/profiles`, {
-      method: 'POST',
-      headers: {
-        apikey: SUPABASE_SERVICE_ROLE_KEY,
-        Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
-        'Content-Type': 'application/json',
-        Prefer: 'return=minimal',
-      },
-      body: JSON.stringify({
-        email,
-        subscription_status: subscriptionStatus,
-        stripe_customer_id: stripeCustomerId,
-        stripe_subscription_id: stripeSubscriptionId,
-      }),
-    });
-    if (!insertRes.ok) {
-      throw new Error(`profiles insert failed: ${insertRes.status} ${await insertRes.text()}`);
-    }
+    body: JSON.stringify({
+      email,
+      subscription_status: subscriptionStatus,
+      stripe_customer_id: stripeCustomerId,
+      stripe_subscription_id: stripeSubscriptionId,
+    }),
+  });
+  if (!res.ok) {
+    throw new Error(`profiles upsert failed: ${res.status} ${await res.text()}`);
   }
 }
 

@@ -1,8 +1,27 @@
-const STRIPE_SECRET_KEY = Deno.env.get('STRIPE_SECRET_KEY')!;
-const STRIPE_WEBHOOK_SECRET = Deno.env.get('STRIPE_WEBHOOK_SECRET')!;
-const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
-const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-const BREVO_API_KEY = Deno.env.get('BREVO_API_KEY')!;
+console.log('[stripe-webhook] Module loading...');
+
+function getEnv(name: string): string {
+  const value = Deno.env.get(name);
+  if (!value) {
+    console.error(`[stripe-webhook] Missing environment variable: ${name}`);
+    return '';
+  }
+  return value;
+}
+
+const STRIPE_SECRET_KEY = getEnv('STRIPE_SECRET_KEY');
+const STRIPE_WEBHOOK_SECRET = getEnv('STRIPE_WEBHOOK_SECRET');
+const SUPABASE_URL = getEnv('SUPABASE_URL');
+const SUPABASE_SERVICE_ROLE_KEY = getEnv('SUPABASE_SERVICE_ROLE_KEY');
+const BREVO_API_KEY = getEnv('BREVO_API_KEY');
+
+console.log('[stripe-webhook] Module loaded. Env present:', {
+  STRIPE_SECRET_KEY: Boolean(STRIPE_SECRET_KEY),
+  STRIPE_WEBHOOK_SECRET: Boolean(STRIPE_WEBHOOK_SECRET),
+  SUPABASE_URL: Boolean(SUPABASE_URL),
+  SUPABASE_SERVICE_ROLE_KEY: Boolean(SUPABASE_SERVICE_ROLE_KEY),
+  BREVO_API_KEY: Boolean(BREVO_API_KEY),
+});
 
 const APP_REDIRECT_URL = 'https://my.harmonyapp.app/home.html';
 const WEBHOOK_TOLERANCE_SECONDS = 300;
@@ -383,66 +402,86 @@ async function handleCheckoutCompleted(session: any) {
 // ---------- HTTP entrypoint ----------
 
 Deno.serve(async (req) => {
-  if (req.method !== 'POST') {
-    return new Response('Method not allowed', { status: 405 });
-  }
-
-  const signature = req.headers.get('stripe-signature');
-  const body = await req.text();
-
-  if (!signature) {
-    return new Response('Missing stripe-signature header', { status: 400 });
-  }
-
-  const isValid = await verifyStripeSignature(body, signature, STRIPE_WEBHOOK_SECRET);
-  if (!isValid) {
-    console.error('Webhook signature verification failed');
-    return new Response('Webhook signature verification failed', { status: 400 });
-  }
-
-  let event: { type: string; data: { object: any } };
   try {
-    event = JSON.parse(body);
-  } catch (err) {
-    console.error('Invalid JSON payload', err);
-    return new Response('Invalid JSON payload', { status: 400 });
-  }
+    console.log('[stripe-webhook] Received request', req.method);
 
-  try {
-    switch (event.type) {
-      case 'checkout.session.completed': {
-        await handleCheckoutCompleted(event.data.object);
-        break;
-      }
-      case 'customer.subscription.updated': {
-        const subscription = event.data.object;
-        await updateSubscriptionStatusByCustomerId(
-          subscription.customer,
-          mapSubscriptionStatus(subscription.status),
-          subscription.id,
-        );
-        break;
-      }
-      case 'customer.subscription.deleted': {
-        const subscription = event.data.object;
-        await updateSubscriptionStatusByCustomerId(subscription.customer, 'canceled', subscription.id);
-        break;
-      }
-      case 'invoice.payment_failed': {
-        const invoice = event.data.object;
-        await updateSubscriptionStatusByCustomerId(invoice.customer, 'past_due');
-        break;
-      }
-      default:
-        break;
+    if (req.method !== 'POST') {
+      return new Response('Method not allowed', { status: 405 });
     }
-  } catch (err) {
-    console.error(`Error handling event ${event.type}`, err);
-    return new Response(`Error handling event: ${(err as Error).message}`, { status: 500 });
-  }
 
-  return new Response(JSON.stringify({ received: true }), {
-    status: 200,
-    headers: { 'Content-Type': 'application/json' },
-  });
+    if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY || !STRIPE_WEBHOOK_SECRET) {
+      console.error('[stripe-webhook] Missing required environment variables, aborting');
+      return new Response('Server misconfigured: missing required environment variables', {
+        status: 500,
+      });
+    }
+
+    const signature = req.headers.get('stripe-signature');
+    const body = await req.text();
+
+    if (!signature) {
+      console.error('[stripe-webhook] Missing stripe-signature header');
+      return new Response('Missing stripe-signature header', { status: 400 });
+    }
+
+    console.log('[stripe-webhook] Received webhook, verifying signature...');
+    const isValid = await verifyStripeSignature(body, signature, STRIPE_WEBHOOK_SECRET);
+    if (!isValid) {
+      console.error('[stripe-webhook] Webhook signature verification failed');
+      return new Response('Webhook signature verification failed', { status: 400 });
+    }
+
+    let event: { type: string; data: { object: any } };
+    try {
+      event = JSON.parse(body);
+    } catch (err) {
+      console.error('[stripe-webhook] Invalid JSON payload', err);
+      return new Response('Invalid JSON payload', { status: 400 });
+    }
+
+    console.log(`[stripe-webhook] Signature valid. Handling event: ${event.type}`);
+
+    try {
+      switch (event.type) {
+        case 'checkout.session.completed': {
+          await handleCheckoutCompleted(event.data.object);
+          break;
+        }
+        case 'customer.subscription.updated': {
+          const subscription = event.data.object;
+          await updateSubscriptionStatusByCustomerId(
+            subscription.customer,
+            mapSubscriptionStatus(subscription.status),
+            subscription.id,
+          );
+          break;
+        }
+        case 'customer.subscription.deleted': {
+          const subscription = event.data.object;
+          await updateSubscriptionStatusByCustomerId(subscription.customer, 'canceled', subscription.id);
+          break;
+        }
+        case 'invoice.payment_failed': {
+          const invoice = event.data.object;
+          await updateSubscriptionStatusByCustomerId(invoice.customer, 'past_due');
+          break;
+        }
+        default:
+          console.log(`[stripe-webhook] Unhandled event type: ${event.type}`);
+          break;
+      }
+    } catch (err) {
+      console.error(`[stripe-webhook] Error handling event ${event.type}`, err);
+      return new Response(`Error handling event: ${(err as Error).message}`, { status: 500 });
+    }
+
+    console.log(`[stripe-webhook] Successfully processed event: ${event.type}`);
+    return new Response(JSON.stringify({ received: true }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (err) {
+    console.error('[stripe-webhook] Unhandled top-level error', err);
+    return new Response(`Unhandled error: ${(err as Error).message}`, { status: 500 });
+  }
 });

@@ -15,6 +15,22 @@ const resetMessageEl = document.getElementById('reset-message');
 
 let isPasswordRecovery = false;
 
+// Supabase reports an expired/invalid recovery or magic link as
+// #error=...&error_code=...&error_description=... on this same page,
+// rather than firing PASSWORD_RECOVERY. Surface that instead of silently
+// falling through to "already logged in, go to home.html" below, which
+// would hide the failure from anyone who happens to have another valid
+// session in the same browser.
+const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+const hashError = hashParams.get('error_description') || hashParams.get('error');
+const recoveryLinkFailed = Boolean(hashError);
+if (recoveryLinkFailed) {
+  showMessage(
+    `${hashError.replace(/\+/g, ' ')} Please request a new reset link.`,
+    'error',
+  );
+}
+
 function showMessage(text, type) {
   messageEl.textContent = text;
   messageEl.className = 'auth-message ' + type;
@@ -45,7 +61,7 @@ function showResetForm() {
 supabase.auth.onAuthStateChange((event, session) => {
   if (event === 'PASSWORD_RECOVERY') {
     showResetForm();
-  } else if (event === 'SIGNED_IN' && !isPasswordRecovery && session) {
+  } else if (event === 'SIGNED_IN' && !isPasswordRecovery && !recoveryLinkFailed && session) {
     window.location.href = 'home.html';
   }
 });
@@ -54,7 +70,7 @@ supabase.auth.onAuthStateChange((event, session) => {
   // Give onAuthStateChange a tick to fire PASSWORD_RECOVERY first if the
   // URL contains a recovery token, so we don't race it into home.html.
   await new Promise((resolve) => setTimeout(resolve, 0));
-  if (isPasswordRecovery) return;
+  if (isPasswordRecovery || recoveryLinkFailed) return;
 
   const { data } = await supabase.auth.getSession();
   if (data && data.session) {

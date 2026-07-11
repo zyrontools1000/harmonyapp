@@ -136,7 +136,7 @@ forgotLink.addEventListener('click', async (event) => {
   }
 
   showResetForm();
-  showResetMessage('Check your email for a 6-digit code.', 'success');
+  showResetMessage('Check your email for a code.', 'success');
 });
 
 resetForm.addEventListener('submit', async (event) => {
@@ -161,7 +161,7 @@ resetForm.addEventListener('submit', async (event) => {
   if (!hasRecoverySession) {
     const code = codeInput.value.trim();
     if (!code) {
-      showResetMessage('Enter the 6-digit code from your email.', 'error');
+      showResetMessage('Enter the code from your email.', 'error');
       resetBtn.disabled = false;
       resetBtn.textContent = 'Set New Password';
       return;

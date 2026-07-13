@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>The Divine 12-Word Scripts — Harmony App</title>
+  <meta name="theme-color" content="#0D0618" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script type="module" src="js/authGuard.js"></script>
+  <style>
+    .twp-page { position:relative; z-index:1; padding-bottom:calc(80px + env(safe-area-inset-bottom)); }
+    .twp-body { padding:4px 20px 30px; max-width:500px; margin:0 auto; }
+
+    .twp-card {
+      background:linear-gradient(135deg,rgba(45,10,94,0.5),rgba(13,6,24,0.6));
+      border:1px solid var(--border); border-radius:18px;
+      padding:22px 20px; margin-bottom:20px;
+    }
+
+    .twp-headline { font-family:'Cinzel',serif; font-size:20px; font-weight:600; line-height:1.3; text-align:center; color:#e8e0f0; margin-bottom:12px; }
+    .twp-headline-accent { display:block; font-family:'Cinzel',serif; font-size:14px; font-weight:500; text-align:center; color:#FFD700; line-height:1.4; margin-bottom:18px; }
+    .twp-paragraph { font-size:13.5px; color:#C4B8D8; line-height:1.7; text-align:center; margin:0 0 14px; }
+    .twp-scroll-hint { font-size:13px; color:#FFD700; text-align:center; font-weight:500; margin:6px 0 0; }
+
+    .twp-section-title { font-family:'Cinzel',serif; font-size:15px; font-weight:600; color:#e8e0f0; text-align:center; line-height:1.4; margin:0 0 8px; }
+    .twp-section-sub { font-size:12.5px; color:#9B89B8; text-align:center; line-height:1.4; margin:0 0 18px; }
+
+    .twp-media { background:rgba(0,0,0,0.4); border:1px solid var(--border); border-radius:14px; overflow:hidden; margin-bottom:14px; }
+    .twp-video-wrap { position:relative; width:100%; padding-bottom:56.25%; background:#000; }
+    .twp-video-wrap iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+    .twp-script-header { background:rgba(255,215,0,0.07); border:1px solid rgba(255,215,0,0.3); border-radius:14px; padding:16px 18px; text-align:center; margin-bottom:18px; }
+    .twp-script-header h2 { font-family:'Cinzel',serif; font-size:14.5px; line-height:1.4; font-weight:700; color:#FFD700; margin:0 0 8px; }
+    .twp-script-header p { font-size:12.5px; line-height:1.6; font-weight:400; color:#e8e0f0; margin:0; }
+
+    .twp-script-body { font-size:13.5px; line-height:1.75; color:#e8e0f0; }
+    .twp-script-body > p { margin:0 0 16px; text-align:left; color:#C4B8D8; }
+
+    .twp-verse-box { background:linear-gradient(135deg,rgba(201,168,76,0.08),rgba(109,40,217,0.1)); border:1px solid rgba(201,168,76,0.3); border-radius:14px; padding:16px 18px; margin-bottom:16px; }
+    .twp-verse-ref { font-family:'Cinzel',serif; font-size:12px; color:#FFD700; font-weight:600; line-height:1.4; margin:0 0 4px; }
+    .twp-verse-text { font-size:13px; line-height:1.6; color:#F0EAF8; font-style:italic; margin:0; }
+
+    .twp-prayer-label { font-family:'Cinzel',serif; font-size:13px; color:#FFD700; font-weight:600; margin:16px 0 8px; text-align:left; }
+    .twp-prayer-text { font-size:13.5px; line-height:1.7; color:#e8e0f0; text-align:left; margin:0 0 22px; }
+
+    .twp-script-block { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:16px 16px 14px; margin-bottom:14px; }
+    .twp-script-block .twp-label { font-family:'Cinzel',serif; font-size:12px; font-weight:600; color:#FFD700; margin-bottom:6px; line-height:1.4; }
+    .twp-script-block .twp-line { font-size:14px; color:#F0EAF8; font-weight:500; line-height:1.45; margin-bottom:6px; }
+    .twp-script-block .twp-desc { font-size:12.5px; color:#9B89B8; font-weight:400; line-height:1.5; }
+
+    .twp-audio-wrap { padding:18px; display:flex; flex-direction:column; align-items:center; background:rgba(255,255,255,0.03); }
+    .twp-audio-title { text-align:center; font-family:'Cinzel',serif; font-size:15px; font-weight:600; line-height:1.4; color:#FFD700; text-shadow:0 0 8px rgba(255,215,0,0.5), 0 0 16px rgba(255,215,0,0.25); margin-bottom:10px; }
+    .twp-audio-sub { text-align:center; font-size:12px; line-height:1.4; font-weight:400; color:#9B89B8; margin-top:-4px; margin-bottom:14px; }
+    .twp-audio-wrap audio { width:100%; outline:none; }
+
+    .twp-divider { width:60px; height:2px; background:radial-gradient(circle, #FFD700 0%, rgba(0,0,0,0) 70%); border-radius:999px; margin:6px auto 22px; opacity:0.7; }
+    .twp-cta-text { font-size:13.5px; line-height:1.7; color:#C4B8D8; text-align:center; margin:0 0 20px; }
+    .twp-btn-premium {
+      display:block; max-width:280px; text-align:center;
+      background:linear-gradient(135deg,rgba(255,215,0,0.2) 0%, rgba(0,0,0,0) 100%);
+      border:1px solid #FFD700; color:#FFD700; font-family:'Cinzel',serif;
+      font-size:13px; font-weight:600; letter-spacing:0.5px; text-decoration:none;
+      padding:14px 16px; line-height:1.3; border-radius:999px;
+      box-shadow:0 20px 50px rgba(255,215,0,0.15); transition:all 0.15s ease; margin:0 auto;
+    }
+    .twp-btn-premium:active, .twp-btn-premium:hover { background:#FFD700; color:#0D0618; box-shadow:0 30px 60px rgba(255,215,0,0.4); }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="twp-page">
+
+    <header class="page-header">
+      <a href="dashboard.html" class="back-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </a>
+      <div class="page-header-text">
+        <div class="page-eyebrow">Special Content</div>
+        <h1 class="page-title">The Divine 12-Word Scripts</h1>
+      </div>
+    </header>
+
+    <div class="twp-body">
+
+      <!-- INTRO / WELCOME -->
+      <div class="twp-card">
+        <div class="twp-headline">Welcome to The<br/>Divine 12-Word Scripts</div>
+        <div class="twp-headline-accent">You've crossed the threshold.</div>
+        <p class="twp-paragraph">For the past three days, your field has been opening, aligning, and remembering what divine resonance feels like.</p>
+        <p class="twp-paragraph">That's activation.</p>
+        <div class="twp-scroll-hint">✨ Scroll down when you're ready ✨</div>
+      </div>
+
+      <!-- VIDEO 1 -->
+      <div class="twp-card">
+        <div class="twp-section-title">Now... it's time for you to find out</div>
+        <div class="twp-section-sub">The Hidden Mechanism Behind Transformation</div>
+        <div class="twp-media">
+          <div class="twp-video-wrap">
+            <iframe
+              src="https://www.youtube.com/embed/YMRdMFWMsog"
+              title="The Hidden Mechanism Behind Transformation"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+        <p class="twp-paragraph">If you've already arrived here, it means you're following the right steps and receiving what you've been seeking. Below is a very important step.</p>
+      </div>
+
+      <!-- VIDEO 2 -->
+      <div class="twp-card">
+        <div class="twp-section-title">Activating The Code</div>
+        <div class="twp-section-sub">Watch this with calm and full permission to receive.</div>
+        <div class="twp-media">
+          <div class="twp-video-wrap">
+            <iframe
+              src="https://www.youtube.com/embed/CZiKQUFjVXY"
+              title="Activating The Code"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+
+      <!-- DIVINE SCRIPT -->
+      <div class="twp-card">
+        <div class="twp-script-header">
+          <h2>✨ THE 12-WORD DIVINE SCRIPT</h2>
+          <p>
+            A Prophetic Declaration of Identity, Expansion, and Kingdom Authority.<br/>
+            This is more than affirmation — it is alignment with truth.<br/>
+            It is a sacred moment between your voice and Heaven.
+          </p>
+        </div>
+
+        <div class="twp-script-body">
+
+          <p>Within these twelve declarations lies a divine blueprint… a spiritual code designed to unlock your identity, dissolve limitation, and activate supernatural flow. Speak them aloud. Whisper them in worship. Repeat them until your spirit remembers who you really are. Let each line rewire your thinking, expand your vision, and pull your destiny into the now.</p>
+
+          <div class="twp-verse-box">
+            <div class="twp-verse-ref">📖 Proverbs 16:3</div>
+            <div class="twp-verse-text">Commit to the Lord whatever you do, and your plans will succeed.</div>
+          </div>
+
+          <div class="twp-verse-box">
+            <div class="twp-verse-ref">📖 Psalm 112:3</div>
+            <div class="twp-verse-text">Wealth and riches are in his house, and his righteousness endures forever.</div>
+          </div>
+
+          <div class="twp-prayer-label">🙏 Prayer of the 12 Declarations</div>
+          <div class="twp-prayer-text">Father, I thank You… Because I am chosen by Your hand, separated for greatness, and appointed for this generation.</div>
+
+          <!-- Declaration 1 -->
+          <div class="twp-script-block">
+            <div class="twp-label">✨ 1. Divine Purpose</div>
+            <div class="twp-line">You have placed a purpose in me that no man can erase.</div>
+            <div class="twp-desc">🗣️ My voice carries weight in Heaven and influence on Earth. When I speak, I align with Your will, and Your power goes before me.</div>
+          </div>
+
+          <!-- Declaration 2 -->
+          <div class="twp-script-block">
+            <div class="twp-label">✨ 2. Divine Timing</div>
+            <div class="twp-line">I do not chase. I rest in Your timing.</div>
+            <div class="twp-desc">❤️ I attract divine alignment and supernatural provision because You are faithful to provide.</div>
+          </div>
+
+          <!-- Declaration 3 -->
+          <div class="twp-script-block">
+            <div class="twp-label">✨ 3. Acceleration After Delay</div>
+            <div class="twp-line">Every delay is being transformed into acceleration by Your hand.</div>
+            <div class="twp-desc">🚀 What once held me back now pushes me forward.</div>
+          </div>
+
+          <!-- Declaration 4 -->
+          <div class="twp-script-block">
+            <div class="twp-label">✨ 4. Grace Over Striving</div>
+            <div class="twp-line">I no longer strive. I walk in Your grace.</div>
+            <div class="twp-desc">🕊 I steward what You've given me and multiply favor wherever I go.</div>
+          </div>
+
+          <!-- Declaration 5 -->
+          <div class="twp-script-block">
+            <div class="twp-label">✨ 5. Abundance Over Lack</div>
+            <div class="twp-line">Lack has no permission to stay in my life.</div>
+            <div class="twp-desc">🛡 You are my Shepherd, and I lack nothing.</div>
+          </div>
+
+          <!-- Declaration 6 -->
+          <div class="twp-script-block">
+            <div class="twp-label">✨ 6. Holy Creativity</div>
+            <div class="twp-line">The creativity You placed in me is holy.</div>
+            <div class="twp-desc">🌱 My ideas are not my own — they are seeds from Heaven.</div>
+          </div>
+
+          <!-- Declaration 7 -->
+          <div class="twp-script-block">
+            <div class="twp-label">✨ 7. Multiplied Results</div>
+            <div class="twp-line">My results are multiplied.</div>
+            <div class="twp-desc">📜 My legacy is eternal. I am building what will outlive me.</div>
+          </div>
+
+          <!-- Declaration 8 -->
+          <div class="twp-script-block">
+            <div class="twp-label">✨ 8. Wealth With Purpose</div>
+            <div class="twp-line">You give me insight, divine strategies, and the power to create wealth.</div>
+            <div class="twp-desc">💰 Not just for me, but to bless generations.</div>
+          </div>
+
+          <!-- Declaration 9 -->
+          <div class="twp-script-block">
+            <div class="twp-label">✨ 9. Faithful Harvest</div>
+            <div class="twp-line">I sow with faith. I water with purpose.</div>
+            <div class="twp-desc">🌾 I harvest with joy and expectation.</div>
+          </div>
+
+          <!-- Declaration 10 -->
+          <div class="twp-script-block">
+            <div class="twp-label">✨ 10. Open Doors Without Force</div>
+            <div class="twp-line">Kingdom doors open for me without striving.</div>
+            <div class="twp-desc">🕊 I don't force. I flow.</div>
+          </div>
+
+          <!-- Declaration 11 -->
+          <div class="twp-script-block">
+            <div class="twp-label">✨ 11. Bold & Fearless Destiny</div>
+            <div class="twp-line">Destiny unfolds before me.</div>
+            <div class="twp-desc">🦁 I walk without fear.</div>
+          </div>
+
+          <!-- Declaration 12 -->
+          <div class="twp-script-block">
+            <div class="twp-label">✨ 12. Rhythm With Heaven</div>
+            <div class="twp-line">I live in rhythm with Heaven.</div>
+            <div class="twp-desc">🔥 I move boldly. I remain pure. I speak with fire.</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- AUDIO BLOCK -->
+      <div class="twp-card" style="padding:0;">
+        <div class="twp-audio-wrap">
+          <div class="twp-audio-title">ACTIVATION CODE</div>
+          <div class="twp-audio-sub">Listen morning &amp; night for 3 days</div>
+          <audio controls preload="none" playsinline>
+            <source src="https://harmonyapp-audios.b-cdn.net/12-words-prayer/12-WORDS_SCRIPT_ACTIVATION_CODE.mp3" type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      </div>
+
+      <!-- CTA FINAL -->
+      <div class="twp-card" style="text-align:center;">
+        <div class="twp-divider"></div>
+        <p class="twp-cta-text">You've opened the code.<br/>Now it's time to anchor it. Keep your field strong, your healing active, and your abundance flowing — this is where activation becomes embodiment.</p>
+        <a class="twp-btn-premium" href="twelve-word-prayer-portal.html">ANCHOR MY DIVINE ACTIVATION →</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Navigation Drawer -->
+  <div id="nav-modal" onclick="closeNav()" style="display:none;position:fixed;inset:0;z-index:40;background:rgba(0,0,0,0.7);backdrop-filter:blur(6px);"></div>
+  <div id="nav-drawer" style="position:fixed;bottom:-100%;left:0;right:0;z-index:50;background:linear-gradient(160deg,#1A0A2E,#0D0618);border-top:1px solid rgba(147,51,234,0.3);border-radius:24px 24px 0 0;padding:20px 20px 50px;transition:bottom 0.3s ease;max-height:80vh;overflow-y:auto;">
+    <div style="width:36px;height:4px;background:rgba(255,255,255,0.15);border-radius:2px;margin:0 auto 20px;"></div>
+    <div style="font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#9B89B8;margin-bottom:14px;">All Modules</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <a href="7-biblical-healing-frequencies.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(255,45,138,0.08);border:1px solid rgba(255,45,138,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">📖 7 Biblical Healing Frequencies</a>
+      <a href="healing-frequencies-vault.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(255,107,43,0.08);border:1px solid rgba(255,107,43,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">🔮 Healing Frequencies Vault</a>
+      <a href="archangel-frequencies.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">👼 7 Sacred Archangel Frequencies</a>
+      <a href="divine-accelerator.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(147,51,234,0.08);border:1px solid rgba(147,51,234,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">☀️ Divine Frequencies Accelerator</a>
+      <a href="bedtime-stories.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(147,51,234,0.08);border:1px solid rgba(147,51,234,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">🛏️ Bedtime Stories</a>
+      <a href="biblical-prosperity.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">✨ Biblical Prosperity Guide</a>
+      <a href="youth-protocol.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(147,51,234,0.08);border:1px solid rgba(147,51,234,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">⚡ Youth Frequency Protocol</a>
+      <a href="special-prayer.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(255,45,138,0.08);border:1px solid rgba(255,45,138,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">🙏 Special Prayer for Rapid Healing</a>
+      <a href="ritual-home.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">⚔️ 7-Day Ritual with Archangel Michael</a>
+      <a href="family-healing-prayers.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(255,45,138,0.08);border:1px solid rgba(255,45,138,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">👪 Family Healing Prayers</a>
+      <a href="spiritual-scrolls.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(147,51,234,0.08);border:1px solid rgba(147,51,234,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">📜 Spiritual Scrolls</a>
+      <a href="morning-activation-series.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">🌅 Morning Activation Series</a>
+      <a href="sacred-resonance.html" onclick="closeNav()" style="display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.2);border-radius:12px;text-decoration:none;color:#F0EAF8;font-family:'Cinzel',serif;font-size:13px;">✦ Sacred Resonance</a>
+    </div>
+  </div>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav" style="justify-content:space-around;">
+    <a href="home.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M12 2C8 7 3 8 3 14a9 9 0 1 0 18 0c0-6-5-7-9-12z"/></svg>
+      <span>HarmonyApp</span>
+    </a>
+    <a href="dashboard.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/></svg>
+      <span>Home</span>
+    </a>
+    <a href="support.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 3.5"/><line x1="12" y1="17" x2="12" y2="17.01"/></svg>
+      <span>Support</span>
+    </a>
+    <button onclick="openNav()" class="nav-item" style="background:none;border:none;cursor:pointer;color:var(--text-dim);font-size:10px;display:flex;flex-direction:column;align-items:center;gap:4px;padding:4px 0;flex:1;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <span>Navigation</span>
+    </button>
+  </nav>
+  <script>
+  function openNav(){document.getElementById('nav-modal').style.display='block';document.getElementById('nav-drawer').style.bottom='0';}
+  function closeNav(){document.getElementById('nav-modal').style.display='none';document.getElementById('nav-drawer').style.bottom='-100%';}
+  </script>
+
+  <script src="js/stars.js" defer></script>
+  <script>
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+  </script>
+
+  <!-- Legal Footer -->
+  <footer class="harmony-legal-footer">
+    <div class="footer-links">
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="refund-policy.html">Refund Policy</a>
+      <a href="support.html">Support</a>
+    </div>
+    <p class="footer-copy">© 2026 HarmonyApp · All rights reserved</p>
+    <div class="disclaimer-bar">
+      HarmonyApp is a spiritual experience for personal reflection and faith. Not intended to diagnose, treat, cure, or prevent any disease or medical condition. Consult a healthcare professional for medical advice.
+    </div>
+  </footer>
+</body>
+</html>

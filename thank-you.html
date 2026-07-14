@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root { --bg: #0D0618; --purple: #6B21A8; --grad-start: #FF2D8A; --grad-end: #FFD700; --text: #F0EAF8; --muted: #9B89B8; --border: rgba(147,51,234,0.25); }
+  :root { --bg: #0D0618; --grad-start: #FF2D8A; --grad-end: #FFD700; --text: #F0EAF8; --muted: #9B89B8; --border: rgba(147,51,234,0.25); }
   html, body { min-height: 100%; background: var(--bg); color: var(--text); font-family: 'Raleway', sans-serif; overflow-x: hidden; }
   body { background-image: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(109,40,217,0.45) 0%, transparent 70%); display: flex; align-items: center; justify-content: center; }
   .page { max-width: 480px; margin: 0 auto; padding: 48px 20px 60px; text-align: center; }
@@ -18,14 +18,27 @@
 
   .page-title { font-family: 'Cinzel', serif; font-size: 24px; letter-spacing: 1px; margin-bottom: 14px; background: linear-gradient(90deg, var(--grad-start), var(--grad-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
-  .lead { font-size: 15px; color: var(--text); line-height: 1.7; margin-bottom: 28px; }
+  .lead { font-size: 15px; color: var(--text); line-height: 1.7; margin-bottom: 24px; }
   .lead strong { color: #FFD700; }
 
+  /* WARNING box */
+  .warning-box { background: rgba(220,38,38,0.1); border: 2px solid rgba(220,38,38,0.4); border-radius: 14px; padding: 16px 18px; margin-bottom: 24px; }
+  .warning-box p { font-size: 13px; color: #ffaaaa; line-height: 1.7; }
+  .warning-box strong { color: #ff6b6b; }
+
+  /* Main CTA button */
+  .btn-enter { display: block; width: 100%; padding: 18px; background: linear-gradient(135deg, #FF2D8A, #FF6B2B); color: white; font-family: 'Cinzel', serif; font-weight: 700; font-size: 15px; letter-spacing: 2px; text-transform: uppercase; border: none; border-radius: 50px; text-decoration: none; cursor: pointer; box-shadow: 0 0 30px rgba(255,45,138,0.35); margin-bottom: 24px; }
+
   .card { background: linear-gradient(160deg, rgba(45,10,94,0.5), rgba(13,6,24,0.6)); border: 1px solid var(--border); border-radius: 18px; padding: 22px 20px; margin-bottom: 24px; text-align: left; }
-  .card-title { font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 0.5px; color: var(--text); margin-bottom: 10px; }
-  .card p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+  .card-title { font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 0.5px; color: #FFD700; margin-bottom: 12px; }
+  .card p { font-size: 13px; color: var(--muted); line-height: 1.8; }
   .card p + p { margin-top: 8px; }
   .card code { background: rgba(255,45,138,0.1); border: 1px solid rgba(255,45,138,0.2); border-radius: 6px; padding: 2px 7px; font-size: 12px; color: #FF2D8A; font-family: monospace; }
+
+  /* Password setup card */
+  .password-card { background: rgba(255,215,0,0.06); border: 2px solid rgba(255,215,0,0.25); border-radius: 14px; padding: 20px; margin-bottom: 24px; text-align: left; }
+  .password-card h3 { font-family: 'Cinzel', serif; font-size: 13px; color: #FFD700; margin-bottom: 12px; }
+  .password-card p { font-size: 13px; color: var(--muted); line-height: 1.9; }
 
   .support { text-align: center; border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; }
   .support p { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
@@ -33,31 +46,53 @@
 
   .harmony-legal-footer { position: relative; z-index: 10; margin-top: 40px; padding: 28px 20px 20px; border-top: 1px solid rgba(147,51,234,0.25); text-align: center; background: rgba(13,6,24,0.6); }
   .harmony-legal-footer .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; margin-bottom: 14px; }
-  .harmony-legal-footer .footer-links a { font-family: 'Raleway', sans-serif; font-size: 12px; color: #a090b8; text-decoration: none; transition: color 0.2s; }
+  .harmony-legal-footer .footer-links a { font-family: 'Raleway', sans-serif; font-size: 12px; color: #a090b8; text-decoration: none; }
   .harmony-legal-footer .footer-links a:hover { color: #FFD700; }
   .harmony-legal-footer .footer-copy { font-family: 'Raleway', sans-serif; font-size: 11px; color: #6b5a80; margin-bottom: 12px; }
 </style>
 </head>
 <body>
 <div class="page">
+
   <div class="checkmark">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
   </div>
 
-  <div class="page-title">Payment Successful</div>
-  <p class="lead">Your HarmonyApp subscription is <strong>active</strong>. You do not need to pay again — please do not use the checkout button a second time.</p>
+  <div class="page-title">Payment Successful!</div>
+  <p class="lead">Welcome to HarmonyApp! Your subscription is <strong>active</strong>. Your sacred space is ready. 🙏</p>
 
+  <!-- WARNING - do not pay again -->
+  <div class="warning-box">
+    <p><strong>⚠️ Important:</strong> Your payment has been confirmed. <strong>Please do not tap the back button or pay again.</strong> You only need one subscription — you are all set!</p>
+  </div>
+
+  <!-- Main CTA -->
+  <a href="https://my.harmonyapp.app/home.html" class="btn-enter">✦ Enter My Sacred Space Now</a>
+
+  <!-- What happens next -->
   <div class="card">
     <div class="card-title">✦ WHAT HAPPENS NEXT</div>
-    <p><strong>Step 1:</strong> Within a couple of minutes, we'll send an email to the address you used at checkout with a secure link to enter the app.</p>
-    <p><strong>Step 2:</strong> Don't see it? Check your spam/junk folder for an email from <code>support@harmonyapp.app</code>.</p>
-    <p><strong>Step 3:</strong> Already have access? Sign in anytime at <code>my.harmonyapp.app</code>.</p>
+    <p><strong>Step 1:</strong> Tap the button above to enter the app right now.</p>
+    <p><strong>Step 2:</strong> We are also sending a welcome email to the address you used at checkout with a secure access link.</p>
+    <p><strong>Step 3:</strong> Don't see the email? Check your spam folder for <code>support@harmonyapp.app</code>.</p>
+  </div>
+
+  <!-- Password setup -->
+  <div class="password-card">
+    <h3>✦ Set Your Personal Password (4 easy steps)</h3>
+    <p>
+      <strong style="color:#FFD700;">Step 1.</strong> Go to <strong style="color:#F0EAF8;">my.harmonyapp.app</strong><br/>
+      <strong style="color:#FFD700;">Step 2.</strong> Type your email address in the email field<br/>
+      <strong style="color:#FFD700;">Step 3.</strong> Tap <strong style="color:#F0EAF8;">"Forgot password?"</strong> below the sign-in button<br/>
+      <strong style="color:#FFD700;">Step 4.</strong> Check your email and tap the link to choose your own password
+    </p>
   </div>
 
   <div class="support">
-    <p>No email after 10 minutes, or charged more than once? We'll sort it out — no questions asked.</p>
+    <p>Charged more than once or need help? We'll sort it out right away.</p>
     <a href="mailto:support@harmonyapp.app">✦ support@harmonyapp.app ✦</a>
   </div>
+
 </div>
 
 <footer class="harmony-legal-footer">
@@ -65,9 +100,9 @@
     <a href="privacy-policy.html">Privacy Policy</a>
     <a href="terms.html">Terms of Service</a>
     <a href="refund-policy.html">Refund Policy</a>
-    <a href="support.html">Support</a>
+    <a href="support-public.html">Support</a>
   </div>
-  <p class="footer-copy">© 2026 HarmonyApp · All rights reserved</p>
+  <p class="footer-copy">© 2026 HarmonyApp · Operated by Zampier Co. Ltda · CNPJ 67.681.548/0001-15</p>
 </footer>
 </body>
 </html>

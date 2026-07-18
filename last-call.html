@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>HarmonyApp — Founding Member Offer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0D0618;
+    --surface: #120820;
+    --surface2: #1a0d2e;
+    --border: rgba(147,51,234,0.2);
+    --border-gold: rgba(255,215,0,0.3);
+    --pink: #FF2D8A;
+    --orange: #FF6B2B;
+    --gold: #FFD700;
+    --gold-dim: #C9A227;
+    --text: #F0EAF8;
+    --muted: #9B89B8;
+    --dim: #6b5a80;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Raleway', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* Stars background */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 80% 40% at 50% 0%, rgba(109,40,217,0.3) 0%, transparent 70%),
+      radial-gradient(1px 1px at 15% 20%, rgba(255,215,0,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 35% 8%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 65% 25%, rgba(255,215,0,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 12%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 20% 60%, rgba(255,215,0,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 75% 70%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 85%, rgba(255,215,0,0.4) 0%, transparent 100%);
+  }
+
+  .page { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 0 20px 80px; }
+
+  /* ── URGENCY BAR ── */
+  .urgency-bar {
+    background: linear-gradient(90deg, #7B1C1C, #A31515, #7B1C1C);
+    text-align: center;
+    padding: 12px 20px;
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #FFB3B3;
+    position: sticky; top: 0; z-index: 100;
+    border-bottom: 1px solid rgba(255,100,100,0.3);
+  }
+  .urgency-bar span { color: #fff; font-weight: 700; }
+
+  /* ── HERO ── */
+  .hero { text-align: center; padding: 60px 0 40px; }
+
+  .eyebrow {
+    display: inline-block;
+    font-family: 'Cinzel', serif;
+    font-size: 10px; letter-spacing: 4px;
+    color: #ff6b6b;
+    text-transform: uppercase;
+    border: 1px solid rgba(255,100,100,0.4);
+    background: rgba(255,50,50,0.08);
+    border-radius: 50px;
+    padding: 6px 18px;
+    margin-bottom: 28px;
+    animation: pulse-red 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-red {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,50,50,0.3); }
+    50% { box-shadow: 0 0 0 8px rgba(255,50,50,0); }
+  }
+
+  .hero h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(26px, 5vw, 42px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #fff 0%, var(--gold) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    color: var(--gold);
+    font-style: italic;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .hero-body {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 11px; letter-spacing: 4px;
+    color: var(--gold);
+    text-align: center;
+    text-transform: uppercase;
+    margin: 48px 0 28px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .section-label::before, .section-label::after {
+    content: ''; flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-gold));
+  }
+  .section-label::after { background: linear-gradient(90deg, var(--border-gold), transparent); }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials { display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px; }
+
+  .testimonial {
+    background: linear-gradient(135deg, rgba(26,13,46,0.9), rgba(13,6,24,0.95));
+    border: 1px solid var(--border-gold);
+    border-radius: 16px;
+    padding: 24px 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .testimonial::before {
+    content: '"';
+    position: absolute; top: -10px; left: 16px;
+    font-size: 80px; color: rgba(255,215,0,0.08);
+    font-family: 'Cinzel', serif; line-height: 1;
+  }
+
+  .stars { color: var(--gold); font-size: 14px; letter-spacing: 2px; margin-bottom: 10px; }
+  .testimonial-text { font-size: 15px; color: var(--text); line-height: 1.7; margin-bottom: 12px; font-style: italic; }
+  .testimonial-author { font-family: 'Cinzel', serif; font-size: 12px; color: var(--gold-dim); letter-spacing: 1px; }
+
+  /* ── BRIDGE TEXT ── */
+  .bridge {
+    text-align: center;
+    padding: 32px 0;
+  }
+  .bridge p { font-size: 16px; color: var(--text); line-height: 1.8; margin-bottom: 12px; }
+  .bridge .highlight { color: var(--gold); font-weight: 600; }
+
+  /* ── CTA BUTTON ── */
+  .cta-wrap { text-align: center; margin: 32px 0; }
+
+  .btn-cta {
+    display: inline-block;
+    padding: 20px 40px;
+    background: linear-gradient(135deg, var(--pink), var(--orange));
+    color: white;
+    font-family: 'Cinzel', serif;
+    font-size: 15px; font-weight: 700;
+    letter-spacing: 1.5px;
+    text-decoration: none;
+    border-radius: 50px;
+    box-shadow: 0 0 40px rgba(255,45,138,0.4), 0 0 80px rgba(255,45,138,0.15);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-align: center;
+  }
+  .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 0 60px rgba(255,45,138,0.6); }
+  .btn-cta span { display: block; font-size: 11px; font-weight: 400; letter-spacing: 2px; opacity: 0.85; margin-top: 4px; }
+
+  /* ── MOCKUP PLACEHOLDER ── */
+  .mockup-block {
+    background: linear-gradient(160deg, rgba(26,13,46,0.8), rgba(13,6,24,0.9));
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px 20px;
+    text-align: center;
+    margin: 32px 0;
+    min-height: 280px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .mockup-block img { max-width: 100%; border-radius: 12px; }
+  .mockup-placeholder { color: var(--dim); font-size: 13px; font-family: 'Cinzel', serif; letter-spacing: 2px; }
+
+  /* ── WHAT'S INCLUDED ── */
+  .included-card {
+    background: linear-gradient(160deg, rgba(26,13,46,0.8), rgba(13,6,24,0.9));
+    border: 1px solid var(--border-gold);
+    border-radius: 20px;
+    padding: 32px 28px;
+    margin-bottom: 32px;
+  }
+  .included-card h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 16px; color: var(--gold);
+    margin-bottom: 20px; text-align: center;
+    letter-spacing: 1px;
+  }
+  .included-list { list-style: none; }
+  .included-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(147,51,234,0.1);
+    font-size: 15px; color: var(--text);
+    display: flex; align-items: flex-start; gap: 12px;
+    line-height: 1.5;
+  }
+  .included-list li:last-child { border-bottom: none; }
+  .included-list li::before { content: '✦'; color: var(--gold); flex-shrink: 0; margin-top: 2px; }
+  .included-note {
+    margin-top: 20px;
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 1px;
+  }
+
+  /* ── PRICE COMPARISON ── */
+  .price-comparison {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px; margin: 32px 0;
+  }
+  .price-card {
+    border-radius: 16px; padding: 28px 20px; text-align: center;
+  }
+  .price-card.new-members {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .price-card.founding {
+    background: linear-gradient(135deg, rgba(255,215,0,0.08), rgba(255,107,43,0.05));
+    border: 2px solid var(--gold);
+    position: relative;
+  }
+  .founding-badge {
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--pink), var(--orange));
+    color: white; font-family: 'Cinzel', serif; font-size: 10px;
+    letter-spacing: 2px; padding: 4px 14px; border-radius: 50px;
+    white-space: nowrap;
+  }
+  .price-label { font-size: 12px; color: var(--muted); letter-spacing: 2px; font-family: 'Cinzel', serif; margin-bottom: 10px; }
+  .price-amount { font-family: 'Cinzel', serif; font-size: 36px; font-weight: 700; line-height: 1; margin-bottom: 6px; }
+  .price-card.new-members .price-amount { color: var(--muted); text-decoration: line-through; }
+  .price-card.founding .price-amount { color: var(--gold); }
+  .price-per { font-size: 12px; color: var(--muted); }
+  .price-card.founding .price-per { color: var(--gold-dim); }
+
+  /* ── CLOSING SECTION ── */
+  .closing {
+    background: linear-gradient(160deg, rgba(26,13,46,0.7), rgba(13,6,24,0.8));
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px 28px;
+    margin: 32px 0;
+  }
+  .closing p { font-size: 16px; color: var(--text); line-height: 1.8; margin-bottom: 16px; }
+  .closing p:last-child { margin-bottom: 0; }
+  .closing .emphasis { color: var(--gold); font-weight: 600; }
+
+  /* ── FOOTER ── */
+  .tsl-footer {
+    text-align: center;
+    padding: 40px 0 20px;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+  .tsl-footer p { font-size: 12px; color: var(--dim); line-height: 1.8; }
+  .tsl-footer a { color: var(--muted); text-decoration: none; }
+  .tsl-footer a:hover { color: var(--gold); }
+  .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 20px; margin-bottom: 12px; }
+
+  /* Mobile */
+  @media (max-width: 480px) {
+    .price-comparison { grid-template-columns: 1fr; }
+    .btn-cta { padding: 18px 28px; font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Urgency Bar -->
+<div class="urgency-bar">
+  ⚠️ <span>THIS LINK WILL DEACTIVATE SOON</span> — PLEASE READ BEFORE IT DOES
+</div>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="eyebrow">⚡ Founding Member Offer — Closing Soon</div>
+    <h1>We Noticed You Haven't Joined Yet —<br/>What's Really Stopping You?</h1>
+    <p class="hero-sub">This is your personal link. Once it's gone, we won't be able to offer you this price again.</p>
+    <p class="hero-body">You saw the message. You know HarmonyApp changed. And you're still here, reading this, instead of already being inside the new app.</p>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <div class="section-label">✦ LOOK AT WHAT YOU'RE MISSING ✦</div>
+
+  <p style="text-align:center;color:var(--muted);font-size:15px;margin-bottom:24px;">Founding Members are already inside. Here's what one of them told us this week.</p>
+
+  <div class="testimonials">
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"I started out with the Harmony App when you introduced it. I feel this is the best app I have ever used. I use it every day. I thank God for what you have put into it."</p>
+      <div class="testimonial-author">— Stephen C., Founding Member</div>
+    </div>
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"The new app is so much more beautiful than before — and the new content is already helping me. It's one of the few things that truly delivers more value than it costs. Thank you."</p>
+      <div class="testimonial-author">— Carolyn T., Founding Member</div>
+    </div>
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"I almost can't believe everything you get for just $4.99 a month. It costs less than a cup of coffee, and the value I've received is beyond anything I expected."</p>
+      <div class="testimonial-author">— Rosemarie R., Founding Member</div>
+    </div>
+  </div>
+
+  <!-- BRIDGE -->
+  <div class="bridge">
+    <p>Others have told us the same thing in their own words — that the new app is even more beautiful than before, and the new content is already making a difference in their lives.</p>
+    <p><span class="highlight">They said yes. They're already in.</span> And you're still one click away from joining them.</p>
+    <p>You were one of the first people to trust HarmonyApp — before it had reviews, before it had an audience. <span class="highlight">We haven't forgotten that.</span></p>
+    <p>This is the last chance to lock in $4.99 a month, forever, for everything the new app offers — while new members pay $19.99 for less. Once this link deactivates, we can't offer you this again.</p>
+    <p style="color:var(--text);font-size:17px;font-weight:600;margin-top:8px;">It's about whether you keep showing up for yourself.<br/>Don't let this be the night you didn't.</p>
+  </div>
+
+  <!-- CTA 1 -->
+  <div class="cta-wrap">
+    <a href="https://buy.stripe.com/cNi4gz00e9NNgizgwM00000" class="btn-cta">
+      Yes — Lock In My $4.99 Price Now →
+      <span>Founding Member Rate · Cancel Anytime</span>
+    </a>
+  </div>
+
+  <!-- MOCKUP IMAGE 1 -->
+  <div class="mockup-block" id="mockup1">
+    <div class="mockup-placeholder">[ INSERT APP MOCKUP IMAGE HERE ]</div>
+  </div>
+
+  <!-- WHAT'S INCLUDED -->
+  <div class="included-card">
+    <h3>✦ WHAT'S INCLUDED ✦</h3>
+    <ul class="included-list">
+      <li>Everything you already knew from HarmonyApp 2.0 — still here</li>
+      <li>Sacred Resonance — 7 sessions combining healing frequencies with biblical prayer, released for the first time</li>
+      <li>Family Healing Prayers — 7 prayers for the hardest family situations</li>
+      <li>Spiritual Scrolls, Morning Activation, Bedtime Stories — all included</li>
+      <li>Every future update, free, for as long as you're a Founding Member</li>
+    </ul>
+    <p class="included-note">New members will pay $19.99 a month for less than this. You won't.</p>
+  </div>
+
+  <!-- CTA 2 -->
+  <div class="cta-wrap">
+    <a href="https://buy.stripe.com/cNi4gz00e9NNgizgwM00000" class="btn-cta">
+      Become a Founding Member Now →
+      <span>$4.99/month · Locked Forever · Cancel Anytime</span>
+    </a>
+  </div>
+
+  <!-- PRICE COMPARISON -->
+  <div class="section-label">✦ YOUR EXCLUSIVE PRICE ✦</div>
+
+  <!-- Comparison Image Placeholder -->
+  <div class="mockup-block" id="mockup2" style="min-height:200px;">
+    <div class="mockup-placeholder">[ INSERT PRICE COMPARISON IMAGE HERE ]</div>
+  </div>
+
+  <div class="price-comparison">
+    <div class="price-card new-members">
+      <div class="price-label">NEW MEMBERS</div>
+      <div class="price-amount">$19.99</div>
+      <div class="price-per">per month</div>
+    </div>
+    <div class="price-card founding">
+      <div class="founding-badge">YOUR PRICE</div>
+      <div class="price-label">FOUNDING MEMBER</div>
+      <div class="price-amount">$4.99</div>
+      <div class="price-per">per month · locked forever</div>
+    </div>
+  </div>
+
+  <!-- CLOSING -->
+  <div class="closing">
+    <p>Four dollars and ninety-nine cents. That's less than a single coffee, once, this month. Less than a fast food combo. Less than almost anything you'll buy today without thinking twice — for something you come back to every night.</p>
+    <p>It's a simple monthly subscription. <span class="emphasis">Cancel anytime, in seconds,</span> if it's ever not right for you.</p>
+    <p>This price is reserved specifically for people who were already using HarmonyApp before it changed. Once that closes for good, it's not coming back for new members at this rate. Not next month. Not ever.</p>
+    <p>This isn't a countdown timer designed to rush you. <span class="emphasis">It's just true.</span></p>
+    <p>Dozens of members already made this decision this week — not because they had more time than you, but because they decided not to let "later" make the choice for them.</p>
+    <p>This is the last link we're able to send you at this price. Once it deactivates, we won't be able to offer it again.</p>
+  </div>
+
+  <!-- FINAL CTA -->
+  <div class="cta-wrap">
+    <a href="https://buy.stripe.com/cNi4gz00e9NNgizgwM00000" class="btn-cta">
+      Become a Founding Member Now →
+      <span>$4.99/month · Locked Forever · Cancel Anytime</span>
+    </a>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="tsl-footer">
+    <div class="footer-links">
+      <a href="https://harmonyapp.app/privacy-policy.html">Privacy Policy</a>
+      <a href="https://harmonyapp.app/terms.html">Terms of Service</a>
+      <a href="https://harmonyapp.app/refund-policy.html">Refund Policy</a>
+      <a href="mailto:support@harmonyapp.app">Support</a>
+    </div>
+    <p>© 2026 HarmonyApp · Operated by Zampier Co. Ltda · CNPJ 67.681.548/0001-15<br/>
+    Rua Pioneiro Rovedo Ziegmann, 251 — Pitanga, PR, 85.200-114, Brazil</p>
+    <p style="margin-top:10px;">HarmonyApp is a spiritual experience for personal reflection and faith.<br/>Not intended to diagnose, treat, cure, or prevent any disease or medical condition.</p>
+  </div>
+
+</div>
+</body>
+</html>
